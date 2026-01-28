@@ -20,7 +20,7 @@
   height: 100%;
   background-color: #000;
   z-index: 9999;
-  animation: fade-out-overlay 1s ease-out forwards;
+  animation: fade-out-overlay 2s ease-out forwards;
   pointer-events: none;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .animate-fade-in {
-  animation: fade-in 0.5s ease-out;
+  animation: fade-in 2s ease-out;
 }
 
 /* Global softer backgrounds and transitions */
