@@ -20,7 +20,7 @@
   height: 100%;
   background-color: #000;
   z-index: 9999;
-  animation: fade-out-overlay 2s ease-out forwards;
+  animation: fade-out-overlay 1.4s ease-out forwards;
   pointer-events: none;
 }
 
