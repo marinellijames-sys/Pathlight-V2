@@ -645,19 +645,24 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
 
   if (loadingStorage) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-gray-700">
-          <div className="w-6 h-6 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
-          <span className="text-base">Loading your journey...</span>
+      <>
+        <div className="page-fade-overlay" />
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50 flex items-center justify-center">
+          <div className="flex items-center gap-3 text-gray-700">
+            <div className="w-6 h-6 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+            <span className="text-base">Loading your journey...</span>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   // Welcome Screen
   if (section.type === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50 flex items-center justify-center p-6">
+      <>
+        <div className="page-fade-overlay" />
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50 flex items-center justify-center p-6">
         <div className="max-w-xl w-full">
           <div className="text-center mb-10">
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-pink-400 via-orange-400 to-amber-400 mb-8 shadow-lg">
@@ -696,6 +701,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
           </div>
         </div>
       </div>
+      </>
     );
   }
 
@@ -704,7 +710,9 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
     const allAnswered = section.questions.every(q => screenerAnswers[q.id]);
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
+      <>
+        <div className="page-fade-overlay" />
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
         <div className="max-w-2xl mx-auto px-6 py-16">
           <div className="mb-10">
             <h2 className="text-4xl font-medium text-gray-900 mb-2 tracking-tight">
@@ -748,6 +756,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
           )}
         </div>
       </div>
+      </>
     );
   }
 
@@ -757,7 +766,9 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
     const parsedData = parseSynthesis(synthesisContent);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
+      <>
+        <div className="page-fade-overlay" />
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
         <div className="max-w-3xl mx-auto px-6 py-16">
           {!synthesisContent ? (
             <div className="bg-white rounded-3xl p-10 shadow-xl text-center">
@@ -1255,12 +1266,15 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
           )}
         </div>
       </div>
+      </>
     );
   }
 
   // Regular Journey Section
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
+    <>
+      <div className="page-fade-overlay" />
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
       <div className="max-w-2xl mx-auto px-6 py-16">
         {/* Progress */}
         <div className="mb-8">
@@ -1378,5 +1392,6 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
         </div>
       </div>
     </div>
+    </>
   );
 }
