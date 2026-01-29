@@ -4,6 +4,11 @@ import { Send, ArrowRight, ArrowLeft, Sparkles, Sun, Check, AlertCircle, Downloa
 // Journey structure
 const SECTIONS = [
   {
+    id: 'consent',
+    title: 'Privacy & Consent',
+    type: 'consent'
+  },
+  {
     id: 'welcome',
     title: 'Welcome to Pathlight',
     type: 'intro'
@@ -651,6 +656,74 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
           <div className="flex items-center gap-3 text-gray-700">
             <div className="w-6 h-6 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
             <span className="text-base">Loading your journey...</span>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Consent Screen
+  if (section.type === 'consent') {
+    return (
+      <>
+        <div className="page-fade-overlay" />
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50 flex items-center justify-center p-6">
+          <div className="max-w-2xl w-full">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-pink-400 via-orange-400 to-amber-400 mb-6 shadow-lg">
+                <Sun className="w-10 h-10 text-white" />
+              </div>
+              <h1 className="text-4xl font-medium mb-2 text-gray-900 tracking-tight">
+                Before We Begin
+              </h1>
+              <p className="text-gray-600">Please read and agree to continue</p>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-xl space-y-6">
+              <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+                <p className="font-medium text-gray-900">How Pathlight Works:</p>
+                <ul className="space-y-3 ml-4">
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Your responses are processed using AI to generate personalized career insights</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Data is saved locally in your browser only - we don't store it on our servers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Your responses are sent to Anthropic's API for real-time AI processing</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Anthropic may retain logs for up to 30 days for safety and abuse prevention</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>We don't sell or share your personal information with third parties</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>You can clear your data anytime from your browser settings</span>
+                  </li>
+                </ul>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-xs text-gray-500">
+                    By clicking "I Agree & Continue" you consent to the processing of your responses as described above. 
+                    See our <a href="/privacy" className="text-orange-600 hover:text-orange-700 underline">Privacy Policy</a> for more details.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={nextSection}
+                className="w-full bg-gradient-to-r from-pink-500 via-orange-500 to-amber-500 hover:shadow-xl text-white px-6 py-4 rounded-full text-base font-medium transition-all shadow-lg"
+              >
+                I Agree & Continue
+              </button>
+            </div>
           </div>
         </div>
       </>
@@ -1380,7 +1453,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
         </div>
 
         {/* Navigation */}
-        <div className="mt-6 flex gap-4">
+        <div className="mt-6 flex justify-between items-center">
           <button
             onClick={prevSection}
             disabled={currentSection <= 1}
@@ -1389,6 +1462,25 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
             <ArrowLeft className="w-4 h-4" />
             Back
           </button>
+          
+          <button
+            onClick={() => {
+              if (confirm('This will delete all your progress. Are you sure?')) {
+                localStorage.clear();
+                window.location.reload();
+              }
+            }}
+            className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            Clear My Data
+          </button>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-8 text-center text-xs text-gray-400">
+          <a href="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</a>
+          {' • '}
+          <span>Your data stays on your device</span>
         </div>
       </div>
     </div>
