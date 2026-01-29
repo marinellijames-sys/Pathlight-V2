@@ -140,7 +140,7 @@ export default function Privacy() {
               <h2 className="text-2xl font-medium text-gray-900 mt-8 mb-4">Contact Us</h2>
               <p>
                 If you have questions about this privacy policy or how we handle your data, please contact us at:{' '}
-                <a href="mailto:privacy@pathlight.app" className="text-orange-600 hover:text-orange-700">
+                <a href="mailto:marinellijames@gmail.com" className="text-orange-600 hover:text-orange-700">
                   privacy@pathlight.app
                 </a>
               </p>
