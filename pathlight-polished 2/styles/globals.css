@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fade-in overlay on initial load */
+@keyframes fade-out-overlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.page-fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 9999;
+  animation: fade-out-overlay 1s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Fade-in animation for content */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* Global softer backgrounds and transitions */
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50;
+    min-height: 100vh;
+  }
+  
+  * {
+    @apply transition-colors duration-200;
+  }
+}
+
+/* Softer card backgrounds */
+@layer components {
+  .bg-white {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .bg-gray-50 {
+    background-color: rgba(249, 250, 251, 0.8);
+  }
+  
+  /* Gentle focus states */
+  button:focus-visible,
+  input:focus-visible {
+    @apply outline-none ring-2 ring-orange-300 ring-opacity-50;
+  }
+  
+  /* Smooth hover transitions */
+  button,
+  input,
+  a {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
