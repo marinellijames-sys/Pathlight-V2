@@ -140,15 +140,15 @@ export default function Privacy() {
               <h2 className="text-2xl font-medium text-gray-900 mt-8 mb-4">Contact Us</h2>
               <p>
                 If you have questions about this privacy policy or how we handle your data, please contact us at:{' '}
-                <a href="mailto:privacy@pathlight.app" className="text-orange-600 hover:text-orange-700">
-                  privacy@pathlight.app
+                <a href="mailto:marinellijames@gmail.com" className="text-orange-600 hover:text-orange-700">
+                  marinellijames@gmail.com
                 </a>
               </p>
             </section>
 
             <section className="mt-12 pt-8 border-t border-gray-200">
               <p className="text-sm text-gray-500">
-                <strong>Your Privacy Matters:</strong> We built Pathlight to help you find career clarity, not to collect your data. 
+                <strong>Your Privacy Matters:</strong> We built Pathlight to help you understand your strengths, not to collect your data. 
                 By keeping your information on your device and using it only for AI processing, we minimize data collection 
                 and maximize your privacy.
               </p>
