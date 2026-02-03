@@ -1268,11 +1268,19 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
 
                   <div className="bg-gradient-to-br from-pink-100 to-orange-100 rounded-3xl p-8 shadow-lg text-center">
                     <Sparkles className="w-10 h-10 text-pink-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-medium text-gray-900 mb-3">Want to go deeper?</h3>
+                    <h3 className="text-xl font-medium text-gray-900 mb-3">🙏 Help Improve Pathlight</h3>
                     <p className="text-gray-700 mb-6 leading-relaxed">
-                      Upgrade to premium for interview questions tailored to your deal-breakers, a job description analyzer, and tools to turn insights into action.
+                      You just completed the beta version! Your feedback will help make this better for others.
                     </p>
-                    <p className="text-sm text-gray-600">Premium features coming soon. This report is completely free.</p>
+                    <a
+                      href="https://forms.gle/fUaxKWAMbQZdbXNk7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-gradient-to-r from-pink-500 via-orange-500 to-amber-500 hover:shadow-xl text-white px-8 py-4 rounded-full text-base font-medium transition-all shadow-lg"
+                    >
+                      Take 2-Minute Survey
+                    </a>
+                    <p className="text-xs text-gray-600 mt-4">Your honest feedback > being nice. Thanks!</p>
                   </div>
 
                   <div className="flex gap-4 justify-center pt-4">
@@ -1283,140 +1291,10 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
                       <ArrowLeft className="w-5 h-5" />
                       Back
                     </button>
-                    <button
-                      onClick={() => setShowFeedback(true)}
-                      className="bg-gradient-to-r from-pink-500 via-orange-500 to-amber-500 hover:shadow-xl text-white px-8 py-4 rounded-full text-base font-medium transition-all shadow-lg flex items-center gap-2"
-                    >
-                      Give Quick Feedback
-                    </button>
                   </div>
                 </div>
               )}
 
-              {/* Feedback Modal */}
-              {showFeedback && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-6 z-50" onClick={() => setShowFeedback(false)}>
-                  <div className="bg-white rounded-3xl p-8 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-                    <h3 className="text-2xl font-medium text-gray-900 mb-6">
-                      Quick feedback (30 seconds)
-                    </h3>
-                    
-                    {/* Question 1: Confidence */}
-                    <div className="mb-6">
-                      <p className="text-gray-700 mb-3">
-                        How confident are you this will help you move forward?
-                      </p>
-                      <div className="flex gap-2">
-                        {[1,2,3,4,5].map(n => (
-                          <button 
-                            key={n}
-                            onClick={() => setFeedbackData({...feedbackData, confidence: n})}
-                            className={`flex-1 py-3 rounded-xl transition-all ${
-                              feedbackData.confidence === n 
-                                ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-lg' 
-                                : 'bg-gray-100 hover:bg-gray-200'
-                            }`}
-                          >
-                            {n}
-                          </button>
-                        ))}
-                      </div>
-                      <div className="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>Not at all</span>
-                        <span>Extremely</span>
-                      </div>
-                    </div>
-
-                    {/* Question 2: Most Valuable */}
-                    <div className="mb-6">
-                      <p className="text-gray-700 mb-3">
-                        Which section was MOST valuable?
-                      </p>
-                      <div className="space-y-2">
-                        {['Profile', 'Superpowers', 'Deal-Breakers', 'Role Territories', 'Next Steps'].map(section => (
-                          <button
-                            key={section}
-                            onClick={() => setFeedbackData({...feedbackData, mostValuable: section})}
-                            className={`w-full text-left px-4 py-2 rounded-xl transition-all ${
-                              feedbackData.mostValuable === section
-                                ? 'bg-pink-100 border-2 border-pink-500'
-                                : 'bg-gray-50 hover:bg-gray-100'
-                            }`}
-                          >
-                            {section}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Question 3: Would Pay */}
-                    <div className="mb-6">
-                      <p className="text-gray-700 mb-3">
-                        Would you pay $20 for this?
-                      </p>
-                      <div className="flex gap-3">
-                        {[
-                          { value: 'yes', label: 'Yes', color: 'green' },
-                          { value: 'maybe', label: 'Maybe', color: 'yellow' },
-                          { value: 'no', label: 'No', color: 'red' }
-                        ].map(option => (
-                          <button 
-                            key={option.value}
-                            onClick={() => setFeedbackData({...feedbackData, wouldPay: option.value})}
-                            className={`flex-1 py-3 rounded-xl transition-all ${
-                              feedbackData.wouldPay === option.value 
-                                ? `bg-${option.color}-500 text-white shadow-lg` 
-                                : 'bg-gray-100 hover:bg-gray-200'
-                            }`}
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Optional: One thing to improve */}
-                    <div className="mb-6">
-                      <p className="text-gray-700 mb-3">
-                        One thing to improve: (optional)
-                      </p>
-                      <input 
-                        type="text"
-                        placeholder="Be brutal, it helps"
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
-                        value={feedbackData.improvement}
-                        onChange={(e) => setFeedbackData({...feedbackData, improvement: e.target.value})}
-                      />
-                    </div>
-
-                    <div className="flex gap-3">
-                      <button 
-                        onClick={() => setShowFeedback(false)}
-                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 rounded-xl font-medium transition-all"
-                      >
-                        Skip
-                      </button>
-                      <button 
-                        onClick={() => {
-                          console.log('=== USER FEEDBACK ===');
-                          console.log('Confidence (1-5):', feedbackData.confidence);
-                          console.log('Most Valuable Section:', feedbackData.mostValuable);
-                          console.log('Would Pay $20:', feedbackData.wouldPay);
-                          console.log('Improvement Suggestion:', feedbackData.improvement);
-                          console.log('Timestamp:', new Date().toISOString());
-                          console.log('=== END FEEDBACK ===');
-                          setShowFeedback(false);
-                          alert('Thank you! Your feedback helps us improve Pathlight for everyone.');
-                        }}
-                        disabled={!feedbackData.confidence || !feedbackData.mostValuable || !feedbackData.wouldPay}
-                        className="flex-1 bg-gradient-to-r from-pink-500 to-orange-500 disabled:opacity-50 text-white py-4 rounded-xl font-medium transition-all shadow-lg"
-                      >
-                        Submit Feedback
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           )}
         </div>
