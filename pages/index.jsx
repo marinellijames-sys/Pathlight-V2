@@ -641,7 +641,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
             <div className="bg-white rounded-3xl p-8 shadow-xl space-y-6">
               <div className="bg-green-50 border-l-2 border-green-200 rounded-lg p-4">
                 <p className="text-sm font-medium text-gray-900 mb-2">
-                  ðŸ”’ Your privacy is protected
+                  Your privacy is protected
                 </p>
                 <p className="text-xs text-gray-700">
                   All data stays on your device. We never see your responses. 
@@ -673,7 +673,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
 
               <div className="bg-orange-50/50 border-l-2 border-orange-200 rounded-lg p-4">
                 <p className="text-sm font-medium text-gray-900 mb-2">
-                  ðŸ’¡ This is a Self-Reflection Tool
+                  This is a Self-Reflection Tool
                 </p>
                 <p className="text-xs text-gray-700 mb-2">
                   Pathlight helps you understand your strengths and skills through AI-powered reflection. 
@@ -890,7 +890,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
             <>
               <div className="bg-orange-50/50 border-l-2 border-orange-200 rounded-lg p-4 mb-6">
                 <p className="text-sm font-medium text-gray-900 mb-1">
-                  ðŸ’¡ AI-Generated Insights
+                  AI-Generated Insights
                 </p>
                 <p className="text-xs text-gray-700">
                   This synthesis is AI-generated to help you reflect on your strengths and skills. 
@@ -1205,7 +1205,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
 
                   <div className="bg-gradient-to-br from-pink-100 to-orange-100 rounded-3xl p-8 shadow-lg text-center">
                     <Sparkles className="w-10 h-10 text-pink-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-medium text-gray-900 mb-3">ðŸ™ Help Improve Pathlight</h3>
+                    <h3 className="text-xl font-medium text-gray-900 mb-3"  Help Improve Pathlight</h3>
                     <p className="text-gray-700 mb-6 leading-relaxed">
                       You just completed the beta version! Your feedback will help make this better for others.
                     </p>
@@ -1248,7 +1248,7 @@ Keep it warm, specific, and actionable. Make them feel seen, capable, and hopefu
       <div className="max-w-2xl mx-auto px-6 py-16">
         <div className="bg-green-50/50 border-l-2 border-green-200 rounded-lg p-3 mb-6 text-center">
           <p className="text-xs text-gray-700">
-            ðŸ”’ <strong>Private:</strong> Your data stays on your device  â€¢  Bookmark this page to save progress
+            <strong>Private:</strong> Your data stays on your device  â€¢  Bookmark this page to save progress
           </p>
         </div>
 
