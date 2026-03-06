@@ -637,9 +637,9 @@ Keep it warm, specific, and actionable.`;
   if (loadingStorage) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="flex items-center gap-3 text-warm-charcoal">
-          <div className="w-6 h-6 border-2 border-terracotta border-t-transparent rounded-full animate-spin" />
-          <span className="text-base">Loading your journey...</span>
+        <div className="flex items-center gap-3 text-charcoal">
+          <div className="w-6 h-6 border-2 border-sage border-t-transparent rounded-full animate-spin" />
+          <span className="text-base font-light tracking-wide">Loading your journey...</span>
         </div>
       </div>
     );
@@ -649,17 +649,17 @@ Keep it warm, specific, and actionable.`;
   if (section.type === 'intro' && introPage === 0) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center p-6">
-        <div className="max-w-2xl w-full text-center space-y-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-terracotta mb-8 shadow-soft">
+        <div className="max-w-2xl w-full text-center space-y-12 fade-in">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sage mb-8 shadow-soft">
             <Sun className="w-10 h-10 text-cream" />
           </div>
           
-          <div className="space-y-6">
-            <h1 className="text-5xl font-semibold text-warm-charcoal leading-tight">
+          <div className="space-y-8">
+            <h1 className="text-4xl sm:text-5xl text-ink leading-tight font-serif">
               You're here because something isn't quite right.
             </h1>
             
-            <div className="space-y-4 text-xl text-warm-charcoal leading-relaxed max-w-xl mx-auto">
+            <div className="space-y-4 text-lg sm:text-xl text-charcoal leading-relaxed max-w-xl mx-auto">
               <p>Maybe you feel stuck in a role that doesn't fit anymore.</p>
               <p>Maybe you lack direction.</p>
               <p>Maybe you're ready for something bigger but don't know what.</p>
@@ -668,7 +668,7 @@ Keep it warm, specific, and actionable.`;
 
           <button
             onClick={() => setIntroPage(1)}
-            className="btn-primary inline-flex items-center gap-2 mt-12"
+            className="btn-primary inline-flex items-center gap-3 mt-12"
           >
             Continue
             <ArrowRight className="w-5 h-5" />
@@ -682,35 +682,35 @@ Keep it warm, specific, and actionable.`;
   if (section.type === 'intro' && introPage === 1) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center p-6">
-        <div className="max-w-2xl w-full">
-          <h2 className="text-4xl font-semibold text-warm-charcoal text-center mb-12">
+        <div className="max-w-2xl w-full fade-in">
+          <h2 className="text-3xl sm:text-4xl text-ink text-center mb-12 font-serif">
             In the next 15 minutes, you'll discover:
           </h2>
           
           <div className="card space-y-8">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-terracotta bg-opacity-10 flex items-center justify-center">
-                <span className="text-terracotta text-xl">•</span>
+            <div className="flex items-start gap-5">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center">
+                <span className="w-2 h-2 rounded-full bg-sage"></span>
               </div>
-              <p className="text-lg text-warm-charcoal leading-relaxed pt-2">
+              <p className="text-lg text-charcoal leading-relaxed pt-1.5">
                 What truly energizes you (and what drains you)
               </p>
             </div>
             
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-terracotta bg-opacity-10 flex items-center justify-center">
-                <span className="text-terracotta text-xl">•</span>
+            <div className="flex items-start gap-5">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center">
+                <span className="w-2 h-2 rounded-full bg-sage"></span>
               </div>
-              <p className="text-lg text-warm-charcoal leading-relaxed pt-2">
+              <p className="text-lg text-charcoal leading-relaxed pt-1.5">
                 Your signature strengths you've been undervaluing
               </p>
             </div>
             
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-terracotta bg-opacity-10 flex items-center justify-center">
-                <span className="text-terracotta text-xl">•</span>
+            <div className="flex items-start gap-5">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center">
+                <span className="w-2 h-2 rounded-full bg-sage"></span>
               </div>
-              <p className="text-lg text-warm-charcoal leading-relaxed pt-2">
+              <p className="text-lg text-charcoal leading-relaxed pt-1.5">
                 Multiple career paths that align with how you work best
               </p>
             </div>
@@ -741,19 +741,19 @@ Keep it warm, specific, and actionable.`;
   if (section.type === 'intro' && introPage === 2) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center p-6">
-        <div className="max-w-xl w-full text-center space-y-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-terracotta mb-6 shadow-soft">
+        <div className="max-w-xl w-full text-center space-y-10 fade-in">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sage mb-6 shadow-soft">
             <Sun className="w-10 h-10 text-cream" />
           </div>
 
           <div className="space-y-6">
-            <p className="text-lg text-warm-charcoal leading-relaxed">
+            <p className="text-lg text-charcoal leading-relaxed">
               Pathlight is a career clarity tool that identifies your signature strengths - 
               the unique skills you've been undervaluing - and shows you exactly how to 
               leverage them in your career.
             </p>
             
-            <p className="text-base text-warm-gray">
+            <p className="text-base text-driftwood">
               Your answers are saved as you go. This takes 15 minutes.
             </p>
           </div>
@@ -785,59 +785,59 @@ Keep it warm, specific, and actionable.`;
 
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center p-6">
-        <div className="max-w-2xl w-full">
+        <div className="max-w-2xl w-full fade-in">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-terracotta mb-6 shadow-soft">
-              <Sun className="w-10 h-10 text-cream" />
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sage mb-6 shadow-soft">
+              <Lock className="w-9 h-9 text-cream" />
             </div>
-            <h1 className="text-4xl font-medium mb-2 text-warm-charcoal">
+            <h1 className="text-3xl sm:text-4xl mb-2 text-ink font-serif">
               Before We Begin
             </h1>
-            <p className="text-warm-gray">Please read and agree to continue</p>
+            <p className="text-driftwood">Please read and agree to continue</p>
           </div>
 
           <div className="card space-y-6">
-            <div className="bg-terracotta bg-opacity-5 border-l-2 border-terracotta rounded-lg p-4">
-              <p className="text-sm font-medium text-warm-charcoal mb-2">
-                🔒 Your privacy is protected
+            <div className="callout">
+              <p className="text-sm font-medium text-charcoal mb-2">
+                Your privacy is protected
               </p>
-              <p className="text-xs text-warm-charcoal">
+              <p className="text-xs text-charcoal leading-relaxed">
                 All data stays on your device. We never see your responses. 
                 Note: Clearing your browser data will delete your progress. Bookmark this page to return.
               </p>
             </div>
 
-            <div className="space-y-3 text-sm text-warm-charcoal">
+            <div className="space-y-3 text-sm text-charcoal">
               <p className="font-medium">How Pathlight Works:</p>
-              <ul className="space-y-2 ml-4">
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-terracotta flex-shrink-0 mt-0.5" />
+              <ul className="space-y-2.5 ml-1">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
                   <span>Your responses are processed using AI to generate personalized insights</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-terracotta flex-shrink-0 mt-0.5" />
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
                   <span>Data is saved locally in your browser only - we don't store it on our servers</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-terracotta flex-shrink-0 mt-0.5" />
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
                   <span>Your responses are sent to Anthropic's API for real-time AI processing</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-terracotta flex-shrink-0 mt-0.5" />
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
                   <span>Anthropic may retain logs for up to 30 days for safety and abuse prevention</span>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-terracotta bg-opacity-5 border-l-2 border-terracotta rounded-lg p-4">
-              <p className="text-sm font-medium text-warm-charcoal mb-2">
-                💡 This is a Self-Reflection Tool
+            <div className="callout">
+              <p className="text-sm font-medium text-charcoal mb-2">
+                This is a Self-Reflection Tool
               </p>
-              <p className="text-xs text-warm-charcoal mb-2">
+              <p className="text-xs text-charcoal leading-relaxed mb-2">
                 Pathlight helps you understand your strengths and skills through AI-powered reflection. 
                 It does not provide professional career counseling or specific career advice.
               </p>
-              <p className="text-xs text-warm-charcoal font-medium">
+              <p className="text-xs text-charcoal font-medium">
                 For professional guidance on career decisions, consult a qualified career counselor.
               </p>
             </div>
@@ -848,9 +848,9 @@ Keep it warm, specific, and actionable.`;
                   type="checkbox"
                   checked={consentChecks.terms}
                   onChange={(e) => setConsentChecks({...consentChecks, terms: e.target.checked})}
-                  className="mt-1 h-4 w-4 rounded border-warm-gray text-terracotta focus:ring-terracotta cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded border-stone text-sage focus:ring-sage cursor-pointer"
                 />
-                <span className="text-sm text-warm-charcoal group-hover:text-warm-charcoal">
+                <span className="text-sm text-charcoal group-hover:text-ink transition-medium">
                   I understand this is a self-reflection tool, not professional career advice. 
                   I will not make significant career decisions based solely on AI-generated insights.
                 </span>
@@ -861,9 +861,9 @@ Keep it warm, specific, and actionable.`;
                   type="checkbox"
                   checked={consentChecks.age}
                   onChange={(e) => setConsentChecks({...consentChecks, age: e.target.checked})}
-                  className="mt-1 h-4 w-4 rounded border-warm-gray text-terracotta focus:ring-terracotta cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded border-stone text-sage focus:ring-sage cursor-pointer"
                 />
-                <span className="text-sm text-warm-charcoal group-hover:text-warm-charcoal">
+                <span className="text-sm text-charcoal group-hover:text-ink transition-medium">
                   I confirm that I am <strong>18 years of age or older</strong>.
                 </span>
               </label>
@@ -873,27 +873,27 @@ Keep it warm, specific, and actionable.`;
                   type="checkbox"
                   checked={consentChecks.data}
                   onChange={(e) => setConsentChecks({...consentChecks, data: e.target.checked})}
-                  className="mt-1 h-4 w-4 rounded border-warm-gray text-terracotta focus:ring-terracotta cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded border-stone text-sage focus:ring-sage cursor-pointer"
                 />
-                <span className="text-sm text-warm-charcoal group-hover:text-warm-charcoal">
+                <span className="text-sm text-charcoal group-hover:text-ink transition-medium">
                   I understand my responses will be processed by AI and may be retained for up to 30 days. 
                   I will not enter sensitive personal information (financial data, health records, etc.).
                 </span>
               </label>
             </div>
 
-            <p className="text-xs text-warm-gray text-center pt-2">
+            <p className="text-xs text-driftwood text-center pt-2">
               By continuing, you consent to the processing of your responses as described above. 
-              See our <a href="/privacy" className="text-terracotta hover:underline">Privacy Policy</a> for details.
+              See our <a href="/privacy" className="text-sage hover:text-sage-dark transition-fast underline underline-offset-2">Privacy Policy</a> for details.
             </p>
 
             <button
               onClick={nextSection}
               disabled={!canProceed}
-              className={`w-full py-4 px-6 rounded-xl font-medium text-base transition-all ${
+              className={`w-full py-4 px-6 rounded-xl font-medium text-base transition-medium ${
                 canProceed
                   ? 'btn-primary'
-                  : 'bg-warm-sand bg-opacity-30 text-warm-gray cursor-not-allowed'
+                  : 'bg-sand text-driftwood cursor-not-allowed'
               }`}
             >
               {canProceed ? 'I Agree & Continue' : 'Please agree to all items above'}
@@ -910,27 +910,27 @@ Keep it warm, specific, and actionable.`;
     
     return (
       <div className="min-h-screen bg-cream">
-        <div className="max-w-2xl mx-auto px-6 py-16">
+        <div className="max-w-2xl mx-auto px-6 py-16 fade-in">
           <div className="mb-10">
-            <h2 className="text-4xl font-medium text-warm-charcoal mb-2">
+            <h2 className="text-3xl sm:text-4xl text-ink mb-2 font-serif">
               {section.title}
             </h2>
-            <p className="text-warm-gray">This helps us personalize your journey</p>
+            <p className="text-driftwood">This helps us personalize your journey</p>
           </div>
 
           <div className="space-y-6">
             {section.questions.map((q, idx) => (
               <div key={q.id} className="card">
-                <h3 className="text-lg font-medium text-warm-charcoal mb-4">{q.question}</h3>
-                <div className="space-y-2">
+                <h3 className="text-lg font-medium text-ink mb-5">{q.question}</h3>
+                <div className="space-y-2.5">
                   {q.options.map(option => (
                     <button
                       key={option}
                       onClick={() => handleScreenerAnswer(q.id, option)}
-                      className={`w-full text-left px-5 py-3.5 rounded-xl transition-slow text-sm ${
+                      className={`w-full text-left px-5 py-3.5 rounded-xl transition-medium text-sm ${
                         screenerAnswers[q.id] === option
-                          ? 'bg-terracotta text-cream shadow-soft'
-                          : 'bg-warm-sand bg-opacity-30 hover:bg-opacity-50 text-warm-charcoal'
+                          ? 'bg-sage text-cream shadow-soft'
+                          : 'bg-sand/50 hover:bg-sand text-charcoal'
                       }`}
                     >
                       {option}
@@ -942,7 +942,7 @@ Keep it warm, specific, and actionable.`;
           </div>
 
           {allAnswered && (
-            <div className="mt-8 flex justify-center">
+            <div className="mt-10 flex justify-center">
               <button
                 onClick={nextSection}
                 className="btn-primary"
@@ -965,13 +965,13 @@ Keep it warm, specific, and actionable.`;
     if (!synthesisContent) {
       return (
         <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16">
+          <div className="max-w-3xl mx-auto px-6 py-16 fade-in">
             <div className="card text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-terracotta mb-6 shadow-soft">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sage mb-6 shadow-soft">
                 <Sparkles className="w-10 h-10 text-cream" />
               </div>
-              <h3 className="text-2xl font-medium text-warm-charcoal mb-3">Ready to see your pathways?</h3>
-              <p className="text-base text-warm-gray mb-8 max-w-md mx-auto leading-relaxed">
+              <h3 className="text-2xl text-ink mb-3 font-serif">Ready to see your pathways?</h3>
+              <p className="text-base text-driftwood mb-8 max-w-md mx-auto leading-relaxed">
                 We'll analyze everything you've shared to identify your signature strengths, suggest role territories, and give you concrete next steps.
               </p>
               <button
@@ -1000,26 +1000,26 @@ Keep it warm, specific, and actionable.`;
     if (synthesisScreen === 0 && parsedData) {
       return (
         <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8">
-            <div className="bg-terracotta bg-opacity-5 border-l-2 border-terracotta rounded-lg p-4">
-              <p className="text-sm font-medium text-warm-charcoal mb-1">
-                💡 AI-Generated Insights
+          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
+            <div className="callout">
+              <p className="text-sm font-medium text-charcoal mb-1">
+                AI-Generated Insights
               </p>
-              <p className="text-xs text-warm-charcoal">
+              <p className="text-xs text-charcoal leading-relaxed">
                 This synthesis is AI-generated to help you reflect on your strengths and skills. 
                 Use these insights as a starting point for reflection and discussion with career professionals.
               </p>
             </div>
 
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta mb-4 shadow-soft">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
                 <Sun className="w-8 h-8 text-cream" />
               </div>
-              <h2 className="text-3xl font-medium text-warm-charcoal mb-2">Your Profile</h2>
+              <h2 className="text-3xl text-ink mb-2 font-serif">Your Profile</h2>
             </div>
 
             <div className="card">
-              <div className="prose prose-lg max-w-none text-warm-charcoal leading-relaxed" style={{ fontSize: '17px', lineHeight: '1.75' }}>
+              <div className="prose-kinfolk" style={{ fontSize: '17px', lineHeight: '1.75' }}>
                 {parsedData.profile.split('\n').map((para, idx) => (
                   <p key={idx} className="mb-4">{para}</p>
                 ))}
@@ -1027,7 +1027,7 @@ Keep it warm, specific, and actionable.`;
             </div>
 
             <div className="text-center">
-              <p className="text-xl text-warm-charcoal font-medium mb-8">
+              <p className="text-xl text-charcoal font-serif mb-8">
                 You're not stuck. You're standing at a crossroads with more options than you realize.
               </p>
               <button
@@ -1047,32 +1047,32 @@ Keep it warm, specific, and actionable.`;
     if (synthesisScreen === 1 && parsedData?.superpowers) {
       return (
         <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8">
+          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta mb-4 shadow-soft">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
                 <Sparkles className="w-8 h-8 text-cream" />
               </div>
-              <h2 className="text-3xl font-medium text-warm-charcoal mb-2">Your Signature Strengths</h2>
-              <p className="text-warm-gray">Look at what you've been bringing to the table all along</p>
+              <h2 className="text-3xl text-ink mb-2 font-serif">Your Signature Strengths</h2>
+              <p className="text-driftwood">Look at what you've been bringing to the table all along</p>
             </div>
 
             {/* Show first strength fully */}
-            <div className="bg-terracotta bg-opacity-5 rounded-xl p-8 shadow-soft border-2 border-terracotta">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-cream text-xl font-bold">
+            <div className="bg-sage/10 rounded-2xl p-8 shadow-soft border border-sage/30">
+              <div className="flex items-start gap-5">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sage flex items-center justify-center text-cream text-xl font-medium">
                   1
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-medium text-warm-charcoal mb-3">{parsedData.superpowers[0].name}</h3>
-                  <p className="text-warm-charcoal mb-4 leading-relaxed" style={{ fontSize: '17px', lineHeight: '1.75' }}>
+                  <h3 className="text-2xl text-ink mb-3 font-serif">{parsedData.superpowers[0].name}</h3>
+                  <p className="text-charcoal mb-4 leading-relaxed" style={{ fontSize: '17px', lineHeight: '1.75' }}>
                     {parsedData.superpowers[0].description}
                   </p>
                   <details className="group">
-                    <summary className="cursor-pointer text-terracotta font-medium hover:underline list-none flex items-center gap-2">
+                    <summary className="cursor-pointer text-sage-dark font-medium hover:text-sage list-none flex items-center gap-2 transition-medium">
                       How to use this
                       <ArrowRight className="w-4 h-4 group-open:rotate-90 transition-transform" />
                     </summary>
-                    <div className="mt-4 pl-4 text-warm-charcoal text-sm leading-relaxed space-y-3">
+                    <div className="mt-4 pl-4 text-charcoal text-sm leading-relaxed space-y-3">
                       {parsedData.superpowers[0].howTo.split('\n').map((line, lineIdx) => {
                         const trimmed = line.trim();
                         if (!trimmed) return null;
@@ -1082,9 +1082,9 @@ Keep it warm, specific, and actionable.`;
                           const label = bulletMatch[1].replace(/:$/, '');
                           return (
                             <div key={lineIdx} className="flex gap-2">
-                              <span className="text-terracotta font-bold mt-0.5">•</span>
+                              <span className="text-sage font-bold mt-0.5">•</span>
                               <div>
-                                <span className="font-medium text-warm-charcoal">{label}:</span>
+                                <span className="font-medium text-ink">{label}:</span>
                                 <span className="ml-1">{bulletMatch[2]}</span>
                               </div>
                             </div>
@@ -1102,14 +1102,14 @@ Keep it warm, specific, and actionable.`;
             {/* Show remaining 3 locked */}
             {parsedData.superpowers.slice(1, 4).map((power, idx) => (
               <div key={idx} className="relative">
-                <div className="bg-warm-sand rounded-xl p-8 shadow-soft opacity-40 blur-sm pointer-events-none">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-cream text-xl font-bold">
+                <div className="bg-linen rounded-2xl p-8 shadow-soft opacity-40 blur-sm pointer-events-none">
+                  <div className="flex items-start gap-5">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sage flex items-center justify-center text-cream text-xl font-medium">
                       {idx + 2}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-medium text-warm-charcoal mb-3">{power.name}</h3>
-                      <p className="text-warm-charcoal leading-relaxed">
+                      <h3 className="text-2xl text-ink mb-3 font-serif">{power.name}</h3>
+                      <p className="text-charcoal leading-relaxed">
                         {power.description.substring(0, 100)}...
                       </p>
                     </div>
@@ -1117,8 +1117,8 @@ Keep it warm, specific, and actionable.`;
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-cream rounded-xl p-6 shadow-soft-lg text-center">
-                    <Lock className="w-8 h-8 text-terracotta mx-auto mb-2" />
-                    <p className="text-sm text-warm-charcoal font-medium">Unlock with full report</p>
+                    <Lock className="w-8 h-8 text-sage mx-auto mb-2" />
+                    <p className="text-sm text-charcoal font-medium">Unlock with full report</p>
                   </div>
                 </div>
               </div>
@@ -1127,17 +1127,17 @@ Keep it warm, specific, and actionable.`;
             {/* Payment wall */}
             {!paymentCompleted && (
               <div className="card text-center space-y-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta bg-opacity-10 mb-4">
-                  <Sparkles className="w-8 h-8 text-terracotta" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage/15 mb-4">
+                  <Sparkles className="w-8 h-8 text-sage" />
                 </div>
-                <h3 className="text-2xl font-medium text-warm-charcoal">Unlock Your Complete Report</h3>
-                <p className="text-base text-warm-charcoal leading-relaxed max-w-lg mx-auto">
+                <h3 className="text-2xl text-ink font-serif">Unlock Your Complete Report</h3>
+                <p className="text-base text-charcoal leading-relaxed max-w-lg mx-auto">
                   Get all 4 signature strengths, how they work together, your deal-breakers, 
                   5-7 role territories to explore, and your next 3 concrete steps.
                 </p>
-                <div className="bg-terracotta bg-opacity-5 rounded-lg p-4 max-w-md mx-auto">
-                  <p className="text-3xl font-bold text-terracotta mb-1">$39 AUD</p>
-                  <p className="text-sm text-warm-gray">One-time payment • Instant access</p>
+                <div className="bg-sage/10 rounded-xl p-5 max-w-md mx-auto">
+                  <p className="text-3xl font-semibold text-sage-dark mb-1">$39 AUD</p>
+                  <p className="text-sm text-driftwood">One-time payment - Instant access</p>
                 </div>
                 <button
                   onClick={handlePayment}
@@ -1146,7 +1146,7 @@ Keep it warm, specific, and actionable.`;
                   Unlock Full Report
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <p className="text-xs text-warm-gray">Secure payment via Stripe</p>
+                <p className="text-xs text-driftwood">Secure payment via Stripe</p>
               </div>
             )}
 
@@ -1178,17 +1178,17 @@ Keep it warm, specific, and actionable.`;
     if (synthesisScreen === 2 && parsedData?.dealbreakers && paymentCompleted) {
       return (
         <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8">
+          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta bg-opacity-10 mb-4 shadow-soft">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta/15 mb-4 shadow-soft">
                 <AlertCircle className="w-8 h-8 text-terracotta" />
               </div>
-              <h2 className="text-3xl font-medium text-warm-charcoal mb-2">Your Deal-Breakers</h2>
-              <p className="text-warm-gray">You've learned what doesn't work. That's wisdom.</p>
+              <h2 className="text-3xl text-ink mb-2 font-serif">Your Deal-Breakers</h2>
+              <p className="text-driftwood">You've learned what doesn't work. That's wisdom.</p>
             </div>
 
-            <div className="bg-terracotta bg-opacity-5 rounded-xl p-8 text-center mb-6 border-l-2 border-terracotta">
-              <p className="text-warm-charcoal text-lg font-medium leading-relaxed">
+            <div className="bg-terracotta/10 rounded-xl p-8 text-center mb-6 border-l-2 border-terracotta">
+              <p className="text-charcoal text-lg leading-relaxed">
                 Use this list when evaluating opportunities. Even if a role looks perfect, if it has these elements, you'll end up miserable again.
               </p>
             </div>
@@ -1196,10 +1196,10 @@ Keep it warm, specific, and actionable.`;
             <div className="grid gap-6">
               {parsedData.dealbreakers.work.length > 0 && (
                 <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-warm-charcoal mb-3 flex items-center gap-2">
-                    <span className="text-terracotta">❌</span> About the work
+                  <h3 className="text-lg font-medium text-ink mb-3 flex items-center gap-2">
+                    About the work
                   </h3>
-                  <ul className="space-y-2 text-warm-charcoal text-sm">
+                  <ul className="space-y-2 text-charcoal text-sm">
                     {parsedData.dealbreakers.work.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-terracotta mt-1">•</span>
@@ -1212,10 +1212,10 @@ Keep it warm, specific, and actionable.`;
 
               {parsedData.dealbreakers.job.length > 0 && (
                 <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-warm-charcoal mb-3 flex items-center gap-2">
-                    <span className="text-terracotta">❌</span> What comes with the job
+                  <h3 className="text-lg font-medium text-ink mb-3">
+                    What comes with the job
                   </h3>
-                  <ul className="space-y-2 text-warm-charcoal text-sm">
+                  <ul className="space-y-2 text-charcoal text-sm">
                     {parsedData.dealbreakers.job.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-terracotta mt-1">•</span>
@@ -1228,10 +1228,10 @@ Keep it warm, specific, and actionable.`;
 
               {parsedData.dealbreakers.leadership.length > 0 && (
                 <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-warm-charcoal mb-3 flex items-center gap-2">
-                    <span className="text-terracotta">❌</span> About leadership
+                  <h3 className="text-lg font-medium text-ink mb-3">
+                    About leadership
                   </h3>
-                  <ul className="space-y-2 text-warm-charcoal text-sm">
+                  <ul className="space-y-2 text-charcoal text-sm">
                     {parsedData.dealbreakers.leadership.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-terracotta mt-1">•</span>
@@ -1244,10 +1244,10 @@ Keep it warm, specific, and actionable.`;
 
               {parsedData.dealbreakers.environment.length > 0 && (
                 <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-warm-charcoal mb-3 flex items-center gap-2">
-                    <span className="text-terracotta">❌</span> About the environment
+                  <h3 className="text-lg font-medium text-ink mb-3">
+                    About the environment
                   </h3>
-                  <ul className="space-y-2 text-warm-charcoal text-sm">
+                  <ul className="space-y-2 text-charcoal text-sm">
                     {parsedData.dealbreakers.environment.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-terracotta mt-1">•</span>
@@ -1284,28 +1284,28 @@ Keep it warm, specific, and actionable.`;
     if (synthesisScreen === 3 && parsedData?.territories && paymentCompleted) {
       return (
         <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8">
+          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta mb-4 shadow-soft">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
                 <Sparkles className="w-8 h-8 text-cream" />
               </div>
-              <h2 className="text-3xl font-medium text-warm-charcoal mb-2">Role Territories to Explore</h2>
-              <p className="text-warm-gray">Here are territories waiting for someone exactly like you</p>
+              <h2 className="text-3xl text-ink mb-2 font-serif">Role Territories to Explore</h2>
+              <p className="text-driftwood">Here are territories waiting for someone exactly like you</p>
             </div>
 
             <div className="space-y-4">
               {parsedData.territories.map((territory, idx) => (
                 <details key={idx} className="group card overflow-hidden">
-                  <summary className="cursor-pointer hover:bg-warm-sand hover:bg-opacity-30 transition-slow list-none -m-12 p-12">
+                  <summary className="cursor-pointer hover:bg-sand/50 transition-medium list-none -m-10 sm:-m-12 p-10 sm:p-12">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-xl font-medium text-warm-charcoal mb-1">{territory.name}</h3>
-                        <p className="text-sm text-warm-gray">Click to explore</p>
+                        <h3 className="text-xl text-ink mb-1 font-serif">{territory.name}</h3>
+                        <p className="text-sm text-driftwood">Click to explore</p>
                       </div>
-                      <ArrowRight className="w-6 h-6 text-warm-gray group-open:rotate-90 transition-transform" />
+                      <ArrowRight className="w-6 h-6 text-driftwood group-open:rotate-90 transition-transform" />
                     </div>
                   </summary>
-                  <div className="text-warm-charcoal text-sm leading-relaxed whitespace-pre-wrap border-t border-warm-sand border-opacity-50 pt-6 -mx-12 px-12 -mb-12 pb-12">
+                  <div className="text-charcoal text-sm leading-relaxed whitespace-pre-wrap border-t border-sand pt-6 -mx-10 sm:-mx-12 px-10 sm:px-12 -mb-10 sm:-mb-12 pb-10 sm:pb-12">
                     <div>{territory.content}</div>
                   </div>
                 </details>
@@ -1313,7 +1313,7 @@ Keep it warm, specific, and actionable.`;
             </div>
 
             <div className="text-center pt-8">
-              <p className="text-lg text-warm-charcoal mb-8 max-w-xl mx-auto">
+              <p className="text-lg text-charcoal mb-8 max-w-xl mx-auto">
                 You're not limited by your current industry. These are territories to explore, not prescriptions.
               </p>
               <div className="flex gap-4 justify-center">
@@ -1342,35 +1342,35 @@ Keep it warm, specific, and actionable.`;
     if (synthesisScreen === 4 && parsedData?.nextSteps && paymentCompleted) {
       return (
         <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8">
+          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta mb-4 shadow-soft">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
                 <Check className="w-8 h-8 text-cream" />
               </div>
-              <h2 className="text-3xl font-medium text-warm-charcoal mb-2">Your Path Forward</h2>
-              <p className="text-warm-gray">You can actually do this</p>
+              <h2 className="text-3xl text-ink mb-2 font-serif">Your Path Forward</h2>
+              <p className="text-driftwood">You can actually do this</p>
             </div>
 
             <div className="space-y-6">
               {parsedData.nextSteps.map((step, idx) => (
                 <div key={idx} className="card">
                   <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-cream font-bold text-lg shadow-soft">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sage flex items-center justify-center text-cream font-medium text-lg shadow-soft">
                       {idx + 1}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-medium text-warm-charcoal mb-2">{step.timeframe}</h3>
-                      <p className="text-warm-charcoal leading-relaxed">{step.action}</p>
+                      <h3 className="text-lg font-medium text-ink mb-2">{step.timeframe}</h3>
+                      <p className="text-charcoal leading-relaxed">{step.action}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="card bg-terracotta bg-opacity-5 text-center border-l-2 border-terracotta">
-              <Sparkles className="w-10 h-10 text-terracotta mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-warm-charcoal mb-3">🙏 Help Improve Pathlight</h3>
-              <p className="text-warm-charcoal mb-6 leading-relaxed">
+            <div className="card bg-sage/10 text-center border-l-2 border-sage">
+              <Sparkles className="w-10 h-10 text-sage mx-auto mb-4" />
+              <h3 className="text-xl text-ink mb-3 font-serif">Help Improve Pathlight</h3>
+              <p className="text-charcoal mb-6 leading-relaxed">
                 You just completed the beta version! Your feedback will help make this better for others.
               </p>
               <a
@@ -1381,7 +1381,7 @@ Keep it warm, specific, and actionable.`;
               >
                 Take 2-Minute Survey
               </a>
-              <p className="text-xs text-warm-gray mt-4">Your honest feedback helps. Thanks!</p>
+              <p className="text-xs text-driftwood mt-4">Your honest feedback helps. Thanks!</p>
             </div>
 
             <div className="flex gap-4 justify-center pt-4">
@@ -1402,44 +1402,44 @@ Keep it warm, specific, and actionable.`;
   // REGULAR JOURNEY SECTION
   return (
     <div className="min-h-screen bg-cream">
-      <div className="max-w-2xl mx-auto px-6 py-16">
-        <div className="bg-terracotta bg-opacity-5 border-l-2 border-terracotta rounded-lg p-3 mb-6 text-center">
-          <p className="text-xs text-warm-charcoal">
-            🔒 <strong>Private:</strong> Your data stays on your device  •  Bookmark this page to save progress
+      <div className="max-w-2xl mx-auto px-6 py-16 fade-in">
+        <div className="callout mb-6 text-center">
+          <p className="text-xs text-charcoal">
+            <strong>Private:</strong> Your data stays on your device  -  Bookmark this page to save progress
           </p>
         </div>
 
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-warm-gray font-medium">
+            <span className="text-sm text-driftwood font-medium">
               {currentSection} of {SECTIONS.length - 1}
             </span>
           </div>
-          <div className="h-1.5 bg-warm-sand rounded-full overflow-hidden">
+          <div className="progress-bar h-1.5">
             <div 
-              className="h-full bg-terracotta transition-slow rounded-full"
+              className="progress-fill h-full"
               style={{ width: `${(currentSection / (SECTIONS.length - 1)) * 100}%` }}
             />
           </div>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-3xl font-medium text-warm-charcoal mb-1">
+          <h2 className="text-3xl text-ink mb-1 font-serif">
             {section.title}
           </h2>
           {section.subtitle && (
-            <p className="text-lg text-warm-gray">{section.subtitle}</p>
+            <p className="text-lg text-driftwood">{section.subtitle}</p>
           )}
         </div>
 
-        <div className="bg-terracotta bg-opacity-5 rounded-xl p-6 mb-8 border-l-2 border-terracotta">
-          <p className="text-warm-charcoal leading-relaxed">{section.explainer}</p>
+        <div className="callout mb-8">
+          <p className="text-charcoal leading-relaxed">{section.explainer}</p>
         </div>
 
         <div className="card min-h-[400px] flex flex-col">
           <div className="flex-1 space-y-4 mb-6 overflow-y-auto max-h-96">
             {sectionMessages.length === 0 && (
-              <div className="text-center py-16 text-warm-gray text-sm">
+              <div className="text-center py-16 text-driftwood text-sm">
                 {section.brainDump ? 'List everything that comes to mind...' : 'Share your thoughts below...'}
               </div>
             )}
@@ -1448,9 +1448,9 @@ Keep it warm, specific, and actionable.`;
                 key={idx}
                 className={`${
                   msg.role === 'user'
-                    ? 'message-user ml-12'
-                    : 'message-ai mr-12'
-                } transition-slow`}
+                    ? 'message-user ml-8 sm:ml-12'
+                    : 'message-ai mr-8 sm:mr-12'
+                } transition-medium`}
               >
                 <div className="leading-relaxed whitespace-pre-wrap text-sm">
                   {msg.content}
@@ -1458,11 +1458,11 @@ Keep it warm, specific, and actionable.`;
               </div>
             ))}
             {isLoading && (
-              <div className="message-ai mr-12">
+              <div className="message-ai mr-8 sm:mr-12">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-terracotta rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2 h-2 bg-terracotta rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2 h-2 bg-terracotta rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <div className="w-2 h-2 bg-sage rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 bg-sage rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 bg-sage rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -1484,25 +1484,25 @@ Keep it warm, specific, and actionable.`;
 
           <div className="space-y-3">
             {currentAiResponses >= maxAiResponses && !section.brainDump && (
-              <div className="bg-warm-sand bg-opacity-30 rounded-xl p-3 text-xs text-warm-charcoal flex items-center gap-2">
-                <Check className="w-4 h-4 text-terracotta" />
+              <div className="bg-sage/10 rounded-xl p-3 text-xs text-charcoal flex items-center gap-2">
+                <Check className="w-4 h-4 text-sage" />
                 <span>Add more thoughts or continue when ready</span>
               </div>
             )}
-            <div className="flex gap-3 pt-4 border-t border-warm-sand">
+            <div className="flex gap-3 pt-4 border-t border-sand">
               <input
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder={section.brainDump ? "Type and press Enter (aim for 10+ items)" : "Type your reflection..."}
-                className="flex-1 px-4 py-3 rounded-xl border border-warm-sand focus:outline-none focus:ring-4 focus:ring-terracotta focus:ring-opacity-15 bg-cream text-warm-charcoal placeholder-warm-gray text-sm"
+                className="flex-1 px-4 py-3 rounded-xl border border-sand focus:outline-none focus:ring-sage bg-cream text-charcoal placeholder-driftwood text-sm transition-medium"
                 disabled={isLoading}
               />
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !userInput.trim()}
-                className="bg-terracotta hover:shadow-soft-lg disabled:opacity-30 text-cream p-3 rounded-xl transition-slow shadow-soft"
+                className="bg-sage hover:bg-sage-dark disabled:opacity-30 text-cream p-3 rounded-xl transition-medium shadow-soft"
               >
                 <Send className="w-5 h-5" />
               </button>
@@ -1514,7 +1514,7 @@ Keep it warm, specific, and actionable.`;
           <button
             onClick={prevSection}
             disabled={currentSection <= 0}
-            className="flex items-center gap-2 text-warm-gray hover:text-warm-charcoal disabled:opacity-30 disabled:cursor-not-allowed transition-slow text-sm"
+            className="flex items-center gap-2 text-driftwood hover:text-charcoal disabled:opacity-30 disabled:cursor-not-allowed transition-medium text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
@@ -1522,17 +1522,17 @@ Keep it warm, specific, and actionable.`;
           
           <button
             onClick={resetProgress}
-            className="text-xs text-warm-gray hover:text-warm-charcoal transition-slow"
+            className="text-xs text-driftwood hover:text-charcoal transition-medium"
           >
             Clear My Data
           </button>
         </div>
 
-        <div className="mt-8 text-center text-xs text-warm-gray">
-          <a href="/privacy" className="hover:text-warm-charcoal transition-slow">Privacy Policy</a>
-          {' • '}
-          <a href="/terms" className="hover:text-warm-charcoal transition-slow">Terms of Service</a>
-          {' • '}
+        <div className="mt-8 text-center text-xs text-driftwood">
+          <a href="/privacy" className="hover:text-charcoal transition-medium">Privacy Policy</a>
+          {' - '}
+          <a href="/terms" className="hover:text-charcoal transition-medium">Terms of Service</a>
+          {' - '}
           <span>Your data stays on your device</span>
         </div>
       </div>
