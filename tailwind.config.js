@@ -7,44 +7,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        /* Light foundation */
-        white: '#FFFFFF',
-        snow: '#FAFAFA',
-        mist: '#F5F5F5',
-        silver: '#E5E5E5',
+        /* Warm off-white foundation */
+        cream: '#F5F2ED',
+        linen: '#FAF8F5',
+        paper: '#FFFDF9',
         
-        /* Dark accents */
+        /* Charcoal/neutral accents */
+        charcoal: '#2C2C2C',
         graphite: '#404040',
-        charcoal: '#262626',
-        ink: '#171717',
-        black: '#0A0A0A',
+        ash: '#5C5650',
+        stone: '#8A8A8A',
+        silver: '#D4D4D4',
         
-        /* Torch/flame warmth */
-        ember: '#F59E0B',
-        flame: '#D97706',
-        glow: '#FEF3C7',
-        warmth: '#FFFBEB',
-        
-        /* Neutrals */
-        stone: '#A3A3A3',
-        ash: '#737373',
+        /* Black and white */
+        ink: '#1A1A1A',
+        black: '#000000',
+        white: '#FFFFFF',
+        beam: '#FFFEF8',
       },
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        serif: ['EB Garamond', 'Georgia', 'serif'],
+        sans: ['Nunito Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       fontSize: {
-        'display': ['clamp(2.5rem, 8vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
-        'headline': ['clamp(1.75rem, 5vw, 2.5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'display': ['clamp(2.5rem, 8vw, 4rem)', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
+        'headline': ['clamp(1.75rem, 5vw, 2.25rem)', { lineHeight: '1.2' }],
       },
       borderRadius: {
-        '4xl': '2rem',
-      },
-      transitionDuration: {
-        '400': '400ms',
-      },
-      animation: {
-        'flicker': 'flicker 3s ease-in-out infinite',
-        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
+        'xl': '0.75rem',
+        '2xl': '1rem',
       },
     },
   },

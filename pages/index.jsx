@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, ArrowRight, ArrowLeft, Sparkles, Check, AlertCircle, Download, RefreshCw, Lock, MessageCircle } from 'lucide-react';
-import Torch from '../components/Torch';
+import { Send, ArrowRight, ArrowLeft, Sparkles, Check, AlertCircle, Download, RefreshCw, Lock, MessageCircle, FileText, Eye } from 'lucide-react';
 
 // Journey structure
 const SECTIONS = [
@@ -61,7 +60,8 @@ const SECTIONS = [
     subtitle: 'And what drains you',
     explainer: 'Energy is your compass. Think about work first - what tasks, projects, or situations make you feel alive? But also look beyond work: hobbies, volunteering, daily activities. Are you energized by the process or the outcome? The more specific examples you share, the better we can identify your patterns.',
     aiContext: 'exploring what energizes and drains them across work and life',
-    maxAiResponses: 1
+    maxAiResponses: 2,
+    hasFollowUp: true
   },
   {
     id: 'strengths',
@@ -69,7 +69,8 @@ const SECTIONS = [
     subtitle: 'That you don\'t realize',
     explainer: 'We\'re terrible at seeing our own strengths because they come easily to us. Think about what people ask you for help with. What do you do that others find difficult but you find simple? Share specific examples.',
     aiContext: 'identifying hidden strengths they undervalue',
-    maxAiResponses: 1
+    maxAiResponses: 2,
+    hasFollowUp: true
   },
   {
     id: 'wins',
@@ -77,7 +78,8 @@ const SECTIONS = [
     subtitle: 'Building evidence',
     explainer: 'You\'ve accomplished more than you realize. These don\'t need to be work achievements - raising kids, overcoming challenges, learning new skills, helping others. Think of specific moments you\'re proud of.',
     aiContext: 'building confidence through past accomplishments',
-    maxAiResponses: 1
+    maxAiResponses: 2,
+    hasFollowUp: true
   },
   {
     id: 'unlimited',
@@ -116,6 +118,8 @@ export default function Pathlight() {
   const [synthesisGenerated, setSynthesisGenerated] = useState(false);
   const [synthesisScreen, setSynthesisScreen] = useState(0);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
+  const [pdfDownloading, setPdfDownloading] = useState(false);
+  const [pdfReady, setPdfReady] = useState(false);
   const [consentChecks, setConsentChecks] = useState({
     terms: false,
     age: false,
@@ -344,6 +348,10 @@ export default function Pathlight() {
     try {
       const isLastResponse = currentAiResponses + 1 === maxAiResponses;
       
+      const hasFollowUp = section.hasFollowUp;
+      const isFirstResponse = currentAiResponses === 0;
+      const isSecondResponse = currentAiResponses === 1;
+      
       let systemPrompt = `You are a warm, insightful career coach helping someone discover what truly matters in their work and life.
 
 Current section: "${section.title}" - ${section.aiContext}
@@ -356,50 +364,71 @@ Context about this person:
 
 CRITICAL: This is response ${currentAiResponses + 1} of ${maxAiResponses}.
 
+${hasFollowUp && isFirstResponse ? `
+THIS IS YOUR FIRST RESPONSE - ASK A PROBING FOLLOW-UP QUESTION.
+
+Your role:
+- Acknowledge what they shared briefly (1 sentence)
+- Ask ONE probing follow-up question that digs DEEPER into their answer
+- Focus on the WHY behind what they said
+- Ask for a specific moment or example that illustrates their point
+- Keep your response to 3-4 sentences maximum
+
 ${section.id === 'energy' ? `
-SPECIAL INSTRUCTIONS FOR ENERGY SECTION:
-- Probe for BOTH work examples AND life examples
-- If they only mention work, ask about life (hobbies, volunteering, etc)
-- If they only mention life, ask about work tasks and projects
-- Ask about process vs outcome
-- Push for SPECIFIC examples and details
-- Look for clues about commercial drive (targets, revenue, business outcomes) vs craft/care drive (quality, mastery, helping individuals)
+For ENERGY specifically, probe:
+- If they mentioned an activity, ask: "What specifically about that made you feel alive? Was it the challenge, the people, the result?"
+- If vague, ask: "Can you walk me through a specific day or project where you felt that energy?"
+- Probe the opposite too: "And what's the flip side - what drains you?"
 ` : ''}
 
-${isLastResponse ? `
+${section.id === 'strengths' ? `
+For STRENGTHS specifically, probe:
+- Ask: "When you do that, what do others struggle with that you find easy?"
+- Or: "Can you give me a specific example of when someone came to you for help with this?"
+- Or: "What would someone watching you do this notice that you might not?"
+` : ''}
+
+${section.id === 'wins' ? `
+For WINS specifically, probe:
+- Ask: "What did you have to overcome to achieve that?"
+- Or: "What skills or strengths did that require from you?"
+- Or: "How did you feel in the moment of that win? What made it meaningful?"
+` : ''}
+
+End with something like: "I want to understand this more deeply."
+` : ''}
+
+${hasFollowUp && isSecondResponse ? `
+THIS IS YOUR SECOND (FINAL) RESPONSE - REFLECT AND SUMMARIZE.
+
+Your role:
+- Provide a brief, insightful reflection on what they've shared (2-3 sentences)
+- Use pattern language: "What I'm hearing is..." or "There's a clear theme of..."
+- Reference SPECIFIC things they mentioned from BOTH responses
+- Note any insights about their underlying motivations
+- End warmly: "Feel free to add more thoughts or continue when ready."
+- Do NOT ask more questions
+` : ''}
+
+${!hasFollowUp && isLastResponse ? `
 This is your FINAL response for this section.
 
 Your role:
 - Provide a brief, insightful reflection on what they've shared (2-3 sentences)
-- Use pattern language: "It sounds like..." or "What stands out is..." or "There's a theme of..."
+- Use pattern language: "It sounds like..." or "What stands out is..."
 - Reference SPECIFIC things they mentioned
-- If they mentioned business outcomes/targets/revenue, note: "I'm noticing you're energized by tangible business results"
-- If they mentioned craft/care/helping individuals, note: "I'm hearing you're driven by quality and direct impact on people"
 - End warmly: "Feel free to add more thoughts or continue when ready."
 - Do NOT ask more questions
+` : ''}
 
-Example tone:
-"It sounds like you're energized by work that involves creative problem-solving and direct collaboration with people. The pattern I'm hearing is that you need both intellectual challenge AND human connection. Feel free to add anything else or move forward when you're ready."
-` : `
+${!hasFollowUp && !isLastResponse ? `
 This is your first response.
 
 Your role:
 - Ask ONE focused follow-up question that requests SPECIFIC, DETAILED examples
-- Ask for a particular moment, situation, or day
-- Ask what they were actually DOING (the activities, not just feelings)
-- Ask what SPECIFICALLY made it energizing or draining
 - Keep it to 2-3 sentences maximum
 - End with: "The more specific you are, the better I can identify patterns."
-
-Good examples:
-- "Can you walk me through a specific moment when you felt that energy? What were you actually doing?"
-- "Think about a particular project where you felt really engaged. What were you doing? Was it the conversations, the problem-solving, the creating?"
-- "Tell me about one time when you felt that drain. What was happening? What specifically made it exhausting?"
-
-ALWAYS end with: "The more specific you are, the better I can identify patterns."
-
-Tone: Warm, curious, directive about wanting specifics.
-`}`;
+` : ''}`;
 
       const response = await fetch('/api/claude', {
         method: 'POST',
@@ -486,12 +515,11 @@ FORMAT AS MARKDOWN with clear headers.
 
 ## Your Profile
 
-Write a 250-word narrative that captures:
-- What energizes them (specific activities and outcomes)
-- Their core strengths they couldn't see
-- What they've proven they can do
-- Their drive orientation (if clear): "I'm noticing you're energized by [tangible business outcomes/mastering your craft/directly helping people]..."
-- "You're not stuck - you're standing at a crossroads with more options than you realize."
+Write a 200-word narrative (max) that captures:
+- What energizes them (specific activities)
+- Their core strengths
+- Their drive orientation if clear
+- End with encouragement
 
 ## Your Signature Strengths
 
@@ -635,6 +663,42 @@ Keep it warm, specific, and actionable.`;
     }
   };
 
+  const downloadPDF = async () => {
+    const synthesisContent = conversations.synthesis?.[0]?.content;
+    if (!synthesisContent) {
+      alert('No report content found. Please generate your report first.');
+      return;
+    }
+
+    setPdfDownloading(true);
+    
+    try {
+      const response = await fetch('/api/generate-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ synthesisContent })
+      });
+
+      if (!response.ok) throw new Error('PDF generation failed');
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pathlight-career-report.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      setPdfReady(true);
+    } catch (error) {
+      console.error('PDF download error:', error);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      setPdfDownloading(false);
+    }
+  };
+
   if (loadingStorage) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
@@ -646,35 +710,45 @@ Keep it warm, specific, and actionable.`;
     );
   }
 
-  // INTRO - PAGE 0: Landing with animated torch
+  // INTRO - PAGE 0: Flashlight landing on black
   if (section.type === 'intro' && introPage === 0) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 py-16">
-        <div className="max-w-2xl w-full text-center fade-in-up">
-          {/* Animated torch */}
-          <div className="flex justify-center mb-12">
-            <Torch size={100} />
+      <div className="landing-dark">
+        <div className="text-center">
+          {/* Flashlight beam with flicker animation */}
+          <div className="relative">
+            {/* Beam glow behind text */}
+            <div 
+              className="absolute inset-0 flicker-on"
+              style={{
+                background: 'radial-gradient(ellipse 300px 200px at center, rgba(255,254,248,0.08) 0%, transparent 70%)',
+                filter: 'blur(40px)',
+              }}
+            />
+            
+            {/* Pathlight wordmark */}
+            <h1 
+              className="font-serif text-5xl md:text-7xl lg:text-8xl text-beam flicker-on beam-glow relative z-10"
+              style={{ fontWeight: 400 }}
+            >
+              Pathlight
+            </h1>
           </div>
           
-          {/* Brand */}
-          <h1 className="text-display text-ink tracking-tight mb-6">
-            Pathlight
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-graphite leading-relaxed mb-12 max-w-lg mx-auto">
-            Find clarity in your career. Discover what makes you come alive.
+          {/* Tagline and button fade in after flicker stabilizes */}
+          <p className="text-stone text-lg md:text-xl mt-8 fade-in-delayed font-light">
+            Find clarity in your career
           </p>
           
           <button
             onClick={() => setIntroPage(1)}
-            className="btn-ember inline-flex items-center gap-3"
+            className="mt-12 fade-in-delayed bg-transparent border border-stone/50 text-beam px-8 py-3 rounded hover:bg-beam/10 hover:border-beam/50 transition-all font-sans font-light tracking-wide"
           >
             Begin
-            <ArrowRight className="w-5 h-5" />
           </button>
           
-          <p className="mt-8 text-sm text-stone">
-            15 minutes. Your data stays on your device.
+          <p className="mt-6 text-stone/60 text-sm fade-in-delayed font-light">
+            15 minutes. Private.
           </p>
         </div>
       </div>
@@ -684,26 +758,26 @@ Keep it warm, specific, and actionable.`;
   // INTRO - PAGE 1: The problem - direct, warm
   if (section.type === 'intro' && introPage === 1) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+      <div className="min-h-screen bg-cream flex items-center justify-center px-6 py-16">
         <div className="max-w-xl w-full fade-in-up">
-          <h2 className="text-headline text-ink tracking-tight mb-10 text-balance">
+          <h2 className="font-serif text-3xl md:text-4xl text-ink mb-10 text-balance">
             You're here because something isn't quite right.
           </h2>
           
-          <div className="space-y-6 text-lg text-graphite leading-relaxed stagger-children">
+          <div className="space-y-5 text-lg text-graphite leading-relaxed font-light stagger-children">
             <p>Maybe you feel stuck in a role that doesn't fit anymore.</p>
             <p>Maybe you lack direction.</p>
             <p>Maybe you're ready for something bigger but don't know what.</p>
           </div>
           
-          <p className="mt-10 text-lg text-ink font-medium">
+          <p className="mt-10 text-lg text-ink">
             That's okay. You're in the right place.
           </p>
 
           <div className="flex items-center justify-between mt-12 pt-8 border-t border-silver">
             <button
               onClick={() => setIntroPage(0)}
-              className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
+              className="flex items-center gap-2 text-stone hover:text-ink transition-colors font-light"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="text-sm">Back</span>
@@ -724,13 +798,13 @@ Keep it warm, specific, and actionable.`;
   // INTRO - PAGE 2: What you'll discover
   if (section.type === 'intro' && introPage === 2) {
     return (
-      <div className="min-h-screen bg-mist flex items-center justify-center px-6 py-16">
+      <div className="min-h-screen bg-linen flex items-center justify-center px-6 py-16">
         <div className="max-w-xl w-full fade-in-up">
-          <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-6">
+          <p className="text-xs tracking-widest uppercase text-ash mb-6 font-medium">
             In 15 minutes
           </p>
           
-          <h2 className="text-headline text-ink tracking-tight mb-12">
+          <h2 className="font-serif text-3xl md:text-4xl text-ink mb-12">
             What you'll discover
           </h2>
           
@@ -741,10 +815,10 @@ Keep it warm, specific, and actionable.`;
               'Career paths that align with how you work best'
             ].map((text, idx) => (
               <div key={idx} className="flex items-start gap-4 py-5 border-b border-silver last:border-0">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-ink text-white text-sm font-semibold flex items-center justify-center">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-charcoal text-cream text-sm font-medium flex items-center justify-center">
                   {idx + 1}
                 </span>
-                <p className="text-lg text-graphite pt-1">{text}</p>
+                <p className="text-lg text-graphite pt-1 font-light">{text}</p>
               </div>
             ))}
           </div>
@@ -752,7 +826,7 @@ Keep it warm, specific, and actionable.`;
           <div className="flex items-center justify-between mt-12">
             <button
               onClick={() => setIntroPage(1)}
-              className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
+              className="flex items-center gap-2 text-stone hover:text-ink transition-colors font-light"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="text-sm">Back</span>
@@ -775,37 +849,37 @@ Keep it warm, specific, and actionable.`;
     const canProceed = consentChecks.terms && consentChecks.age && consentChecks.data;
 
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+      <div className="min-h-screen bg-cream flex items-center justify-center px-6 py-16">
         <div className="max-w-lg w-full fade-in-up">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-full bg-mist flex items-center justify-center">
-              <Lock className="w-5 h-5 text-graphite" />
+            <div className="w-10 h-10 rounded-full bg-linen flex items-center justify-center border border-silver">
+              <Lock className="w-5 h-5 text-ash" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-ink">Before we begin</h1>
-              <p className="text-sm text-stone">Your privacy is protected</p>
+              <h1 className="font-serif text-xl text-ink">Before we begin</h1>
+              <p className="text-sm text-stone font-light">Your privacy is protected</p>
             </div>
           </div>
 
-          <div className="bg-mist rounded-2xl p-6 mb-8">
-            <p className="text-sm text-graphite leading-relaxed">
+          <div className="bg-linen rounded-xl p-5 mb-8 border border-silver">
+            <p className="text-sm text-graphite leading-relaxed font-light">
               Your data stays on your device. Responses are processed by AI to generate insights. 
               We don't store your information on our servers.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {[
               { key: 'terms', text: 'I understand this is a self-reflection tool, not professional career advice' },
               { key: 'age', text: 'I am 18 years of age or older' },
               { key: 'data', text: 'I understand my responses will be processed by AI' }
             ].map((item) => (
-              <label key={item.key} className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl border border-silver hover:border-stone transition-colors">
+              <label key={item.key} className="flex items-start gap-4 cursor-pointer group p-4 rounded-lg border border-silver hover:border-ash transition-colors bg-paper">
                 <div className="pt-0.5">
-                  <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                    consentChecks[item.key] ? 'bg-ink border-ink' : 'border-silver'
+                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                    consentChecks[item.key] ? 'bg-charcoal border-charcoal' : 'border-silver bg-white'
                   }`}>
-                    {consentChecks[item.key] && <Check className="w-3 h-3 text-white" />}
+                    {consentChecks[item.key] && <Check className="w-3 h-3 text-cream" />}
                   </div>
                   <input
                     type="checkbox"
@@ -814,7 +888,7 @@ Keep it warm, specific, and actionable.`;
                     className="sr-only"
                   />
                 </div>
-                <span className="text-sm text-graphite leading-relaxed">{item.text}</span>
+                <span className="text-sm text-graphite leading-relaxed font-light">{item.text}</span>
               </label>
             ))}
           </div>
@@ -823,7 +897,7 @@ Keep it warm, specific, and actionable.`;
             <button
               onClick={nextSection}
               disabled={!canProceed}
-              className={`w-full py-4 px-6 rounded-full font-medium transition-all ${
+              className={`w-full py-4 px-6 rounded-lg font-medium transition-all ${
                 canProceed
                   ? 'btn-primary'
                   : 'bg-silver text-stone cursor-not-allowed'
@@ -831,8 +905,8 @@ Keep it warm, specific, and actionable.`;
             >
               {canProceed ? 'Continue' : 'Please agree to all items'}
             </button>
-            <p className="text-xs text-stone text-center mt-4">
-              See our <a href="/privacy" className="text-graphite hover:underline">Privacy Policy</a>
+            <p className="text-xs text-stone text-center mt-4 font-light">
+              See our <a href="/privacy" className="text-ash hover:underline">Privacy Policy</a>
             </p>
           </div>
         </div>
@@ -840,23 +914,23 @@ Keep it warm, specific, and actionable.`;
     );
   }
 
-  // SCREENER - One question at a time feel
+  // SCREENER
   if (section.type === 'screener') {
     const allAnswered = section.questions.every(q => screenerAnswers[q.id]);
     const answeredCount = section.questions.filter(q => screenerAnswers[q.id]).length;
     
     return (
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-cream flex flex-col">
         {/* Progress header */}
         <header className="px-6 py-4 flex items-center justify-between border-b border-silver">
-          <span className="text-sm font-semibold text-ink tracking-tight">Pathlight</span>
+          <span className="font-serif text-lg text-ink">Pathlight</span>
           <div className="flex items-center gap-4">
-            <span className="text-xs text-stone font-medium">
+            <span className="text-xs text-stone font-light">
               {answeredCount}/{section.questions.length}
             </span>
-            <div className="w-16 h-1.5 bg-mist rounded-full overflow-hidden">
+            <div className="w-16 h-1 bg-silver rounded-full overflow-hidden">
               <div 
-                className="h-full bg-ember rounded-full transition-all duration-500"
+                className="h-full bg-charcoal rounded-full transition-all duration-500"
                 style={{ width: `${(answeredCount / section.questions.length) * 100}%` }}
               />
             </div>
@@ -867,16 +941,16 @@ Keep it warm, specific, and actionable.`;
           <div className="max-w-xl w-full space-y-12 stagger-children">
             {section.questions.map((q, idx) => (
               <div key={q.id} className="text-center">
-                <h3 className="text-xl lg:text-2xl font-semibold text-ink tracking-tight mb-6">{q.question}</h3>
+                <h3 className="font-serif text-xl lg:text-2xl text-ink mb-6">{q.question}</h3>
                 <div className="flex flex-wrap justify-center gap-2">
                   {q.options.map(option => (
                     <button
                       key={option}
                       onClick={() => handleScreenerAnswer(q.id, option)}
-                      className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                      className={`px-5 py-2.5 rounded-lg text-sm font-light transition-all ${
                         screenerAnswers[q.id] === option
-                          ? 'bg-ink text-white'
-                          : 'bg-mist hover:bg-silver text-graphite'
+                          ? 'bg-charcoal text-cream'
+                          : 'bg-linen hover:bg-silver text-graphite border border-silver'
                       }`}
                     >
                       {option}
@@ -911,21 +985,19 @@ Keep it warm, specific, and actionable.`;
     // Not generated yet
     if (!synthesisContent) {
       return (
-        <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+        <div className="min-h-screen bg-cream flex items-center justify-center px-6 py-16">
           <div className="max-w-md w-full text-center fade-in-up">
-            <div className="flex justify-center mb-8">
-              <Torch size={80} />
-            </div>
-            <h2 className="text-headline text-ink tracking-tight mb-4">
+            <Sparkles className="w-12 h-12 text-ash mx-auto mb-6" />
+            <h2 className="font-serif text-3xl text-ink mb-4">
               Ready for your results
             </h2>
-            <p className="text-graphite mb-10">
-              We'll analyze your responses to identify your strengths, suggest paths, and give you next steps.
+            <p className="text-graphite mb-10 font-light">
+              We'll analyze your responses to generate your personalized report.
             </p>
             <button
               onClick={generateSynthesis}
               disabled={isLoading}
-              className="btn-ember inline-flex items-center gap-3 w-full justify-center"
+              className="btn-primary inline-flex items-center gap-3 w-full justify-center"
             >
               {isLoading ? (
                 <>
@@ -950,26 +1022,22 @@ Keep it warm, specific, and actionable.`;
     // Profile screen
     if (synthesisScreen === 0 && parsedData) {
       return (
-        <div className="min-h-screen bg-white px-6 py-12">
+        <div className="min-h-screen bg-cream px-6 py-12">
           <div className="max-w-2xl mx-auto fade-in-up">
-            <div className="bg-glow rounded-xl p-4 mb-8 text-sm text-graphite">
-              <strong>Note:</strong> These insights are AI-generated to help you reflect. Use them as a starting point.
+            <div className="bg-linen rounded-lg p-4 mb-8 text-sm text-graphite border border-silver font-light">
+              These insights are AI-generated to help you reflect. Use them as a starting point.
             </div>
 
-            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Your Profile</p>
-            <h2 className="text-headline text-ink tracking-tight mb-8">
+            <p className="text-xs tracking-widest uppercase text-ash mb-4 font-medium">Your Profile</p>
+            <h2 className="font-serif text-3xl text-ink mb-8">
               Here's what we see in you
             </h2>
 
-            <div className="text-lg text-graphite leading-relaxed space-y-4 mb-10">
+            <div className="text-lg text-graphite leading-relaxed space-y-4 mb-10 font-light">
               {parsedData.profile.split('\n').map((para, idx) => (
                 <p key={idx}>{para}</p>
               ))}
             </div>
-
-            <p className="text-xl text-ink font-semibold mb-8">
-              You're not stuck. You're at a crossroads with more options than you realize.
-            </p>
 
             <button
               onClick={() => setSynthesisScreen(1)}
@@ -983,37 +1051,26 @@ Keep it warm, specific, and actionable.`;
       );
     }
 
-    // Signature Strengths - FREE PREVIEW
+    // Signature Strengths - FREE PREVIEW (1 teaser)
     if (synthesisScreen === 1 && parsedData?.superpowers) {
       return (
-        <div className="min-h-screen bg-white px-6 py-12">
+        <div className="min-h-screen bg-cream px-6 py-12">
           <div className="max-w-2xl mx-auto fade-in-up">
-            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Signature Strengths</p>
-            <h2 className="text-headline text-ink tracking-tight mb-3">
+            <p className="text-xs tracking-widest uppercase text-ash mb-4 font-medium">Signature Strengths</p>
+            <h2 className="font-serif text-3xl text-ink mb-3">
               What you've been bringing to the table
             </h2>
-            <p className="text-graphite mb-10">Strengths you likely undervalue because they come naturally.</p>
+            <p className="text-graphite mb-10 font-light">Strengths you likely undervalue because they come naturally.</p>
 
-            {/* First strength - unlocked */}
-            <div className="bg-glow border border-ember/30 rounded-2xl p-6 mb-6">
+            {/* First strength - unlocked teaser */}
+            <div className="bg-paper border border-silver rounded-xl p-6 mb-6">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-ember text-white font-semibold flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-charcoal text-cream font-medium flex items-center justify-center">
                   1
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-ink mb-2">{parsedData.superpowers[0].name}</h3>
-                  <p className="text-graphite leading-relaxed mb-4">{parsedData.superpowers[0].description}</p>
-                  <details className="group">
-                    <summary className="cursor-pointer text-ember font-medium list-none flex items-center gap-2">
-                      How to use this
-                      <ArrowRight className="w-4 h-4 group-open:rotate-90 transition-transform" />
-                    </summary>
-                    <div className="mt-4 text-graphite text-sm leading-relaxed space-y-2">
-                      {parsedData.superpowers[0].howTo.split('\n').filter(l => l.trim()).map((line, i) => (
-                        <p key={i}>{line.replace(/^-\s*/, '').replace(/\*\*/g, '')}</p>
-                      ))}
-                    </div>
-                  </details>
+                  <h3 className="font-serif text-xl text-ink mb-2">{parsedData.superpowers[0].name}</h3>
+                  <p className="text-graphite leading-relaxed font-light">{parsedData.superpowers[0].description}</p>
                 </div>
               </div>
             </div>
@@ -1021,19 +1078,19 @@ Keep it warm, specific, and actionable.`;
             {/* Remaining strengths - locked */}
             {parsedData.superpowers.slice(1, 4).map((power, idx) => (
               <div key={idx} className="relative mb-4">
-                <div className="bg-mist rounded-2xl p-6 opacity-50 blur-[2px]">
+                <div className="bg-linen rounded-xl p-6 opacity-40 blur-[2px]">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-silver" />
                     <div>
-                      <h3 className="text-xl font-semibold text-ink mb-2">{power.name}</h3>
-                      <p className="text-graphite">{power.description.substring(0, 80)}...</p>
+                      <h3 className="font-serif text-xl text-ink mb-2">{power.name}</h3>
+                      <p className="text-graphite font-light">{power.description.substring(0, 60)}...</p>
                     </div>
                   </div>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-white rounded-lg px-4 py-2 shadow-lg flex items-center gap-2">
+                  <div className="bg-paper rounded-lg px-4 py-2 shadow-md flex items-center gap-2 border border-silver">
                     <Lock className="w-4 h-4 text-stone" />
-                    <span className="text-sm font-medium text-graphite">Locked</span>
+                    <span className="text-sm text-graphite">Locked</span>
                   </div>
                 </div>
               </div>
@@ -1041,30 +1098,73 @@ Keep it warm, specific, and actionable.`;
 
             {/* Payment wall */}
             {!paymentCompleted && (
-              <div className="bg-ink text-white rounded-2xl p-8 text-center mt-10">
-                <h3 className="text-2xl font-semibold mb-3">Unlock Your Complete Report</h3>
-                <p className="text-white/80 mb-6 max-w-md mx-auto">
-                  All 4 strengths, deal-breakers, role territories, and your concrete next steps.
+              <div className="bg-charcoal text-cream rounded-xl p-8 text-center mt-10">
+                <FileText className="w-10 h-10 mx-auto mb-4 text-cream/80" />
+                <h3 className="font-serif text-2xl mb-3">Unlock Your Full PDF Report</h3>
+                <p className="text-cream/70 mb-6 max-w-md mx-auto font-light">
+                  All 4 strengths with action guides, deal-breakers, role territories, and next steps. Download instantly.
                 </p>
+                
+                {/* See example button */}
+                <a
+                  href="/example-report"
+                  target="_blank"
+                  className="mb-6 text-cream/70 hover:text-cream underline text-sm inline-flex items-center gap-2 mx-auto font-light"
+                >
+                  <Eye className="w-4 h-4" />
+                  See example report
+                </a>
+                
                 <div className="mb-6">
-                  <span className="text-4xl font-bold">$39</span>
-                  <span className="text-white/60 ml-1">AUD</span>
+                  <span className="text-4xl font-serif">$39</span>
+                  <span className="text-cream/60 ml-1">AUD</span>
                 </div>
                 <button
                   onClick={handlePayment}
-                  className="btn-ember inline-flex items-center gap-2"
+                  className="bg-cream text-charcoal px-8 py-3 rounded-lg font-medium hover:bg-paper transition-colors inline-flex items-center gap-2"
                 >
                   Unlock Full Report
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <p className="text-xs text-white/50 mt-4">Secure payment via Stripe</p>
+                <p className="text-xs text-cream/50 mt-4 font-light">Secure payment via Stripe. Instant PDF download.</p>
+              </div>
+            )}
+
+            {/* PDF Download button after payment */}
+            {paymentCompleted && (
+              <div className="bg-paper border border-charcoal rounded-xl p-6 text-center mt-10">
+                <FileText className="w-10 h-10 mx-auto mb-4 text-charcoal" />
+                <h3 className="font-serif text-xl mb-2">Your Report is Ready</h3>
+                <p className="text-graphite mb-6 font-light text-sm">
+                  Download your full PDF report with all insights.
+                </p>
+                <button
+                  onClick={downloadPDF}
+                  disabled={pdfDownloading}
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  {pdfDownloading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-cream border-t-transparent rounded-full animate-spin" />
+                      Generating PDF...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-5 h-5" />
+                      Download PDF Report
+                    </>
+                  )}
+                </button>
+                {pdfReady && (
+                  <p className="mt-3 text-sm text-ash">PDF downloaded successfully.</p>
+                )}
               </div>
             )}
 
             <div className="flex gap-4 justify-between mt-10 pt-6 border-t border-silver">
               <button
                 onClick={() => setSynthesisScreen(0)}
-                className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
+                className="flex items-center gap-2 text-stone hover:text-ink transition-colors font-light"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back
@@ -1074,7 +1174,7 @@ Keep it warm, specific, and actionable.`;
                   onClick={() => setSynthesisScreen(2)}
                   className="btn-primary inline-flex items-center gap-2"
                 >
-                  See Deal-Breakers
+                  Continue Reading
                   <ArrowRight className="w-5 h-5" />
                 </button>
               )}
@@ -1087,22 +1187,22 @@ Keep it warm, specific, and actionable.`;
     // Deal-Breakers (paid only)
     if (synthesisScreen === 2 && parsedData?.dealbreakers && paymentCompleted) {
       return (
-        <div className="min-h-screen bg-white px-6 py-12">
+        <div className="min-h-screen bg-cream px-6 py-12">
           <div className="max-w-2xl mx-auto fade-in-up">
-            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Deal-Breakers</p>
-            <h2 className="text-headline text-ink tracking-tight mb-3">
+            <p className="text-xs tracking-widest uppercase text-ash mb-4 font-medium">Deal-Breakers</p>
+            <h2 className="font-serif text-3xl text-ink mb-3">
               What doesn't work for you
             </h2>
-            <p className="text-graphite mb-8">Use this list when evaluating opportunities.</p>
+            <p className="text-graphite mb-8 font-light">Use this list when evaluating opportunities.</p>
 
             <div className="space-y-4">
               {parsedData.dealbreakers.work.length > 0 && (
-                <div className="border border-silver rounded-xl p-5">
-                  <h3 className="font-semibold text-ink mb-3">About the work</h3>
-                  <ul className="space-y-2 text-graphite text-sm">
+                <div className="bg-paper border border-silver rounded-lg p-5">
+                  <h3 className="font-serif text-lg text-ink mb-3">About the work</h3>
+                  <ul className="space-y-2 text-graphite text-sm font-light">
                     {parsedData.dealbreakers.work.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-ember mt-0.5">-</span>
+                        <span className="text-ash mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1111,12 +1211,12 @@ Keep it warm, specific, and actionable.`;
               )}
 
               {parsedData.dealbreakers.job.length > 0 && (
-                <div className="border border-silver rounded-xl p-5">
-                  <h3 className="font-semibold text-ink mb-3">What comes with the job</h3>
-                  <ul className="space-y-2 text-graphite text-sm">
+                <div className="bg-paper border border-silver rounded-lg p-5">
+                  <h3 className="font-serif text-lg text-ink mb-3">What comes with the job</h3>
+                  <ul className="space-y-2 text-graphite text-sm font-light">
                     {parsedData.dealbreakers.job.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-ember mt-0.5">-</span>
+                        <span className="text-ash mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1125,12 +1225,12 @@ Keep it warm, specific, and actionable.`;
               )}
 
               {parsedData.dealbreakers.leadership.length > 0 && (
-                <div className="border border-silver rounded-xl p-5">
-                  <h3 className="font-semibold text-ink mb-3">About leadership</h3>
-                  <ul className="space-y-2 text-graphite text-sm">
+                <div className="bg-paper border border-silver rounded-lg p-5">
+                  <h3 className="font-serif text-lg text-ink mb-3">About leadership</h3>
+                  <ul className="space-y-2 text-graphite text-sm font-light">
                     {parsedData.dealbreakers.leadership.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-ember mt-0.5">-</span>
+                        <span className="text-ash mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1139,12 +1239,12 @@ Keep it warm, specific, and actionable.`;
               )}
 
               {parsedData.dealbreakers.environment.length > 0 && (
-                <div className="border border-silver rounded-xl p-5">
-                  <h3 className="font-semibold text-ink mb-3">About the environment</h3>
-                  <ul className="space-y-2 text-graphite text-sm">
+                <div className="bg-paper border border-silver rounded-lg p-5">
+                  <h3 className="font-serif text-lg text-ink mb-3">About the environment</h3>
+                  <ul className="space-y-2 text-graphite text-sm font-light">
                     {parsedData.dealbreakers.environment.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-ember mt-0.5">-</span>
+                        <span className="text-ash mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1177,31 +1277,31 @@ Keep it warm, specific, and actionable.`;
     // Role Territories (paid only)
     if (synthesisScreen === 3 && parsedData?.territories && paymentCompleted) {
       return (
-        <div className="min-h-screen bg-white px-6 py-12">
+        <div className="min-h-screen bg-cream px-6 py-12">
           <div className="max-w-2xl mx-auto fade-in-up">
-            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Role Territories</p>
-            <h2 className="text-headline text-ink tracking-tight mb-3">
+            <p className="text-xs tracking-widest uppercase text-ash mb-4 font-medium">Role Territories</p>
+            <h2 className="font-serif text-3xl text-ink mb-3">
               Paths to explore
             </h2>
-            <p className="text-graphite mb-8">These are directions, not prescriptions. Tap to expand.</p>
+            <p className="text-graphite mb-8 font-light">These are directions, not prescriptions. Tap to expand.</p>
 
             <div className="space-y-3">
               {parsedData.territories.map((territory, idx) => (
-                <details key={idx} className="group border border-silver rounded-xl overflow-hidden">
-                  <summary className="cursor-pointer p-5 list-none hover:bg-mist transition-colors">
+                <details key={idx} className="group bg-paper border border-silver rounded-lg overflow-hidden">
+                  <summary className="cursor-pointer p-5 list-none hover:bg-linen transition-colors">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-ink">{territory.name}</h3>
+                      <h3 className="font-serif text-lg text-ink">{territory.name}</h3>
                       <ArrowRight className="w-5 h-5 text-stone group-open:rotate-90 transition-transform" />
                     </div>
                   </summary>
-                  <div className="px-5 pb-5 text-graphite text-sm leading-relaxed border-t border-silver pt-4">
+                  <div className="px-5 pb-5 text-graphite text-sm leading-relaxed border-t border-silver pt-4 font-light">
                     {territory.content}
                   </div>
                 </details>
               ))}
             </div>
 
-            <p className="text-center text-graphite mt-10">
+            <p className="text-center text-ash mt-10 font-light">
               You're not limited by your current industry.
             </p>
 
@@ -1229,42 +1329,68 @@ Keep it warm, specific, and actionable.`;
     // Next Steps (paid only)
     if (synthesisScreen === 4 && parsedData?.nextSteps && paymentCompleted) {
       return (
-        <div className="min-h-screen bg-white px-6 py-12">
+        <div className="min-h-screen bg-cream px-6 py-12">
           <div className="max-w-2xl mx-auto fade-in-up">
-            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Next Steps</p>
-            <h2 className="text-headline text-ink tracking-tight mb-3">
+            <p className="text-xs tracking-widest uppercase text-ash mb-4 font-medium">Next Steps</p>
+            <h2 className="font-serif text-3xl text-ink mb-3">
               Your path forward
             </h2>
-            <p className="text-graphite mb-10">You can actually do this.</p>
+            <p className="text-graphite mb-10 font-light">You can actually do this.</p>
 
             <div className="space-y-4">
               {parsedData.nextSteps.map((step, idx) => (
-                <div key={idx} className="border border-silver rounded-xl p-5">
+                <div key={idx} className="bg-paper border border-silver rounded-lg p-5">
                   <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-ember text-white font-semibold flex items-center justify-center">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-charcoal text-cream font-medium flex items-center justify-center">
                       {idx + 1}
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-ink mb-1">{step.timeframe}</h3>
-                      <p className="text-graphite leading-relaxed">{step.action}</p>
+                      <h3 className="font-serif text-lg text-ink mb-1">{step.timeframe}</h3>
+                      <p className="text-graphite leading-relaxed font-light">{step.action}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
+            {/* PDF Download */}
+            <div className="bg-paper border border-charcoal rounded-xl p-6 text-center mt-10">
+              <FileText className="w-10 h-10 mx-auto mb-4 text-charcoal" />
+              <h3 className="font-serif text-xl mb-2">Download Your Report</h3>
+              <p className="text-graphite mb-4 font-light text-sm">
+                Keep your full report for reference.
+              </p>
+              <button
+                onClick={downloadPDF}
+                disabled={pdfDownloading}
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                {pdfDownloading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-cream border-t-transparent rounded-full animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-5 h-5" />
+                    Download PDF
+                  </>
+                )}
+              </button>
+            </div>
+
             {/* Feedback CTA */}
-            <div className="bg-glow border border-ember/20 rounded-2xl p-6 text-center mt-10">
-              <Sparkles className="w-8 h-8 text-ember mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-ink mb-2">Help improve Pathlight</h3>
-              <p className="text-graphite text-sm mb-4">
+            <div className="bg-linen border border-silver rounded-xl p-6 text-center mt-6">
+              <Sparkles className="w-8 h-8 text-ash mx-auto mb-3" />
+              <h3 className="font-serif text-lg text-ink mb-2">Help improve Pathlight</h3>
+              <p className="text-graphite text-sm mb-4 font-light">
                 You completed the beta! Your feedback makes this better.
               </p>
               <a
                 href="https://forms.gle/fUaxKWAMbQZdbXNk7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-block"
+                className="btn-secondary inline-block"
               >
                 Take 2-Min Survey
               </a>
@@ -1273,7 +1399,7 @@ Keep it warm, specific, and actionable.`;
             <div className="flex justify-start mt-10 pt-6 border-t border-silver">
               <button
                 onClick={() => setSynthesisScreen(3)}
-                className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
+                className="flex items-center gap-2 text-stone hover:text-ink transition-colors font-light"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back
@@ -1285,19 +1411,19 @@ Keep it warm, specific, and actionable.`;
     }
   }
 
-  // REGULAR JOURNEY SECTION - Clean, focused
+  // REGULAR JOURNEY SECTION
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-cream flex flex-col">
       {/* Minimal header */}
       <header className="px-6 py-4 flex items-center justify-between border-b border-silver">
-        <span className="text-sm font-semibold text-ink tracking-tight">Pathlight</span>
+        <span className="font-serif text-lg text-ink">Pathlight</span>
         <div className="flex items-center gap-4">
-          <span className="text-xs text-stone font-medium">
+          <span className="text-xs text-stone font-light">
             {currentSection}/{SECTIONS.length - 1}
           </span>
-          <div className="w-20 h-1.5 bg-mist rounded-full overflow-hidden">
+          <div className="w-20 h-1 bg-silver rounded-full overflow-hidden">
             <div 
-              className="h-full bg-ember rounded-full transition-all duration-500"
+              className="h-full bg-charcoal rounded-full transition-all duration-500"
               style={{ width: `${(currentSection / (SECTIONS.length - 1)) * 100}%` }}
             />
           </div>
@@ -1306,20 +1432,20 @@ Keep it warm, specific, and actionable.`;
 
       {/* Main content */}
       <div className="flex-1 flex flex-col">
-        {/* Context - collapsible on mobile */}
-        <div className="bg-mist px-6 py-6 lg:py-8 border-b border-silver">
+        {/* Context */}
+        <div className="bg-linen px-6 py-6 lg:py-8 border-b border-silver">
           <div className="max-w-2xl mx-auto">
-            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-3">
+            <p className="text-xs tracking-widest uppercase text-ash mb-3 font-medium">
               {section.subtitle || 'Reflection'}
             </p>
-            <h1 className="text-2xl lg:text-3xl font-semibold text-ink tracking-tight mb-4">
+            <h1 className="font-serif text-2xl lg:text-3xl text-ink mb-4">
               {section.title}
             </h1>
-            <p className="text-graphite leading-relaxed">
+            <p className="text-graphite leading-relaxed font-light">
               {section.explainer}
             </p>
             {section.brainDump && (
-              <p className="mt-3 text-sm text-stone">
+              <p className="mt-3 text-sm text-stone font-light">
                 Tip: Aim for 10+ items. Press Enter after each one.
               </p>
             )}
@@ -1331,13 +1457,13 @@ Keep it warm, specific, and actionable.`;
           <div className="max-w-2xl mx-auto space-y-4">
             {sectionMessages.length === 0 ? (
               <div className="flex flex-col items-center justify-center min-h-[40vh] text-center">
-                <div className="w-14 h-14 rounded-full bg-mist flex items-center justify-center mb-5">
-                  <MessageCircle className="w-6 h-6 text-stone" />
+                <div className="w-14 h-14 rounded-full bg-linen flex items-center justify-center mb-5 border border-silver">
+                  <MessageCircle className="w-6 h-6 text-ash" />
                 </div>
-                <h3 className="text-lg font-semibold text-ink mb-2">
+                <h3 className="font-serif text-lg text-ink mb-2">
                   {section.brainDump ? 'Start listing' : 'Share your thoughts'}
                 </h3>
-                <p className="text-stone max-w-sm">
+                <p className="text-stone max-w-sm font-light">
                   {section.brainDump 
                     ? 'One item at a time. No wrong answers.'
                     : 'Write naturally. Take your time.'}
@@ -1374,17 +1500,17 @@ Keep it warm, specific, and actionable.`;
         </div>
 
         {/* Input area */}
-        <div className="border-t border-silver bg-white p-4 lg:p-6">
+        <div className="border-t border-silver bg-paper p-4 lg:p-6">
           <div className="max-w-2xl mx-auto">
             {sectionMessages.length > 0 && (currentAiResponses >= maxAiResponses || section.brainDump) && (
-              <div className="mb-4 flex items-center justify-between bg-glow rounded-xl px-5 py-3">
-                <div className="flex items-center gap-2 text-sm text-graphite">
-                  <Check className="w-4 h-4 text-ember" />
+              <div className="mb-4 flex items-center justify-between bg-linen rounded-lg px-5 py-3 border border-silver">
+                <div className="flex items-center gap-2 text-sm text-graphite font-light">
+                  <Check className="w-4 h-4 text-charcoal" />
                   <span>Ready to continue</span>
                 </div>
                 <button
                   onClick={nextSection}
-                  className="flex items-center gap-2 bg-ink hover:bg-charcoal text-white px-5 py-2.5 rounded-full font-medium text-sm transition-all"
+                  className="flex items-center gap-2 bg-charcoal hover:bg-ink text-cream px-5 py-2.5 rounded-lg font-medium text-sm transition-all"
                 >
                   Continue
                   <ArrowRight className="w-4 h-4" />
@@ -1405,7 +1531,7 @@ Keep it warm, specific, and actionable.`;
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !userInput.trim()}
-                className="bg-ink hover:bg-charcoal disabled:bg-silver disabled:text-stone text-white px-5 rounded-xl transition-all flex items-center justify-center"
+                className="bg-charcoal hover:bg-ink disabled:bg-silver disabled:text-stone text-cream px-5 rounded-lg transition-all flex items-center justify-center"
                 aria-label="Send"
               >
                 <Send className="w-5 h-5" />
@@ -1416,7 +1542,7 @@ Keep it warm, specific, and actionable.`;
       </div>
 
       {/* Footer */}
-      <footer className="px-6 py-3 border-t border-silver flex items-center justify-between text-xs text-stone">
+      <footer className="px-6 py-3 border-t border-silver flex items-center justify-between text-xs text-stone font-light">
         <button
           onClick={prevSection}
           disabled={currentSection <= 0}
