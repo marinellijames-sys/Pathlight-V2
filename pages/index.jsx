@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, ArrowRight, ArrowLeft, Sparkles, Sun, Check, AlertCircle, Download, RefreshCw, Lock, MessageCircle } from 'lucide-react';
+import { Send, ArrowRight, ArrowLeft, Sparkles, Check, AlertCircle, Download, RefreshCw, Lock, MessageCircle } from 'lucide-react';
+import Torch from '../components/Torch';
 
 // Journey structure
 const SECTIONS = [
@@ -645,86 +646,74 @@ Keep it warm, specific, and actionable.`;
     );
   }
 
-  // INTRO - PAGE 0: THE PROBLEM - Full bleed editorial
+  // INTRO - PAGE 0: Landing with animated torch
   if (section.type === 'intro' && introPage === 0) {
     return (
-      <div className="min-h-screen bg-linen flex flex-col lg:flex-row">
-        {/* Left: Large typography */}
-        <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
-          <div className="max-w-xl">
-            <p className="text-xs font-medium tracking-widest uppercase text-sage mb-8">
-              Career Clarity
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-ink font-serif leading-[1.1] mb-8">
-              You're here because something isn't quite right.
-            </h1>
-            <div className="h-px w-16 bg-sage mb-8" />
-            <div className="space-y-4 text-lg lg:text-xl text-charcoal/80 leading-relaxed">
-              <p>Maybe you feel stuck in a role that doesn't fit anymore.</p>
-              <p>Maybe you lack direction.</p>
-              <p>Maybe you're ready for something bigger but don't know what.</p>
-            </div>
-            <button
-              onClick={() => setIntroPage(1)}
-              className="mt-12 group flex items-center gap-3 text-sage hover:text-sage-dark transition-colors"
-            >
-              <span className="text-sm font-medium tracking-wide uppercase">Continue</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 py-16">
+        <div className="max-w-2xl w-full text-center fade-in-up">
+          {/* Animated torch */}
+          <div className="flex justify-center mb-12">
+            <Torch size={100} />
           </div>
-        </div>
-        
-        {/* Right: Visual element */}
-        <div className="hidden lg:flex lg:w-2/5 bg-sage/10 items-center justify-center">
-          <div className="w-32 h-32 rounded-full bg-sage/20 flex items-center justify-center">
-            <Sun className="w-16 h-16 text-sage" />
-          </div>
+          
+          {/* Brand */}
+          <h1 className="text-display text-ink tracking-tight mb-6">
+            Pathlight
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-graphite leading-relaxed mb-12 max-w-lg mx-auto">
+            Find clarity in your career. Discover what makes you come alive.
+          </p>
+          
+          <button
+            onClick={() => setIntroPage(1)}
+            className="btn-ember inline-flex items-center gap-3"
+          >
+            Begin
+            <ArrowRight className="w-5 h-5" />
+          </button>
+          
+          <p className="mt-8 text-sm text-stone">
+            15 minutes. Your data stays on your device.
+          </p>
         </div>
       </div>
     );
   }
 
-  // INTRO - PAGE 1: THE SOLUTION - Clean list
+  // INTRO - PAGE 1: The problem - direct, warm
   if (section.type === 'intro' && introPage === 1) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center p-8 lg:p-16">
-        <div className="max-w-3xl w-full">
-          <p className="text-xs font-medium tracking-widest uppercase text-sage mb-4 text-center">
-            15 Minutes
-          </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-ink text-center font-serif leading-tight mb-16">
-            What you'll discover
+      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+        <div className="max-w-xl w-full fade-in-up">
+          <h2 className="text-headline text-ink tracking-tight mb-10 text-balance">
+            You're here because something isn't quite right.
           </h2>
           
-          <div className="space-y-0">
-            {[
-              { num: '01', text: 'What truly energizes you (and what drains you)' },
-              { num: '02', text: 'Your signature strengths you\'ve been undervaluing' },
-              { num: '03', text: 'Multiple career paths that align with how you work best' }
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-baseline gap-6 py-8 border-b border-sand/60 group">
-                <span className="text-xs font-mono text-sage tracking-wider">{item.num}</span>
-                <p className="text-lg lg:text-xl text-charcoal leading-relaxed group-hover:text-ink transition-colors">
-                  {item.text}
-                </p>
-              </div>
-            ))}
+          <div className="space-y-6 text-lg text-graphite leading-relaxed stagger-children">
+            <p>Maybe you feel stuck in a role that doesn't fit anymore.</p>
+            <p>Maybe you lack direction.</p>
+            <p>Maybe you're ready for something bigger but don't know what.</p>
           </div>
+          
+          <p className="mt-10 text-lg text-ink font-medium">
+            That's okay. You're in the right place.
+          </p>
 
-          <div className="flex items-center justify-between mt-12 pt-8">
+          <div className="flex items-center justify-between mt-12 pt-8 border-t border-silver">
             <button
               onClick={() => setIntroPage(0)}
-              className="flex items-center gap-2 text-driftwood hover:text-charcoal transition-colors"
+              className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="text-sm">Back</span>
             </button>
             <button
               onClick={() => setIntroPage(2)}
-              className="group flex items-center gap-3 bg-sage hover:bg-sage-dark text-cream px-8 py-4 rounded-full transition-all"
+              className="btn-primary inline-flex items-center gap-3"
             >
-              <span className="font-medium">Continue</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Continue
+              <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -732,40 +721,48 @@ Keep it warm, specific, and actionable.`;
     );
   }
 
-  // INTRO - PAGE 2: THE METHOD - Minimal CTA
+  // INTRO - PAGE 2: What you'll discover
   if (section.type === 'intro' && introPage === 2) {
     return (
-      <div className="min-h-screen bg-linen flex items-center justify-center p-8 lg:p-16">
-        <div className="max-w-2xl w-full text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-10">
-            <Sun className="w-8 h-8 text-cream" />
-          </div>
-
-          <h2 className="text-3xl lg:text-4xl text-ink font-serif leading-tight mb-6">
-            Pathlight
+      <div className="min-h-screen bg-mist flex items-center justify-center px-6 py-16">
+        <div className="max-w-xl w-full fade-in-up">
+          <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-6">
+            In 15 minutes
+          </p>
+          
+          <h2 className="text-headline text-ink tracking-tight mb-12">
+            What you'll discover
           </h2>
           
-          <p className="text-lg lg:text-xl text-charcoal/80 leading-relaxed mb-4 max-w-lg mx-auto">
-            A career clarity tool that identifies your signature strengths and shows you exactly how to leverage them.
-          </p>
-          
-          <p className="text-sm text-driftwood mb-12">
-            Your answers are saved locally. Takes about 15 minutes.
-          </p>
+          <div className="space-y-0 stagger-children">
+            {[
+              'What truly energizes you (and what drains you)',
+              'Your signature strengths you\'ve been undervaluing',
+              'Career paths that align with how you work best'
+            ].map((text, idx) => (
+              <div key={idx} className="flex items-start gap-4 py-5 border-b border-silver last:border-0">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-ink text-white text-sm font-semibold flex items-center justify-center">
+                  {idx + 1}
+                </span>
+                <p className="text-lg text-graphite pt-1">{text}</p>
+              </div>
+            ))}
+          </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex items-center justify-between mt-12">
             <button
               onClick={() => setIntroPage(1)}
-              className="px-6 py-3 text-driftwood hover:text-charcoal transition-colors text-sm"
+              className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
             >
-              Back
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm">Back</span>
             </button>
             <button
               onClick={nextSection}
-              className="group bg-ink hover:bg-charcoal text-cream px-10 py-4 rounded-full font-medium transition-all flex items-center justify-center gap-3"
+              className="btn-primary inline-flex items-center gap-3"
             >
-              Begin Your Journey
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Let's start
+              <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -773,193 +770,130 @@ Keep it warm, specific, and actionable.`;
     );
   }
 
-  // CONSENT SCREEN - Clean two-column
+  // CONSENT SCREEN - Clean, minimal
   if (section.type === 'consent') {
     const canProceed = consentChecks.terms && consentChecks.age && consentChecks.data;
 
     return (
-      <div className="min-h-screen bg-cream flex flex-col lg:flex-row">
-        {/* Left: Info */}
-        <aside className="lg:w-2/5 bg-linen p-8 lg:p-12 xl:p-16 lg:sticky lg:top-0 lg:h-screen lg:overflow-auto">
-          <div className="max-w-md">
-            <div className="w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center mb-8">
-              <Lock className="w-5 h-5 text-sage" />
+      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+        <div className="max-w-lg w-full fade-in-up">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-full bg-mist flex items-center justify-center">
+              <Lock className="w-5 h-5 text-graphite" />
             </div>
-            
-            <h1 className="text-3xl lg:text-4xl text-ink font-serif leading-tight mb-6">
-              Your privacy matters
-            </h1>
-            
-            <p className="text-charcoal/80 leading-relaxed mb-8">
-              All data stays on your device. We never see your responses. Clearing browser data deletes progress.
-            </p>
-
-            <div className="space-y-4 text-sm text-charcoal/70">
-              <p className="text-xs font-medium tracking-widest uppercase text-sage mb-3">How it works</p>
-              {[
-                'AI generates personalized insights from your responses',
-                'Data saved locally in your browser only',
-                'Responses sent to Anthropic API for processing',
-                'Logs may be retained 30 days for safety'
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <span className="w-1 h-1 rounded-full bg-sage mt-2 flex-shrink-0" />
-                  <span>{item}</span>
-                </div>
-              ))}
+            <div>
+              <h1 className="text-xl font-semibold text-ink">Before we begin</h1>
+              <p className="text-sm text-stone">Your privacy is protected</p>
             </div>
           </div>
-        </aside>
 
-        {/* Right: Consent form */}
-        <main className="flex-1 p-8 lg:p-12 xl:p-16 flex items-center">
-          <div className="max-w-lg mx-auto lg:mx-0 w-full">
-            <p className="text-xs font-medium tracking-widest uppercase text-sage mb-8">
-              Please confirm
+          <div className="bg-mist rounded-2xl p-6 mb-8">
+            <p className="text-sm text-graphite leading-relaxed">
+              Your data stays on your device. Responses are processed by AI to generate insights. 
+              We don't store your information on our servers.
             </p>
-
-            <div className="space-y-6">
-              {/* Checkbox items */}
-              <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-linen transition-colors">
-                <div className="pt-0.5">
-                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                    consentChecks.terms ? 'bg-sage border-sage' : 'border-stone'
-                  }`}>
-                    {consentChecks.terms && <Check className="w-3 h-3 text-cream" />}
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={consentChecks.terms}
-                    onChange={(e) => setConsentChecks({...consentChecks, terms: e.target.checked})}
-                    className="sr-only"
-                  />
-                </div>
-                <span className="text-sm text-charcoal leading-relaxed">
-                  I understand this is a self-reflection tool, not professional career advice
-                </span>
-              </label>
-
-              <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-linen transition-colors">
-                <div className="pt-0.5">
-                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                    consentChecks.age ? 'bg-sage border-sage' : 'border-stone'
-                  }`}>
-                    {consentChecks.age && <Check className="w-3 h-3 text-cream" />}
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={consentChecks.age}
-                    onChange={(e) => setConsentChecks({...consentChecks, age: e.target.checked})}
-                    className="sr-only"
-                  />
-                </div>
-                <span className="text-sm text-charcoal leading-relaxed">
-                  I am 18 years of age or older
-                </span>
-              </label>
-
-              <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-linen transition-colors">
-                <div className="pt-0.5">
-                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                    consentChecks.data ? 'bg-sage border-sage' : 'border-stone'
-                  }`}>
-                    {consentChecks.data && <Check className="w-3 h-3 text-cream" />}
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={consentChecks.data}
-                    onChange={(e) => setConsentChecks({...consentChecks, data: e.target.checked})}
-                    className="sr-only"
-                  />
-                </div>
-                <span className="text-sm text-charcoal leading-relaxed">
-                  I understand my responses will be processed by AI and won't enter sensitive personal information
-                </span>
-              </label>
-            </div>
-
-            <div className="mt-10 pt-8 border-t border-sand">
-              <button
-                onClick={nextSection}
-                disabled={!canProceed}
-                className={`w-full py-4 px-6 rounded-full font-medium transition-all ${
-                  canProceed
-                    ? 'bg-ink hover:bg-charcoal text-cream'
-                    : 'bg-sand text-driftwood cursor-not-allowed'
-                }`}
-              >
-                {canProceed ? 'Continue' : 'Please agree to all items'}
-              </button>
-              <p className="text-xs text-driftwood text-center mt-4">
-                See our <a href="/privacy" className="text-sage hover:underline">Privacy Policy</a> for details
-              </p>
-            </div>
           </div>
-        </main>
+
+          <div className="space-y-4">
+            {[
+              { key: 'terms', text: 'I understand this is a self-reflection tool, not professional career advice' },
+              { key: 'age', text: 'I am 18 years of age or older' },
+              { key: 'data', text: 'I understand my responses will be processed by AI' }
+            ].map((item) => (
+              <label key={item.key} className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl border border-silver hover:border-stone transition-colors">
+                <div className="pt-0.5">
+                  <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
+                    consentChecks[item.key] ? 'bg-ink border-ink' : 'border-silver'
+                  }`}>
+                    {consentChecks[item.key] && <Check className="w-3 h-3 text-white" />}
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={consentChecks[item.key]}
+                    onChange={(e) => setConsentChecks({...consentChecks, [item.key]: e.target.checked})}
+                    className="sr-only"
+                  />
+                </div>
+                <span className="text-sm text-graphite leading-relaxed">{item.text}</span>
+              </label>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <button
+              onClick={nextSection}
+              disabled={!canProceed}
+              className={`w-full py-4 px-6 rounded-full font-medium transition-all ${
+                canProceed
+                  ? 'btn-primary'
+                  : 'bg-silver text-stone cursor-not-allowed'
+              }`}
+            >
+              {canProceed ? 'Continue' : 'Please agree to all items'}
+            </button>
+            <p className="text-xs text-stone text-center mt-4">
+              See our <a href="/privacy" className="text-graphite hover:underline">Privacy Policy</a>
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // SCREENER - Minimal single-question focus
+  // SCREENER - One question at a time feel
   if (section.type === 'screener') {
     const allAnswered = section.questions.every(q => screenerAnswers[q.id]);
     const answeredCount = section.questions.filter(q => screenerAnswers[q.id]).length;
     
     return (
-      <div className="min-h-screen bg-cream flex flex-col">
+      <div className="min-h-screen bg-white flex flex-col">
         {/* Progress header */}
-        <header className="px-6 py-4 flex items-center justify-between border-b border-sand/50">
-          <span className="text-sm text-charcoal font-medium">Pathlight</span>
+        <header className="px-6 py-4 flex items-center justify-between border-b border-silver">
+          <span className="text-sm font-semibold text-ink tracking-tight">Pathlight</span>
           <div className="flex items-center gap-4">
-            <span className="text-xs text-driftwood">
-              {answeredCount} of {section.questions.length}
+            <span className="text-xs text-stone font-medium">
+              {answeredCount}/{section.questions.length}
             </span>
-            <div className="w-20 h-1 bg-sand rounded-full overflow-hidden">
+            <div className="w-16 h-1.5 bg-mist rounded-full overflow-hidden">
               <div 
-                className="h-full bg-sage rounded-full transition-all duration-500"
+                className="h-full bg-ember rounded-full transition-all duration-500"
                 style={{ width: `${(answeredCount / section.questions.length) * 100}%` }}
               />
             </div>
           </div>
         </header>
 
-        <main className="flex-1 flex items-center justify-center p-8">
-          <div className="max-w-xl w-full">
-            <p className="text-xs font-medium tracking-widest uppercase text-sage mb-8 text-center">
-              Quick Questions
-            </p>
-            
-            <div className="space-y-10">
-              {section.questions.map((q, idx) => (
-                <div key={q.id} className="text-center">
-                  <h3 className="text-xl lg:text-2xl font-serif text-ink mb-8">{q.question}</h3>
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {q.options.map(option => (
-                      <button
-                        key={option}
-                        onClick={() => handleScreenerAnswer(q.id, option)}
-                        className={`px-6 py-3 rounded-full text-sm transition-all ${
-                          screenerAnswers[q.id] === option
-                            ? 'bg-sage text-cream'
-                            : 'bg-linen hover:bg-sand text-charcoal'
-                        }`}
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
+        <main className="flex-1 flex items-center justify-center px-6 py-12">
+          <div className="max-w-xl w-full space-y-12 stagger-children">
+            {section.questions.map((q, idx) => (
+              <div key={q.id} className="text-center">
+                <h3 className="text-xl lg:text-2xl font-semibold text-ink tracking-tight mb-6">{q.question}</h3>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {q.options.map(option => (
+                    <button
+                      key={option}
+                      onClick={() => handleScreenerAnswer(q.id, option)}
+                      className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                        screenerAnswers[q.id] === option
+                          ? 'bg-ink text-white'
+                          : 'bg-mist hover:bg-silver text-graphite'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
 
             {allAnswered && (
-              <div className="mt-16 text-center">
+              <div className="text-center pt-4">
                 <button
                   onClick={nextSection}
-                  className="group bg-ink hover:bg-charcoal text-cream px-10 py-4 rounded-full font-medium transition-all inline-flex items-center gap-3"
+                  className="btn-primary inline-flex items-center gap-3"
                 >
                   Continue
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
             )}
@@ -977,33 +911,37 @@ Keep it warm, specific, and actionable.`;
     // Not generated yet
     if (!synthesisContent) {
       return (
-        <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 fade-in">
-            <div className="card text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sage mb-6 shadow-soft">
-                <Sparkles className="w-10 h-10 text-cream" />
-              </div>
-              <h3 className="text-2xl text-ink mb-3 font-serif">Ready to see your pathways?</h3>
-              <p className="text-base text-driftwood mb-8 max-w-md mx-auto leading-relaxed">
-                We'll analyze everything you've shared to identify your signature strengths, suggest role territories, and give you concrete next steps.
-              </p>
-              <button
-                onClick={generateSynthesis}
-                disabled={isLoading}
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                {isLoading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-cream border-t-transparent rounded-full animate-spin" />
-                    Generating... (30-45 seconds)
-                  </>
-                ) : (
-                  <>
-                    Generate My Pathways
-                  </>
-                )}
-              </button>
+        <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+          <div className="max-w-md w-full text-center fade-in-up">
+            <div className="flex justify-center mb-8">
+              <Torch size={80} />
             </div>
+            <h2 className="text-headline text-ink tracking-tight mb-4">
+              Ready for your results
+            </h2>
+            <p className="text-graphite mb-10">
+              We'll analyze your responses to identify your strengths, suggest paths, and give you next steps.
+            </p>
+            <button
+              onClick={generateSynthesis}
+              disabled={isLoading}
+              className="btn-ember inline-flex items-center gap-3 w-full justify-center"
+            >
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-ink border-t-transparent rounded-full animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  Generate My Pathways
+                  <Sparkles className="w-5 h-5" />
+                </>
+              )}
+            </button>
+            {isLoading && (
+              <p className="mt-4 text-sm text-stone">This takes 30-45 seconds</p>
+            )}
           </div>
         </div>
       );
@@ -1012,126 +950,90 @@ Keep it warm, specific, and actionable.`;
     // Profile screen
     if (synthesisScreen === 0 && parsedData) {
       return (
-        <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
-            <div className="callout">
-              <p className="text-sm font-medium text-charcoal mb-1">
-                AI-Generated Insights
-              </p>
-              <p className="text-xs text-charcoal leading-relaxed">
-                This synthesis is AI-generated to help you reflect on your strengths and skills. 
-                Use these insights as a starting point for reflection and discussion with career professionals.
-              </p>
+        <div className="min-h-screen bg-white px-6 py-12">
+          <div className="max-w-2xl mx-auto fade-in-up">
+            <div className="bg-glow rounded-xl p-4 mb-8 text-sm text-graphite">
+              <strong>Note:</strong> These insights are AI-generated to help you reflect. Use them as a starting point.
             </div>
 
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
-                <Sun className="w-8 h-8 text-cream" />
-              </div>
-              <h2 className="text-3xl text-ink mb-2 font-serif">Your Profile</h2>
+            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Your Profile</p>
+            <h2 className="text-headline text-ink tracking-tight mb-8">
+              Here's what we see in you
+            </h2>
+
+            <div className="text-lg text-graphite leading-relaxed space-y-4 mb-10">
+              {parsedData.profile.split('\n').map((para, idx) => (
+                <p key={idx}>{para}</p>
+              ))}
             </div>
 
-            <div className="card">
-              <div className="prose-kinfolk" style={{ fontSize: '17px', lineHeight: '1.75' }}>
-                {parsedData.profile.split('\n').map((para, idx) => (
-                  <p key={idx} className="mb-4">{para}</p>
-                ))}
-              </div>
-            </div>
+            <p className="text-xl text-ink font-semibold mb-8">
+              You're not stuck. You're at a crossroads with more options than you realize.
+            </p>
 
-            <div className="text-center">
-              <p className="text-xl text-charcoal font-serif mb-8">
-                You're not stuck. You're standing at a crossroads with more options than you realize.
-              </p>
-              <button
-                onClick={() => setSynthesisScreen(1)}
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                Discover Your Signature Strengths
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
+            <button
+              onClick={() => setSynthesisScreen(1)}
+              className="btn-primary inline-flex items-center gap-3"
+            >
+              See Your Signature Strengths
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
         </div>
       );
     }
 
-    // Signature Strengths - FREE PREVIEW (1 shown, 3 locked)
+    // Signature Strengths - FREE PREVIEW
     if (synthesisScreen === 1 && parsedData?.superpowers) {
       return (
-        <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
-                <Sparkles className="w-8 h-8 text-cream" />
-              </div>
-              <h2 className="text-3xl text-ink mb-2 font-serif">Your Signature Strengths</h2>
-              <p className="text-driftwood">Look at what you've been bringing to the table all along</p>
-            </div>
+        <div className="min-h-screen bg-white px-6 py-12">
+          <div className="max-w-2xl mx-auto fade-in-up">
+            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Signature Strengths</p>
+            <h2 className="text-headline text-ink tracking-tight mb-3">
+              What you've been bringing to the table
+            </h2>
+            <p className="text-graphite mb-10">Strengths you likely undervalue because they come naturally.</p>
 
-            {/* Show first strength fully */}
-            <div className="bg-sage/10 rounded-2xl p-8 shadow-soft border border-sage/30">
-              <div className="flex items-start gap-5">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sage flex items-center justify-center text-cream text-xl font-medium">
+            {/* First strength - unlocked */}
+            <div className="bg-glow border border-ember/30 rounded-2xl p-6 mb-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-ember text-white font-semibold flex items-center justify-center">
                   1
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl text-ink mb-3 font-serif">{parsedData.superpowers[0].name}</h3>
-                  <p className="text-charcoal mb-4 leading-relaxed" style={{ fontSize: '17px', lineHeight: '1.75' }}>
-                    {parsedData.superpowers[0].description}
-                  </p>
+                  <h3 className="text-xl font-semibold text-ink mb-2">{parsedData.superpowers[0].name}</h3>
+                  <p className="text-graphite leading-relaxed mb-4">{parsedData.superpowers[0].description}</p>
                   <details className="group">
-                    <summary className="cursor-pointer text-sage-dark font-medium hover:text-sage list-none flex items-center gap-2 transition-medium">
+                    <summary className="cursor-pointer text-ember font-medium list-none flex items-center gap-2">
                       How to use this
                       <ArrowRight className="w-4 h-4 group-open:rotate-90 transition-transform" />
                     </summary>
-                    <div className="mt-4 pl-4 text-charcoal text-sm leading-relaxed space-y-3">
-                      {parsedData.superpowers[0].howTo.split('\n').map((line, lineIdx) => {
-                        const trimmed = line.trim();
-                        if (!trimmed) return null;
-                        
-                        const bulletMatch = trimmed.match(/^-\s+\*\*([^*]+)\*\*[:\s]+(.*)/);
-                        if (bulletMatch) {
-                          const label = bulletMatch[1].replace(/:$/, '');
-                          return (
-                            <div key={lineIdx} className="flex gap-2">
-                              <span className="text-sage font-bold mt-0.5">•</span>
-                              <div>
-                                <span className="font-medium text-ink">{label}:</span>
-                                <span className="ml-1">{bulletMatch[2]}</span>
-                              </div>
-                            </div>
-                          );
-                        }
-                        
-                        return <p key={lineIdx}>{trimmed}</p>;
-                      })}
+                    <div className="mt-4 text-graphite text-sm leading-relaxed space-y-2">
+                      {parsedData.superpowers[0].howTo.split('\n').filter(l => l.trim()).map((line, i) => (
+                        <p key={i}>{line.replace(/^-\s*/, '').replace(/\*\*/g, '')}</p>
+                      ))}
                     </div>
                   </details>
                 </div>
               </div>
             </div>
 
-            {/* Show remaining 3 locked */}
+            {/* Remaining strengths - locked */}
             {parsedData.superpowers.slice(1, 4).map((power, idx) => (
-              <div key={idx} className="relative">
-                <div className="bg-linen rounded-2xl p-8 shadow-soft opacity-40 blur-sm pointer-events-none">
-                  <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sage flex items-center justify-center text-cream text-xl font-medium">
-                      {idx + 2}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl text-ink mb-3 font-serif">{power.name}</h3>
-                      <p className="text-charcoal leading-relaxed">
-                        {power.description.substring(0, 100)}...
-                      </p>
+              <div key={idx} className="relative mb-4">
+                <div className="bg-mist rounded-2xl p-6 opacity-50 blur-[2px]">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-silver" />
+                    <div>
+                      <h3 className="text-xl font-semibold text-ink mb-2">{power.name}</h3>
+                      <p className="text-graphite">{power.description.substring(0, 80)}...</p>
                     </div>
                   </div>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-cream rounded-xl p-6 shadow-soft-lg text-center">
-                    <Lock className="w-8 h-8 text-sage mx-auto mb-2" />
-                    <p className="text-sm text-charcoal font-medium">Unlock with full report</p>
+                  <div className="bg-white rounded-lg px-4 py-2 shadow-lg flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-stone" />
+                    <span className="text-sm font-medium text-graphite">Locked</span>
                   </div>
                 </div>
               </div>
@@ -1139,43 +1041,38 @@ Keep it warm, specific, and actionable.`;
 
             {/* Payment wall */}
             {!paymentCompleted && (
-              <div className="card text-center space-y-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage/15 mb-4">
-                  <Sparkles className="w-8 h-8 text-sage" />
-                </div>
-                <h3 className="text-2xl text-ink font-serif">Unlock Your Complete Report</h3>
-                <p className="text-base text-charcoal leading-relaxed max-w-lg mx-auto">
-                  Get all 4 signature strengths, how they work together, your deal-breakers, 
-                  5-7 role territories to explore, and your next 3 concrete steps.
+              <div className="bg-ink text-white rounded-2xl p-8 text-center mt-10">
+                <h3 className="text-2xl font-semibold mb-3">Unlock Your Complete Report</h3>
+                <p className="text-white/80 mb-6 max-w-md mx-auto">
+                  All 4 strengths, deal-breakers, role territories, and your concrete next steps.
                 </p>
-                <div className="bg-sage/10 rounded-xl p-5 max-w-md mx-auto">
-                  <p className="text-3xl font-semibold text-sage-dark mb-1">$39 AUD</p>
-                  <p className="text-sm text-driftwood">One-time payment - Instant access</p>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold">$39</span>
+                  <span className="text-white/60 ml-1">AUD</span>
                 </div>
                 <button
                   onClick={handlePayment}
-                  className="btn-primary inline-flex items-center gap-2"
+                  className="btn-ember inline-flex items-center gap-2"
                 >
                   Unlock Full Report
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <p className="text-xs text-driftwood">Secure payment via Stripe</p>
+                <p className="text-xs text-white/50 mt-4">Secure payment via Stripe</p>
               </div>
             )}
 
-            {/* Navigation */}
-            <div className="flex gap-4 justify-center pt-4">
+            <div className="flex gap-4 justify-between mt-10 pt-6 border-t border-silver">
               <button
                 onClick={() => setSynthesisScreen(0)}
-                className="btn-secondary flex items-center gap-2"
+                className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4" />
                 Back
               </button>
               {paymentCompleted && (
                 <button
                   onClick={() => setSynthesisScreen(2)}
-                  className="btn-primary flex items-center gap-2"
+                  className="btn-primary inline-flex items-center gap-2"
                 >
                   See Deal-Breakers
                   <ArrowRight className="w-5 h-5" />
@@ -1190,32 +1087,22 @@ Keep it warm, specific, and actionable.`;
     // Deal-Breakers (paid only)
     if (synthesisScreen === 2 && parsedData?.dealbreakers && paymentCompleted) {
       return (
-        <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta/15 mb-4 shadow-soft">
-                <AlertCircle className="w-8 h-8 text-terracotta" />
-              </div>
-              <h2 className="text-3xl text-ink mb-2 font-serif">Your Deal-Breakers</h2>
-              <p className="text-driftwood">You've learned what doesn't work. That's wisdom.</p>
-            </div>
+        <div className="min-h-screen bg-white px-6 py-12">
+          <div className="max-w-2xl mx-auto fade-in-up">
+            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Deal-Breakers</p>
+            <h2 className="text-headline text-ink tracking-tight mb-3">
+              What doesn't work for you
+            </h2>
+            <p className="text-graphite mb-8">Use this list when evaluating opportunities.</p>
 
-            <div className="bg-terracotta/10 rounded-xl p-8 text-center mb-6 border-l-2 border-terracotta">
-              <p className="text-charcoal text-lg leading-relaxed">
-                Use this list when evaluating opportunities. Even if a role looks perfect, if it has these elements, you'll end up miserable again.
-              </p>
-            </div>
-
-            <div className="grid gap-6">
+            <div className="space-y-4">
               {parsedData.dealbreakers.work.length > 0 && (
-                <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-ink mb-3 flex items-center gap-2">
-                    About the work
-                  </h3>
-                  <ul className="space-y-2 text-charcoal text-sm">
+                <div className="border border-silver rounded-xl p-5">
+                  <h3 className="font-semibold text-ink mb-3">About the work</h3>
+                  <ul className="space-y-2 text-graphite text-sm">
                     {parsedData.dealbreakers.work.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-terracotta mt-1">•</span>
+                        <span className="text-ember mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1224,14 +1111,12 @@ Keep it warm, specific, and actionable.`;
               )}
 
               {parsedData.dealbreakers.job.length > 0 && (
-                <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-ink mb-3">
-                    What comes with the job
-                  </h3>
-                  <ul className="space-y-2 text-charcoal text-sm">
+                <div className="border border-silver rounded-xl p-5">
+                  <h3 className="font-semibold text-ink mb-3">What comes with the job</h3>
+                  <ul className="space-y-2 text-graphite text-sm">
                     {parsedData.dealbreakers.job.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-terracotta mt-1">•</span>
+                        <span className="text-ember mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1240,14 +1125,12 @@ Keep it warm, specific, and actionable.`;
               )}
 
               {parsedData.dealbreakers.leadership.length > 0 && (
-                <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-ink mb-3">
-                    About leadership
-                  </h3>
-                  <ul className="space-y-2 text-charcoal text-sm">
+                <div className="border border-silver rounded-xl p-5">
+                  <h3 className="font-semibold text-ink mb-3">About leadership</h3>
+                  <ul className="space-y-2 text-graphite text-sm">
                     {parsedData.dealbreakers.leadership.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-terracotta mt-1">•</span>
+                        <span className="text-ember mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1256,14 +1139,12 @@ Keep it warm, specific, and actionable.`;
               )}
 
               {parsedData.dealbreakers.environment.length > 0 && (
-                <div className="card border-l-4 border-terracotta">
-                  <h3 className="text-lg font-medium text-ink mb-3">
-                    About the environment
-                  </h3>
-                  <ul className="space-y-2 text-charcoal text-sm">
+                <div className="border border-silver rounded-xl p-5">
+                  <h3 className="font-semibold text-ink mb-3">About the environment</h3>
+                  <ul className="space-y-2 text-graphite text-sm">
                     {parsedData.dealbreakers.environment.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-terracotta mt-1">•</span>
+                        <span className="text-ember mt-0.5">-</span>
                         <span>{item.replace(/^- /, '')}</span>
                       </li>
                     ))}
@@ -1272,17 +1153,17 @@ Keep it warm, specific, and actionable.`;
               )}
             </div>
 
-            <div className="flex gap-4 justify-center pt-4">
+            <div className="flex gap-4 justify-between mt-10 pt-6 border-t border-silver">
               <button
                 onClick={() => setSynthesisScreen(1)}
-                className="btn-secondary flex items-center gap-2"
+                className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4" />
                 Back
               </button>
               <button
                 onClick={() => setSynthesisScreen(3)}
-                className="btn-primary flex items-center gap-2"
+                className="btn-primary inline-flex items-center gap-2"
               >
                 Explore Role Territories
                 <ArrowRight className="w-5 h-5" />
@@ -1296,55 +1177,49 @@ Keep it warm, specific, and actionable.`;
     // Role Territories (paid only)
     if (synthesisScreen === 3 && parsedData?.territories && paymentCompleted) {
       return (
-        <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
-                <Sparkles className="w-8 h-8 text-cream" />
-              </div>
-              <h2 className="text-3xl text-ink mb-2 font-serif">Role Territories to Explore</h2>
-              <p className="text-driftwood">Here are territories waiting for someone exactly like you</p>
-            </div>
+        <div className="min-h-screen bg-white px-6 py-12">
+          <div className="max-w-2xl mx-auto fade-in-up">
+            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Role Territories</p>
+            <h2 className="text-headline text-ink tracking-tight mb-3">
+              Paths to explore
+            </h2>
+            <p className="text-graphite mb-8">These are directions, not prescriptions. Tap to expand.</p>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {parsedData.territories.map((territory, idx) => (
-                <details key={idx} className="group card overflow-hidden">
-                  <summary className="cursor-pointer hover:bg-sand/50 transition-medium list-none -m-10 sm:-m-12 p-10 sm:p-12">
+                <details key={idx} className="group border border-silver rounded-xl overflow-hidden">
+                  <summary className="cursor-pointer p-5 list-none hover:bg-mist transition-colors">
                     <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-xl text-ink mb-1 font-serif">{territory.name}</h3>
-                        <p className="text-sm text-driftwood">Click to explore</p>
-                      </div>
-                      <ArrowRight className="w-6 h-6 text-driftwood group-open:rotate-90 transition-transform" />
+                      <h3 className="font-semibold text-ink">{territory.name}</h3>
+                      <ArrowRight className="w-5 h-5 text-stone group-open:rotate-90 transition-transform" />
                     </div>
                   </summary>
-                  <div className="text-charcoal text-sm leading-relaxed whitespace-pre-wrap border-t border-sand pt-6 -mx-10 sm:-mx-12 px-10 sm:px-12 -mb-10 sm:-mb-12 pb-10 sm:pb-12">
-                    <div>{territory.content}</div>
+                  <div className="px-5 pb-5 text-graphite text-sm leading-relaxed border-t border-silver pt-4">
+                    {territory.content}
                   </div>
                 </details>
               ))}
             </div>
 
-            <div className="text-center pt-8">
-              <p className="text-lg text-charcoal mb-8 max-w-xl mx-auto">
-                You're not limited by your current industry. These are territories to explore, not prescriptions.
-              </p>
-              <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => setSynthesisScreen(2)}
-                  className="btn-secondary flex items-center gap-2"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                  Back
-                </button>
-                <button
-                  onClick={() => setSynthesisScreen(4)}
-                  className="btn-primary flex items-center gap-2"
-                >
-                  Get Your Next Steps
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
+            <p className="text-center text-graphite mt-10">
+              You're not limited by your current industry.
+            </p>
+
+            <div className="flex gap-4 justify-between mt-10 pt-6 border-t border-silver">
+              <button
+                onClick={() => setSynthesisScreen(2)}
+                className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </button>
+              <button
+                onClick={() => setSynthesisScreen(4)}
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                Your Next Steps
+                <ArrowRight className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
@@ -1354,37 +1229,36 @@ Keep it warm, specific, and actionable.`;
     // Next Steps (paid only)
     if (synthesisScreen === 4 && parsedData?.nextSteps && paymentCompleted) {
       return (
-        <div className="min-h-screen bg-cream">
-          <div className="max-w-3xl mx-auto px-6 py-16 space-y-8 fade-in">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sage mb-4 shadow-soft">
-                <Check className="w-8 h-8 text-cream" />
-              </div>
-              <h2 className="text-3xl text-ink mb-2 font-serif">Your Path Forward</h2>
-              <p className="text-driftwood">You can actually do this</p>
-            </div>
+        <div className="min-h-screen bg-white px-6 py-12">
+          <div className="max-w-2xl mx-auto fade-in-up">
+            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-4">Next Steps</p>
+            <h2 className="text-headline text-ink tracking-tight mb-3">
+              Your path forward
+            </h2>
+            <p className="text-graphite mb-10">You can actually do this.</p>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {parsedData.nextSteps.map((step, idx) => (
-                <div key={idx} className="card">
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sage flex items-center justify-center text-cream font-medium text-lg shadow-soft">
+                <div key={idx} className="border border-silver rounded-xl p-5">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-ember text-white font-semibold flex items-center justify-center">
                       {idx + 1}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-medium text-ink mb-2">{step.timeframe}</h3>
-                      <p className="text-charcoal leading-relaxed">{step.action}</p>
+                      <h3 className="font-semibold text-ink mb-1">{step.timeframe}</h3>
+                      <p className="text-graphite leading-relaxed">{step.action}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="card bg-sage/10 text-center border-l-2 border-sage">
-              <Sparkles className="w-10 h-10 text-sage mx-auto mb-4" />
-              <h3 className="text-xl text-ink mb-3 font-serif">Help Improve Pathlight</h3>
-              <p className="text-charcoal mb-6 leading-relaxed">
-                You just completed the beta version! Your feedback will help make this better for others.
+            {/* Feedback CTA */}
+            <div className="bg-glow border border-ember/20 rounded-2xl p-6 text-center mt-10">
+              <Sparkles className="w-8 h-8 text-ember mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-ink mb-2">Help improve Pathlight</h3>
+              <p className="text-graphite text-sm mb-4">
+                You completed the beta! Your feedback makes this better.
               </p>
               <a
                 href="https://forms.gle/fUaxKWAMbQZdbXNk7"
@@ -1392,17 +1266,16 @@ Keep it warm, specific, and actionable.`;
                 rel="noopener noreferrer"
                 className="btn-primary inline-block"
               >
-                Take 2-Minute Survey
+                Take 2-Min Survey
               </a>
-              <p className="text-xs text-driftwood mt-4">Your honest feedback helps. Thanks!</p>
             </div>
 
-            <div className="flex gap-4 justify-center pt-4">
+            <div className="flex justify-start mt-10 pt-6 border-t border-silver">
               <button
                 onClick={() => setSynthesisScreen(3)}
-                className="btn-secondary flex items-center gap-2"
+                className="flex items-center gap-2 text-stone hover:text-ink transition-colors"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4" />
                 Back
               </button>
             </div>
@@ -1412,198 +1285,153 @@ Keep it warm, specific, and actionable.`;
     }
   }
 
-  // REGULAR JOURNEY SECTION - Editorial Design
+  // REGULAR JOURNEY SECTION - Clean, focused
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Minimal header */}
-      <header className="px-6 py-4 flex items-center justify-between border-b border-sand/50">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-sage flex items-center justify-center">
-            <Sun className="w-4 h-4 text-cream" />
-          </div>
-          <span className="text-sm font-medium text-charcoal tracking-wide">Pathlight</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <span className="text-xs text-driftwood tracking-widest uppercase">
-            Step {currentSection} of {SECTIONS.length - 1}
+      <header className="px-6 py-4 flex items-center justify-between border-b border-silver">
+        <span className="text-sm font-semibold text-ink tracking-tight">Pathlight</span>
+        <div className="flex items-center gap-4">
+          <span className="text-xs text-stone font-medium">
+            {currentSection}/{SECTIONS.length - 1}
           </span>
-          <div className="w-24 h-1 bg-sand rounded-full overflow-hidden">
+          <div className="w-20 h-1.5 bg-mist rounded-full overflow-hidden">
             <div 
-              className="h-full bg-sage rounded-full transition-all duration-700 ease-out"
+              className="h-full bg-ember rounded-full transition-all duration-500"
               style={{ width: `${(currentSection / (SECTIONS.length - 1)) * 100}%` }}
             />
           </div>
         </div>
       </header>
 
-      {/* Main content - two column on desktop */}
-      <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left: Context panel */}
-        <aside className="lg:w-2/5 xl:w-1/3 bg-linen p-8 lg:p-12 lg:sticky lg:top-0 lg:h-screen lg:overflow-auto">
-          <div className="max-w-md mx-auto lg:mx-0">
-            <p className="text-xs text-sage font-medium tracking-widest uppercase mb-6">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col">
+        {/* Context - collapsible on mobile */}
+        <div className="bg-mist px-6 py-6 lg:py-8 border-b border-silver">
+          <div className="max-w-2xl mx-auto">
+            <p className="text-xs font-semibold tracking-widest uppercase text-ember mb-3">
               {section.subtitle || 'Reflection'}
             </p>
-            
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl text-ink font-serif leading-tight mb-8">
+            <h1 className="text-2xl lg:text-3xl font-semibold text-ink tracking-tight mb-4">
               {section.title}
             </h1>
-            
-            <div className="prose-kinfolk">
-              <p className="text-charcoal/80 leading-relaxed text-base lg:text-lg">
-                {section.explainer}
-              </p>
-            </div>
-
-            {/* Prompts/hints */}
+            <p className="text-graphite leading-relaxed">
+              {section.explainer}
+            </p>
             {section.brainDump && (
-              <div className="mt-8 p-5 bg-cream rounded-xl">
-                <p className="text-xs text-sage font-medium tracking-wider uppercase mb-3">Tips</p>
-                <ul className="space-y-2 text-sm text-charcoal/70">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1 h-1 rounded-full bg-sage mt-2 flex-shrink-0" />
-                    <span>Aim for 10+ items</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1 h-1 rounded-full bg-sage mt-2 flex-shrink-0" />
-                    <span>Press Enter after each one</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1 h-1 rounded-full bg-sage mt-2 flex-shrink-0" />
-                    <span>No idea is too small</span>
-                  </li>
-                </ul>
+              <p className="mt-3 text-sm text-stone">
+                Tip: Aim for 10+ items. Press Enter after each one.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Messages area */}
+        <div className="flex-1 overflow-y-auto px-6 py-8">
+          <div className="max-w-2xl mx-auto space-y-4">
+            {sectionMessages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center min-h-[40vh] text-center">
+                <div className="w-14 h-14 rounded-full bg-mist flex items-center justify-center mb-5">
+                  <MessageCircle className="w-6 h-6 text-stone" />
+                </div>
+                <h3 className="text-lg font-semibold text-ink mb-2">
+                  {section.brainDump ? 'Start listing' : 'Share your thoughts'}
+                </h3>
+                <p className="text-stone max-w-sm">
+                  {section.brainDump 
+                    ? 'One item at a time. No wrong answers.'
+                    : 'Write naturally. Take your time.'}
+                </p>
+              </div>
+            ) : (
+              sectionMessages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div className={`max-w-[85%] sm:max-w-[75%] message-${msg.role}`}>
+                    <p className="leading-relaxed whitespace-pre-wrap">
+                      {msg.content}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
+            
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="message-ai">
+                  <div className="flex items-center gap-1.5">
+                    <span className="typing-dot w-2 h-2 bg-stone rounded-full" />
+                    <span className="typing-dot w-2 h-2 bg-stone rounded-full" />
+                    <span className="typing-dot w-2 h-2 bg-stone rounded-full" />
+                  </div>
+                </div>
               </div>
             )}
-
-            <div className="mt-8 pt-6 border-t border-sand/50">
-              <p className="text-xs text-driftwood flex items-center gap-2">
-                <Lock className="w-3 h-3" />
-                Your responses stay on your device
-              </p>
-            </div>
+            <div ref={messagesEndRef} />
           </div>
-        </aside>
+        </div>
 
-        {/* Right: Conversation */}
-        <main className="flex-1 flex flex-col bg-cream lg:border-l border-sand/50">
-          {/* Messages area */}
-          <div className="flex-1 overflow-y-auto p-6 lg:p-10">
-            <div className="max-w-2xl mx-auto space-y-6">
-              {sectionMessages.length === 0 ? (
-                /* Beautiful empty state */
-                <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
-                  <div className="w-16 h-16 rounded-full bg-sage/10 flex items-center justify-center mb-6">
-                    <MessageCircle className="w-7 h-7 text-sage" />
-                  </div>
-                  <h3 className="text-xl font-serif text-ink mb-3">
-                    {section.brainDump ? 'Start listing your thoughts' : 'Begin your reflection'}
-                  </h3>
-                  <p className="text-driftwood max-w-sm leading-relaxed">
-                    {section.brainDump 
-                      ? 'Type one item at a time and press Enter. There are no wrong answers here.'
-                      : 'Take your time. Write naturally, as if you were talking to a thoughtful friend.'}
-                  </p>
-                </div>
-              ) : (
-                /* Messages */
-                sectionMessages.map((msg, idx) => (
-                  <div
-                    key={idx}
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[85%] sm:max-w-[75%] ${
-                        msg.role === 'user'
-                          ? 'bg-sage text-cream rounded-2xl rounded-br-md'
-                          : 'bg-linen text-charcoal rounded-2xl rounded-bl-md'
-                      } px-5 py-4 shadow-sm`}
-                    >
-                      <p className="leading-relaxed whitespace-pre-wrap">
-                        {msg.content}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              )}
-              
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-linen text-charcoal rounded-2xl rounded-bl-md px-5 py-4">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 bg-sage/60 rounded-full animate-pulse" />
-                      <span className="w-2 h-2 bg-sage/60 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
-                      <span className="w-2 h-2 bg-sage/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-
-          {/* Input area - fixed at bottom */}
-          <div className="border-t border-sand/50 bg-cream p-4 lg:p-6">
-            <div className="max-w-2xl mx-auto">
-              {/* Continue button when ready */}
-              {sectionMessages.length > 0 && (currentAiResponses >= maxAiResponses || section.brainDump) && (
-                <div className="mb-4 flex items-center justify-between bg-sage/5 rounded-xl px-5 py-3">
-                  <div className="flex items-center gap-2 text-sm text-charcoal">
-                    <Check className="w-4 h-4 text-sage" />
-                    <span>Ready to continue, or add more thoughts</span>
-                  </div>
-                  <button
-                    onClick={nextSection}
-                    className="flex items-center gap-2 bg-sage hover:bg-sage-dark text-cream px-5 py-2.5 rounded-lg font-medium text-sm transition-all"
-                  >
-                    Continue
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
-              
-              {/* Input */}
-              <div className="flex gap-3">
-                <div className="flex-1 relative">
-                  <input
-                    type="text"
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-                    placeholder={section.brainDump ? "Type an item and press Enter..." : "What comes to mind?"}
-                    className="w-full px-5 py-4 rounded-xl bg-linen border-0 text-charcoal placeholder-driftwood focus:outline-none focus:ring-2 focus:ring-sage/30 transition-all text-base"
-                    disabled={isLoading}
-                  />
+        {/* Input area */}
+        <div className="border-t border-silver bg-white p-4 lg:p-6">
+          <div className="max-w-2xl mx-auto">
+            {sectionMessages.length > 0 && (currentAiResponses >= maxAiResponses || section.brainDump) && (
+              <div className="mb-4 flex items-center justify-between bg-glow rounded-xl px-5 py-3">
+                <div className="flex items-center gap-2 text-sm text-graphite">
+                  <Check className="w-4 h-4 text-ember" />
+                  <span>Ready to continue</span>
                 </div>
                 <button
-                  onClick={sendMessage}
-                  disabled={isLoading || !userInput.trim()}
-                  className="bg-sage hover:bg-sage-dark disabled:bg-sand disabled:text-driftwood text-cream px-5 rounded-xl transition-all flex items-center justify-center"
-                  aria-label="Send"
+                  onClick={nextSection}
+                  className="flex items-center gap-2 bg-ink hover:bg-charcoal text-white px-5 py-2.5 rounded-full font-medium text-sm transition-all"
                 >
-                  <Send className="w-5 h-5" />
+                  Continue
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
+            )}
+            
+            <div className="flex gap-3">
+              <input
+                type="text"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
+                placeholder={section.brainDump ? "Type and press Enter..." : "What comes to mind?"}
+                className="input flex-1"
+                disabled={isLoading}
+              />
+              <button
+                onClick={sendMessage}
+                disabled={isLoading || !userInput.trim()}
+                className="bg-ink hover:bg-charcoal disabled:bg-silver disabled:text-stone text-white px-5 rounded-xl transition-all flex items-center justify-center"
+                aria-label="Send"
+              >
+                <Send className="w-5 h-5" />
+              </button>
             </div>
           </div>
-        </main>
+        </div>
       </div>
 
       {/* Footer */}
-      <footer className="px-6 py-4 border-t border-sand/50 flex items-center justify-between text-xs text-driftwood">
+      <footer className="px-6 py-3 border-t border-silver flex items-center justify-between text-xs text-stone">
         <button
           onClick={prevSection}
           disabled={currentSection <= 0}
-          className="flex items-center gap-2 hover:text-charcoal disabled:opacity-30 transition-colors"
+          className="flex items-center gap-2 hover:text-ink disabled:opacity-30 transition-colors"
         >
           <ArrowLeft className="w-3 h-3" />
           Back
         </button>
         <div className="flex items-center gap-4">
-          <a href="/privacy" className="hover:text-charcoal transition-colors">Privacy</a>
-          <span className="text-sand">|</span>
-          <button onClick={resetProgress} className="hover:text-charcoal transition-colors">
-            Clear data
+          <span className="flex items-center gap-1">
+            <Lock className="w-3 h-3" />
+            Private
+          </span>
+          <button onClick={resetProgress} className="hover:text-ink transition-colors">
+            Clear
           </button>
         </div>
       </footer>

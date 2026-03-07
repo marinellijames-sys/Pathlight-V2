@@ -7,53 +7,44 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        /* Kinfolk/Myora - warm, muted, serene */
-        cream: '#FAF8F5',
-        linen: '#F5F1EC',
-        sand: '#E8E2D9',
-        stone: '#D4CCC2',
-        driftwood: '#B8AFA3',
-        charcoal: '#4A4642',
-        ink: '#2D2B28',
+        /* Light foundation */
+        white: '#FFFFFF',
+        snow: '#FAFAFA',
+        mist: '#F5F5F5',
+        silver: '#E5E5E5',
         
-        /* Muted sage accent - calming, natural */
-        sage: {
-          DEFAULT: '#8B9A7E',
-          light: '#A8B59C',
-          dark: '#6B7A60',
-        },
+        /* Dark accents */
+        graphite: '#404040',
+        charcoal: '#262626',
+        ink: '#171717',
+        black: '#0A0A0A',
         
-        /* Warm terracotta as secondary */
-        terracotta: {
-          DEFAULT: '#A0574B',
-          light: '#C17B68',
-        },
+        /* Torch/flame warmth */
+        ember: '#F59E0B',
+        flame: '#D97706',
+        glow: '#FEF3C7',
+        warmth: '#FFFBEB',
         
-        /* Legacy support */
-        'warm-sand': '#E8E2D9',
-        'warm-charcoal': '#4A4642',
-        'warm-gray': '#B8AFA3',
-      },
-      transitionDuration: {
-        '400': '400ms',
-        '600': '600ms',
-        '800': '800ms',
-      },
-      transitionTimingFunction: {
-        'kinfolk': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        /* Neutrals */
+        stone: '#A3A3A3',
+        ash: '#737373',
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        serif: ['Crimson Text', 'Georgia', 'serif'],
+      },
+      fontSize: {
+        'display': ['clamp(2.5rem, 8vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        'headline': ['clamp(1.75rem, 5vw, 2.5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
       },
       borderRadius: {
-        'xl': '0.75rem',
-        '2xl': '1rem',
-        '3xl': '1.5rem',
+        '4xl': '2rem',
       },
-      spacing: {
-        '18': '4.5rem',
-        '22': '5.5rem',
+      transitionDuration: {
+        '400': '400ms',
+      },
+      animation: {
+        'flicker': 'flicker 3s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
       },
     },
   },
