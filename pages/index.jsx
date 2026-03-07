@@ -1438,9 +1438,6 @@ Keep it warm, specific, and actionable.`;
         {/* Section header */}
         <div className="bg-linen px-6 py-5 border-b border-silver">
           <div className="max-w-2xl mx-auto">
-            <p className="text-xs tracking-widest uppercase text-ash mb-2 font-medium">
-              {section.subtitle || 'Reflection'}
-            </p>
             <h1 className="font-serif text-2xl lg:text-3xl text-ink">
               {section.title}
             </h1>
@@ -1508,7 +1505,7 @@ Keep it warm, specific, and actionable.`;
       ) : currentAiResponses >= maxAiResponses ? (
         <>
           <Check className="w-4 h-4 text-charcoal" />
-          <span>Section complete • Add more or continue</span>
+          <span>Ready to continue</span>
         </>
       ) : (
         <>
