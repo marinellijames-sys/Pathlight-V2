@@ -1098,10 +1098,10 @@ Keep it warm, specific, and actionable.`;
 
             {/* Payment wall */}
             {!paymentCompleted && (
-              <div className="bg-charcoal text-cream rounded-xl p-8 text-center mt-10">
-                <FileText className="w-10 h-10 mx-auto mb-4 text-cream/80" />
-                <h3 className="font-serif text-2xl mb-3">Unlock Your Full PDF Report</h3>
-                <p className="text-cream/70 mb-6 max-w-md mx-auto font-light">
+              <div className="bg-charcoal rounded-xl p-8 text-center mt-10">
+                <FileText className="w-10 h-10 mx-auto mb-4 text-white/80" />
+                <h3 className="font-serif text-2xl mb-3 text-white">Unlock Your Full PDF Report</h3>
+                <p className="text-white/70 mb-6 max-w-md mx-auto font-light">
                   All 4 strengths with action guides, deal-breakers, role territories, and next steps. Download instantly.
                 </p>
                 
@@ -1109,24 +1109,24 @@ Keep it warm, specific, and actionable.`;
                 <a
                   href="/example-report"
                   target="_blank"
-                  className="mb-6 text-cream/70 hover:text-cream underline text-sm inline-flex items-center gap-2 mx-auto font-light"
+                  className="mb-6 text-white/70 hover:text-white underline text-sm inline-flex items-center gap-2 mx-auto font-light"
                 >
                   <Eye className="w-4 h-4" />
                   See example report
                 </a>
                 
                 <div className="mb-6">
-                  <span className="text-4xl font-serif">$39</span>
-                  <span className="text-cream/60 ml-1">AUD</span>
+                  <span className="text-4xl font-serif text-white">$39</span>
+                  <span className="text-white/60 ml-1">AUD</span>
                 </div>
                 <button
                   onClick={handlePayment}
-                  className="bg-cream text-charcoal px-8 py-3 rounded-lg font-medium hover:bg-paper transition-colors inline-flex items-center gap-2"
+                  className="bg-white text-charcoal px-8 py-3 rounded-lg font-medium hover:bg-cream transition-colors inline-flex items-center gap-2"
                 >
                   Unlock Full Report
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <p className="text-xs text-cream/50 mt-4 font-light">Secure payment via Stripe. Instant PDF download.</p>
+                <p className="text-xs text-white/50 mt-4 font-light">Secure payment via Stripe. Instant PDF download.</p>
               </div>
             )}
 
