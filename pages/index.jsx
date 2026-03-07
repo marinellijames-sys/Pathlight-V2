@@ -1497,35 +1497,21 @@ Keep it warm, specific, and actionable.`;
         {/* Input area */}
         <div className="border-t border-silver bg-paper p-4 lg:p-6">
           <div className="max-w-2xl mx-auto">
-{sectionMessages.length > 0 && (
-  <div className="mb-4 flex items-center justify-between bg-linen rounded-lg px-5 py-3 border border-silver">
-    <div className="flex items-center gap-2 text-sm text-graphite font-light">
-      {section.brainDump ? (
-        <>
-          <FileText className="w-4 h-4 text-charcoal" />
-          <span>Listed {sectionMessages.filter(m => m.role === 'user').length} items • Aim for 10+</span>
-        </>
-      ) : currentAiResponses >= maxAiResponses ? (
-        <>
-          <Check className="w-4 h-4 text-charcoal" />
-          <span>Section complete • Add more or continue</span>
-        </>
-      ) : (
-        <>
-          <MessageCircle className="w-4 h-4 text-charcoal" />
-          <span>Reflecting on your response...</span>
-        </>
-      )}
-    </div>
-    <button
-      onClick={nextSection}
-      className="flex items-center gap-2 bg-charcoal hover:bg-ink text-cream px-5 py-2.5 rounded-lg font-medium text-sm transition-all"
-    >
-      Continue
-      <ArrowRight className="w-4 h-4" />
-    </button>
-  </div>
-)}
+{sectionMessages.length > 0 && (currentAiResponses >= maxAiResponses || section.brainDump) && (
+              <div className="mb-4 flex items-center justify-between bg-linen rounded-lg px-5 py-3 border border-silver">
+                <div className="flex items-center gap-2 text-sm text-graphite font-light">
+                  <Check className="w-4 h-4 text-charcoal" />
+                  <span>Ready to continue</span>
+                </div>
+                <button
+                  onClick={nextSection}
+                  className="flex items-center gap-2 bg-charcoal hover:bg-ink text-cream px-5 py-2.5 rounded-lg font-medium text-sm transition-all"
+                >
+                  Continue
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
             
             <div className="flex gap-3">
               <input
