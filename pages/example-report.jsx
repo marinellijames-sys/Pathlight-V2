@@ -1,16 +1,16 @@
 // pages/example-report.jsx
-// Generic example PDF preview - shows what the paid report looks like
-// Uses fictional "Sarah Chen" accountant example
+// Full example PDF preview - shows complete report for fictional "Sarah Chen"
+// This is what every user sees when clicking "See example report"
 
 import React from 'react';
-import { ArrowLeft, Lock, FileText, Check } from 'lucide-react';
+import { ArrowLeft, FileText, Check } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ExampleReport() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <header className="px-6 py-4 border-b border-silver bg-paper">
+      <header className="px-6 py-4 border-b border-silver bg-paper sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-ash hover:text-ink transition-colors">
             <ArrowLeft className="w-4 h-4" />
@@ -28,7 +28,7 @@ export default function ExampleReport() {
             <FileText className="w-10 h-10 mx-auto mb-3 text-white/80" />
             <h1 className="font-serif text-2xl mb-2 text-white">Sample Report: Sarah Chen</h1>
             <p className="text-white/70 font-light text-sm">
-              See what your personalized PDF report includes
+              This is exactly what your personalized report looks like
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function ExampleReport() {
             </ul>
           </div>
 
-          {/* Simulated PDF Pages */}
+          {/* Full Report Pages */}
           <div className="space-y-8">
             {/* Page 1 - Cover */}
             <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden">
@@ -69,15 +69,13 @@ export default function ExampleReport() {
             {/* Page 2 - Profile */}
             <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden">
               <div className="p-8">
-                <section className="mb-8">
-                  <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-4">Your Profile</h3>
-                  <p className="text-graphite font-light leading-relaxed">
-                    Sarah, you're someone who brings unusual clarity to complexity. While your career has been built on precision and accuracy, what truly energizes you isn't the numbers themselves - it's the moment when you help someone understand their financial picture for the first time.
-                  </p>
-                  <p className="text-graphite font-light leading-relaxed mt-4">
-                    You've been undervaluing your ability to translate technical information into plain language. The skills that feel effortless to you - pattern recognition, building trust with anxious clients, staying calm under deadline pressure - are exactly what set you apart.
-                  </p>
-                </section>
+                <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-4">Your Profile</h3>
+                <p className="text-graphite font-light leading-relaxed">
+                  Sarah, you're someone who brings unusual clarity to complexity. While your career has been built on precision and accuracy, what truly energizes you isn't the numbers themselves - it's the moment when you help someone understand their financial picture for the first time.
+                </p>
+                <p className="text-graphite font-light leading-relaxed mt-4">
+                  You've been undervaluing your ability to translate technical information into plain language. The skills that feel effortless to you - pattern recognition, building trust with anxious clients, staying calm under deadline pressure - are exactly what set you apart. You're not stuck. You're standing at a crossroads with more options than you realize.
+                </p>
               </div>
             </div>
 
@@ -86,7 +84,7 @@ export default function ExampleReport() {
               <div className="p-8">
                 <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-6">Your Signature Strengths</h3>
                   
-                {/* Strength 1 - Full */}
+                {/* Strength 1 */}
                 <div className="bg-linen border border-silver rounded-lg p-5 mb-4">
                   <div className="flex items-start gap-3 mb-3">
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">1</span>
@@ -105,14 +103,14 @@ export default function ExampleReport() {
                   </div>
                 </div>
 
-                {/* Strength 2 - Full */}
+                {/* Strength 2 */}
                 <div className="bg-linen border border-silver rounded-lg p-5 mb-4">
                   <div className="flex items-start gap-3 mb-3">
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">2</span>
                     <h4 className="font-serif text-lg text-ink">The Calm Under Pressure</h4>
                   </div>
                   <p className="text-graphite font-light text-sm mb-4">
-                    End-of-month close, tax deadlines, audit scrambles - you've trained yourself to stay composed when others panic. This regulated nervous system is valuable leadership currency. People feel safe around you.
+                    End-of-month close, tax deadlines, audit scrambles - you've trained yourself to stay composed when others panic. This regulated nervous system is valuable leadership currency. People feel safe around you in high-stakes moments.
                   </p>
                   <div className="text-xs text-ash bg-paper rounded p-3 border border-silver">
                     <p className="font-medium text-graphite mb-2">How to deploy this strength:</p>
@@ -124,75 +122,168 @@ export default function ExampleReport() {
                   </div>
                 </div>
 
-                {/* Strength 3-4 - Blurred */}
-                {['The Pattern Spotter', 'The Trust Builder'].map((name, idx) => (
-                  <div key={idx} className="relative mb-4">
-                    <div className="bg-linen border border-silver rounded-lg p-5 opacity-30 blur-[3px]">
-                      <div className="flex items-start gap-3 mb-3">
-                        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">{idx + 3}</span>
-                        <h4 className="font-serif text-lg text-ink">{name}</h4>
-                      </div>
-                      <p className="text-graphite font-light text-sm">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor...
-                      </p>
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-paper px-4 py-2 rounded-lg shadow-md border border-silver flex items-center gap-2">
-                        <Lock className="w-4 h-4 text-stone" />
-                        <span className="text-sm text-graphite">In your report</span>
-                      </div>
-                    </div>
+                {/* Strength 3 */}
+                <div className="bg-linen border border-silver rounded-lg p-5 mb-4">
+                  <div className="flex items-start gap-3 mb-3">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">3</span>
+                    <h4 className="font-serif text-lg text-ink">The Pattern Spotter</h4>
                   </div>
-                ))}
+                  <p className="text-graphite font-light text-sm mb-4">
+                    You see connections others miss. Whether it's catching an anomaly in a spreadsheet or noticing that a client's "small question" reveals a bigger concern, your brain is wired to detect what doesn't fit. This is strategic thinking in disguise.
+                  </p>
+                  <div className="text-xs text-ash bg-paper rounded p-3 border border-silver">
+                    <p className="font-medium text-graphite mb-2">How to deploy this strength:</p>
+                    <ul className="space-y-1">
+                      <li>- This week: When you spot something others miss, document it</li>
+                      <li>- In interviews: "I catch problems before they become expensive"</li>
+                      <li>- Roles that need this: Business Analyst, Risk Management, Strategy Consulting</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Strength 4 */}
+                <div className="bg-linen border border-silver rounded-lg p-5">
+                  <div className="flex items-start gap-3 mb-3">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">4</span>
+                    <h4 className="font-serif text-lg text-ink">The Trust Builder</h4>
+                  </div>
+                  <p className="text-graphite font-light text-sm mb-4">
+                    Clients specifically request you. New hires seek you out for guidance. You create psychological safety without trying. This isn't just "being nice" - it's a leadership competency that many senior people never develop.
+                  </p>
+                  <div className="text-xs text-ash bg-paper rounded p-3 border border-silver">
+                    <p className="font-medium text-graphite mb-2">How to deploy this strength:</p>
+                    <ul className="space-y-1">
+                      <li>- This week: Offer to mentor someone junior</li>
+                      <li>- In interviews: "I build the relationships that make teams work"</li>
+                      <li>- Roles that need this: Client Lead, People Manager, Account Director</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Page 4 Preview - Deal-Breakers & Territories */}
-            <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden relative">
-              <div className="p-8 opacity-30 blur-[2px]">
-                <section className="mb-8">
-                  <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-4">Your Deal-Breakers</h3>
-                  <div className="space-y-3">
-                    <div className="bg-linen rounded p-3">
-                      <p className="text-graphite font-light text-sm"><strong>About the work:</strong> Repetitive data entry with no variety or problem-solving...</p>
-                    </div>
-                    <div className="bg-linen rounded p-3">
-                      <p className="text-graphite font-light text-sm"><strong>About leadership:</strong> Micromanagement and lack of autonomy...</p>
-                    </div>
-                  </div>
-                </section>
+            {/* Page 4 - Deal-Breakers */}
+            <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden">
+              <div className="p-8">
+                <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-6">Your Deal-Breakers</h3>
+                <p className="text-graphite font-light text-sm mb-6">Use this list when evaluating opportunities. If a role hits multiple items here, it's probably not for you.</p>
                 
-                <section className="mb-8">
-                  <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-4">Role Territories to Explore</h3>
-                  <div className="space-y-2">
-                    <div className="bg-linen rounded p-3">
-                      <p className="text-graphite font-light text-sm"><strong>Financial Advisory:</strong> Your clarity strength + trust-building...</p>
-                    </div>
-                    <div className="bg-linen rounded p-3">
-                      <p className="text-graphite font-light text-sm"><strong>Operations Management:</strong> Your pattern-spotting + calm under pressure...</p>
-                    </div>
+                <div className="space-y-4">
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-medium text-ink text-sm mb-2">About the work</h4>
+                    <ul className="text-graphite font-light text-sm space-y-1">
+                      <li>- Repetitive data entry with no variety or problem-solving</li>
+                      <li>- Work that stays in spreadsheets and never impacts real people</li>
+                      <li>- Being siloed from the rest of the business</li>
+                    </ul>
                   </div>
-                </section>
-                
-                <section>
-                  <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-4">Your Next Three Steps</h3>
-                  <div className="space-y-2">
-                    <div className="bg-linen rounded p-3">
-                      <p className="text-graphite font-light text-sm"><strong>This week:</strong> Have 2 coffee chats with people in your target roles...</p>
-                    </div>
-                    <div className="bg-linen rounded p-3">
-                      <p className="text-graphite font-light text-sm"><strong>This month:</strong> Update your LinkedIn headline to reflect your strengths...</p>
-                    </div>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-medium text-ink text-sm mb-2">About leadership</h4>
+                    <ul className="text-graphite font-light text-sm space-y-1">
+                      <li>- Micromanagement and lack of autonomy</li>
+                      <li>- Leaders who don't explain the "why"</li>
+                      <li>- Environments where asking questions is seen as weakness</li>
+                    </ul>
                   </div>
-                </section>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-medium text-ink text-sm mb-2">About the environment</h4>
+                    <ul className="text-graphite font-light text-sm space-y-1">
+                      <li>- Constant firefighting with no time for deep work</li>
+                      <li>- Teams that don't collaborate or share information</li>
+                      <li>- Cultures that reward politics over performance</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              
-              {/* Locked overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-paper/60">
-                <div className="bg-charcoal px-8 py-6 rounded-xl text-center shadow-xl">
-                  <Lock className="w-8 h-8 mx-auto mb-3 text-white/80" />
-                  <p className="font-serif text-lg mb-2 text-white">Continue in Your Report</p>
-                  <p className="text-white/70 text-sm font-light mb-4">Deal-breakers, role territories, next steps</p>
+            </div>
+
+            {/* Page 5 - Role Territories */}
+            <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden">
+              <div className="p-8">
+                <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-6">Role Territories to Explore</h3>
+                <p className="text-graphite font-light text-sm mb-6">These are directions based on your strengths, not prescriptions. Explore what resonates.</p>
+                
+                <div className="space-y-4">
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-serif text-ink mb-2">Financial Advisory / Wealth Management</h4>
+                    <p className="text-graphite font-light text-sm">
+                      Your clarity-bringing and trust-building strengths are exactly what high-net-worth clients need. You'd be translating complex financial concepts into confident decisions - but for people, not just spreadsheets. Look at firms that emphasize client relationships over product sales.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-serif text-ink mb-2">Operations / Process Improvement</h4>
+                    <p className="text-graphite font-light text-sm">
+                      Your pattern-spotting strength is underutilized in pure accounting. Operations roles would let you redesign how things work, not just report on them. Your calm under pressure means you'd thrive leading transformation projects.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-serif text-ink mb-2">Client Success / Account Management</h4>
+                    <p className="text-graphite font-light text-sm">
+                      Your trust-building is a competitive advantage in B2B relationships. Companies pay premium rates to retain clients - and you're naturally good at the human side that most "numbers people" struggle with. Tech companies especially value this combination.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <h4 className="font-serif text-ink mb-2">Internal Consulting / Business Partnering</h4>
+                    <p className="text-graphite font-light text-sm">
+                      Many large companies have Finance Business Partner roles that sit between the numbers and the business. You'd be the person who helps non-finance leaders understand what the data means for their decisions. Your communication strength is perfect for this.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Page 6 - Next Steps */}
+            <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden">
+              <div className="p-8">
+                <h3 className="font-serif text-xl text-ink border-b border-silver pb-2 mb-6">Your Next Steps</h3>
+                
+                <div className="space-y-4">
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">1</span>
+                      <div>
+                        <h4 className="font-medium text-ink text-sm mb-1">This Week</h4>
+                        <p className="text-graphite font-light text-sm">
+                          Have 2 coffee chats with people in Financial Advisory or Operations roles. Ask them: "What does a typical day look like?" and "What skills matter most?" LinkedIn is your friend here.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">2</span>
+                      <div>
+                        <h4 className="font-medium text-ink text-sm mb-1">This Month</h4>
+                        <p className="text-graphite font-light text-sm">
+                          Update your LinkedIn headline to include "Clarity Bringer" language - something like "Helping clients understand their numbers and make confident decisions." Watch how people respond.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-linen border border-silver rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-7 h-7 rounded-full bg-charcoal text-white text-sm flex items-center justify-center">3</span>
+                      <div>
+                        <h4 className="font-medium text-ink text-sm mb-1">This Quarter</h4>
+                        <p className="text-graphite font-light text-sm">
+                          Volunteer for one cross-functional project at work that lets you flex your pattern-spotting or trust-building muscles outside pure accounting. This builds evidence and expands your internal network.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-8 pt-6 border-t border-silver text-center">
+                  <p className="text-graphite font-light">
+                    You're not stuck. You're at a crossroads with more options than you realize.
+                  </p>
                 </div>
               </div>
             </div>
@@ -210,7 +301,7 @@ export default function ExampleReport() {
               Start Your Journey
             </Link>
             <p className="text-stone text-sm mt-4 font-light">
-              15 minutes. Instant PDF download.
+              15 minutes. $39. Instant PDF download.
             </p>
           </div>
         </div>

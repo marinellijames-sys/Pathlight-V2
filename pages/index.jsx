@@ -710,39 +710,42 @@ Keep it warm, specific, and actionable.`;
     );
   }
 
-  // INTRO - PAGE 0: Flashlight landing on black
+  // INTRO - PAGE 0: Flashlight landing - flick flick GLOW
   if (section.type === 'intro' && introPage === 0) {
     return (
       <div className="landing-dark">
         <div className="text-center">
-          {/* Flashlight beam with flicker animation */}
-          <div className="relative">
-            {/* Beam glow behind text */}
+          {/* Flashlight reveal with flick-flick-GLOW animation */}
+          <div className="relative flex items-center justify-center">
+            {/* Soft circular glow behind text - the GLOW reveal */}
             <div 
-              className="absolute inset-0 flicker-on"
+              className="absolute flashlight-glow"
               style={{
-                background: 'radial-gradient(ellipse 300px 200px at center, rgba(255,254,248,0.08) 0%, transparent 70%)',
-                filter: 'blur(40px)',
+                width: '400px',
+                height: '400px',
+                background: 'radial-gradient(circle, rgba(255,252,245,0.15) 0%, rgba(255,252,245,0.05) 40%, transparent 70%)',
+                borderRadius: '50%',
+                filter: 'blur(30px)',
               }}
             />
             
-            {/* Pathlight wordmark */}
+            {/* Pathlight wordmark with flicker */}
             <h1 
-              className="font-serif text-5xl md:text-7xl lg:text-8xl text-beam flicker-on beam-glow relative z-10"
-              style={{ fontWeight: 400 }}
+              className="font-serif text-5xl md:text-7xl lg:text-8xl flashlight-text relative z-10"
+              style={{ fontWeight: 400, color: '#FFFCF5' }}
             >
               Pathlight
             </h1>
           </div>
           
-          {/* Tagline and button fade in after flicker stabilizes */}
+          {/* Tagline and button fade in after glow stabilizes */}
           <p className="text-stone text-lg md:text-xl mt-8 fade-in-delayed font-light">
             Find clarity in your career
           </p>
           
           <button
             onClick={() => setIntroPage(1)}
-            className="mt-12 fade-in-delayed bg-transparent border border-stone/50 text-beam px-8 py-3 rounded hover:bg-beam/10 hover:border-beam/50 transition-all font-sans font-light tracking-wide"
+            className="mt-12 fade-in-delayed bg-transparent border border-stone/50 text-cream px-8 py-3 rounded hover:bg-white/5 hover:border-stone transition-all font-sans font-light tracking-wide"
           >
             Begin
           </button>
@@ -1432,23 +1435,15 @@ Keep it warm, specific, and actionable.`;
 
       {/* Main content */}
       <div className="flex-1 flex flex-col">
-        {/* Context */}
-        <div className="bg-linen px-6 py-6 lg:py-8 border-b border-silver">
+        {/* Section header */}
+        <div className="bg-linen px-6 py-5 border-b border-silver">
           <div className="max-w-2xl mx-auto">
-            <p className="text-xs tracking-widest uppercase text-ash mb-3 font-medium">
+            <p className="text-xs tracking-widest uppercase text-ash mb-2 font-medium">
               {section.subtitle || 'Reflection'}
             </p>
-            <h1 className="font-serif text-2xl lg:text-3xl text-ink mb-4">
+            <h1 className="font-serif text-2xl lg:text-3xl text-ink">
               {section.title}
             </h1>
-            <p className="text-graphite leading-relaxed font-light">
-              {section.explainer}
-            </p>
-            {section.brainDump && (
-              <p className="mt-3 text-sm text-stone font-light">
-                Tip: Aim for 10+ items. Press Enter after each one.
-              </p>
-            )}
           </div>
         </div>
 
