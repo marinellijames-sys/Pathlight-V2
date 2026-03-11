@@ -597,7 +597,7 @@ INTRO VERSION:
             <p className="text-sm text-graphite leading-relaxed font-light">Your data stays on your device. Responses are processed by AI to generate insights. We don't store your information on our servers.</p>
           </div>
           <div className="space-y-3">
-            { key: 'terms', text: 'I agree to the Terms of Service and understand this is a self-reflection tool, not professional career advice' }, { key: 'age', text: 'I am 18 years of age or older' }, { key: 'data', text: 'I understand my responses will be processed by AI' }].map(item => (
+            {[{ key: 'terms', text: 'I agree to the Terms of Service and understand this is a self-reflection tool, not professional career advice' }, { key: 'age', text: 'I am 18 years of age or older' }, { key: 'data', text: 'I understand my responses will be processed by AI' }].map(item => (
               <label key={item.key} className="flex items-start gap-4 cursor-pointer group p-4 rounded-lg border border-silver hover:border-ash transition-colors bg-paper">
                 <div className="pt-0.5">
                   <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${consentChecks[item.key] ? 'bg-charcoal border-charcoal' : 'border-silver bg-white'}`}>{consentChecks[item.key] && <Check className="w-3 h-3 text-cream" />}</div>
