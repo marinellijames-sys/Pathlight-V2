@@ -597,7 +597,7 @@ INTRO VERSION:
             <p className="text-sm text-graphite leading-relaxed font-light">Your data stays on your device. Responses are processed by AI to generate insights. We don't store your information on our servers.</p>
           </div>
           <div className="space-y-3">
-            {[{ key: 'terms', text: 'I understand this is a self-reflection tool, not professional career advice' }, { key: 'age', text: 'I am 18 years of age or older' }, { key: 'data', text: 'I understand my responses will be processed by AI' }].map(item => (
+            { key: 'terms', text: 'I agree to the Terms of Service and understand this is a self-reflection tool, not professional career advice' }, { key: 'age', text: 'I am 18 years of age or older' }, { key: 'data', text: 'I understand my responses will be processed by AI' }].map(item => (
               <label key={item.key} className="flex items-start gap-4 cursor-pointer group p-4 rounded-lg border border-silver hover:border-ash transition-colors bg-paper">
                 <div className="pt-0.5">
                   <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${consentChecks[item.key] ? 'bg-charcoal border-charcoal' : 'border-silver bg-white'}`}>{consentChecks[item.key] && <Check className="w-3 h-3 text-cream" />}</div>
@@ -609,7 +609,7 @@ INTRO VERSION:
           </div>
           <div className="mt-8">
             <button onClick={startChat} disabled={!ok} className={`w-full py-4 px-6 rounded-lg font-medium transition-all ${ok ? 'btn-primary' : 'bg-silver text-stone cursor-not-allowed'}`}>{ok ? 'Start the conversation' : 'Please agree to all items'}</button>
-            <p className="text-xs text-stone text-center mt-4 font-light">See our <a href="/privacy" className="text-ash hover:underline">Privacy Policy</a></p>
+            <p className="text-xs text-stone text-center mt-4 font-light">See our <a href="/privacy" className="text-ash hover:underline">Privacy Policy</a> and <a href="/terms" className="text-ash hover:underline">Terms of Service</a></p>
           </div>
         </div>
       </div>
@@ -659,7 +659,8 @@ INTRO VERSION:
             )}
           </div>
         </div>
-        <footer className="px-6 py-2 flex items-center justify-end text-xs text-stone font-light border-t border-silver">
+        <footer className="px-6 py-2 flex items-center justify-between text-xs text-stone font-light border-t border-silver">
+          <div className="flex items-center gap-3"><a href="/privacy" className="hover:text-ink transition-colors">Privacy</a><a href="/terms" className="hover:text-ink transition-colors">Terms</a></div>
           <button onClick={resetProgress} className="hover:text-ink transition-colors">Clear data</button>
         </footer>
       </div>
