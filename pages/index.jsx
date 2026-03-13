@@ -202,9 +202,9 @@ ${n>=13?'FINAL. One sentence reflecting core pattern. "I\'ve got a really clear 
 SHORT responses. Questions, not advice.`;
   };
 
-  const callAPI = async (msgs,sys,mt=250) => { const r = await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:MODEL,max_tokens:mt,system:sys,messages:msgs})}); return (await r.json()).content[0].text; };
+  const callAPI = async (msgs,sys,mt=250) => { const r = await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:MODEL,max_tokens:mt,system:sys,messages:msgs})}); const data = await r.json(); if (data?.content?.[0]?.text) return data.content[0].text; if (data?.error) { console.error('API error:', data.error); throw new Error(data.error.message || 'API error'); } console.error('Unexpected API response:', data); throw new Error('Unexpected API response'); };
 
-  const startChat = async () => { setScreen('chat'); setIsLoading(true); try { const text = await callAPI([{role:'user',content:'[Begin]'}],buildSystemPrompt(),150); const {conversationText} = parseAIResponse(text); const rm=[{role:'assistant',content:text}]; const pm=[{role:'assistant',text:conversationText}]; setMessages(rm); setParsedMessages(pm); setHadInteractionLast(false); save({messages:rm,parsedMessages:pm,hadInteractionLast:false}); } catch(e){console.error(e);} finally{setIsLoading(false);} };
+  const startChat = async () => { setScreen('chat'); setIsLoading(true); try { const text = await callAPI([{role:'user',content:'[Begin]'}],buildSystemPrompt(),150); const {conversationText} = parseAIResponse(text); const rm=[{role:'user',content:'[Begin]'},{role:'assistant',content:text}]; const pm=[{role:'assistant',text:conversationText}]; setMessages(rm); setParsedMessages(pm); setHadInteractionLast(false); save({messages:rm,parsedMessages:pm,hadInteractionLast:false}); } catch(e){console.error(e);} finally{setIsLoading(false);} };
 
   const sendMessage = async (content) => {
     if (!content?.trim()||isLoading||chatComplete) return;
@@ -259,7 +259,7 @@ SHORT responses. Questions, not advice.`;
   const handlePayment = async () => { try { const r=await fetch('/api/stripe-checkout',{method:'POST',headers:{'Content-Type':'application/json'}}); window.location.href=(await r.json()).url; } catch(e){alert('Payment failed.');} };
   const downloadPDF = async () => { if(!synthesisContent)return; setPdfDownloading(true); try { const r=await fetch('/api/generate-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({synthesisContent})}); if(!r.ok)throw new Error(); const b=await r.blob();const u=window.URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='pathlight-career-report.pdf';document.body.appendChild(a);a.click();document.body.removeChild(a);window.URL.revokeObjectURL(u); } catch(e){alert('PDF generation failed.');} finally{setPdfDownloading(false);} };
 
-  const Fonts = () => <Head><title>Pathlight</title><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" /></Head>;
+  const Fonts = () => <Head><title>Pathlight</title></Head>;
   const Dark = ({children,center}) => <div className="pl-screen-enter" style={{minHeight:'100vh',background:'#0A0A0B',display:'flex',flexDirection:'column',alignItems:center?'center':'stretch',justifyContent:center?'center':'flex-start',position:'relative',overflow:'hidden',padding:center?'48px 24px':0}}>{children}</div>;
 
   if (screen==='loading') return <><Fonts/><Dark center><div style={{width:32,height:32,border:'2px solid rgba(255,255,255,0.1)',borderTopColor:'#B8A9FF',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/></Dark></>;
