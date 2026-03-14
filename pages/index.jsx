@@ -1542,9 +1542,9 @@ INTRO VERSION:
             }}
           >
             {[
-              'Maybe you feel stuck in a role that doesn't fit anymore.',
-              'Maybe you lack direction.',
-              'Maybe you're ready for something bigger but don't know what.',
+              "Maybe you feel stuck in a role that doesn't fit anymore.",
+              "Maybe you lack direction.",
+              "Maybe you're ready for something bigger but don't know what.",
             ].map((text, i) => (
               <p
                 key={i}
