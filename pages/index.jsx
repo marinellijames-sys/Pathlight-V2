@@ -849,7 +849,7 @@ Remember: SHORT responses. Questions, not advice. You are a skilled interviewer,
     const currentUserCount = newMsgs.filter((m) => m.role === 'user').length;
 
     try {
-      let text = await callAPI(newMsgs, buildSystemPrompt(), 300);
+      let text = await callAPI(newMsgs, buildSystemPrompt(), 600);
 
       // Hard cap at 18 user messages
       if (currentUserCount >= 18 && !text.includes('[CONVERSATION_COMPLETE]')) {
@@ -2395,6 +2395,7 @@ INTRO VERSION:
           <button
             onClick={() => {
               setRevealStrength(null);
+              setSynthesisScreen(1);
               setScreen('synthesis');
             }}
             style={{
