@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Spinner } from './components/shared/DesignSystem';
+import { Spinner } from '../components/shared/DesignSystem';
 import {
   LandingScreen,
   IntroScreen,
   ConsentScreen,
-} from './components/shared/PreChatScreens';
-import ChatScreen from './components/chat/ChatScreen';
+} from '../components/shared/PreChatScreens';
+import ChatScreen from '../components/chat/ChatScreen';
 import {
   SynthesisLoadingScreen,
   StrengthRevealScreen,
@@ -15,13 +15,13 @@ import {
   DealBreakersScreen,
   TerritoriesScreen,
   CareerNarrativeScreen,
-} from './components/synthesis/SynthesisScreens';
-import { parseSynthesis } from './lib/parsers';
+} from '../components/synthesis/SynthesisScreens';
+import { parseSynthesis } from '../lib/parsers';
 import {
   callAPI,
   buildSynthesisPromptPart1,
   buildSynthesisPromptPart2,
-} from './lib/prompts';
+} from '../lib/prompts';
 
 // ═══════════════════════════════════════════════
 // PATHLIGHT v5 — ROOT ORCHESTRATOR
