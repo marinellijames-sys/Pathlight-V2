@@ -7,7 +7,7 @@ import {
   DisplayHeading,
   BodyLg,
   BodyText,
-} from '../shared/DesignSystem';
+} from './DesignSystem';
 
 // ═══════════════════════════════════════════════
 // LANDING
