@@ -63,6 +63,13 @@ export default function ChatScreen({
       return { ...parsed, interaction: null };
     }
 
+    // Bug 4 code-level guardrail: if the AI asked a text question AND
+    // served an interaction, strip the interaction. The conversational
+    // text should be a reflection/acknowledgment, not a question.
+    if (parsed.interaction && parsed.conversationText.includes('?')) {
+      return { ...parsed, interaction: null };
+    }
+
     return parsed;
   };
 
