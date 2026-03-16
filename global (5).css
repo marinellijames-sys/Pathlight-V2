@@ -1,0 +1,341 @@
+/* ═══════════════════════════════════════════
+   PATHLIGHT v5 — GLOBAL STYLES
+   "Co-Star meets Notion"
+   Design tokens + Keyframes + Interaction widgets
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* Surfaces */
+  --bg-void:        #0A0A0B;
+  --bg-surface:     #111113;
+  --bg-elevated:    #1A1A1D;
+  --bg-glass:       rgba(255, 255, 255, 0.04);
+  --bg-glass-hover: rgba(255, 255, 255, 0.07);
+  --bg-light:       #F5F5F3;
+  --bg-light-card:  #FFFFFF;
+
+  /* Text */
+  --text-primary:   #F0EDE8;
+  --text-body:      #A8A4A0;
+  --text-muted:     #5C5955;
+  --text-ghost:     #3A3835;
+  --text-dark:      #111113;
+  --text-dark-body: #555250;
+
+  /* Accent: Electric Lilac */
+  --accent:         #B8A9FF;
+  --accent-bright:  #D4C9FF;
+  --accent-dim:     #7B6FBF;
+  --accent-glow:    rgba(184, 169, 255, 0.15);
+  --accent-surface: rgba(184, 169, 255, 0.06);
+
+  /* Signal Colours */
+  --signal-warm:    #FFB88C;
+  --signal-cool:    #8CCFB8;
+  --signal-sharp:   #FF8F8F;
+
+  /* Borders */
+  --border-subtle:  rgba(255, 255, 255, 0.06);
+  --border-medium:  rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+  --border-accent:  rgba(184, 169, 255, 0.30);
+  --border-light:   #E5E3DF;
+
+  /* Typography */
+  --font-display:   'Syne', sans-serif;
+  --font-body:      'Inter', -apple-system, sans-serif;
+  --font-mono:      'Space Mono', monospace;
+
+  /* Type Scale */
+  --text-hero:      clamp(3rem, 9vw, 6rem);
+  --text-display:   clamp(2rem, 5vw, 3rem);
+  --text-heading:   clamp(1.375rem, 3vw, 1.75rem);
+  --text-subhead:   clamp(1.125rem, 2.5vw, 1.25rem);
+  --text-body-lg:   1.0625rem;
+  --text-body-base: 0.9375rem;
+  --text-small:     0.8125rem;
+  --text-mono-sm:   0.6875rem;
+
+  /* Spacing */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+  --space-2xl:  48px;
+  --space-3xl:  64px;
+
+  /* Radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-full: 9999px;
+
+  /* Animation */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 350ms;
+  --duration-slow:   700ms;
+}
+
+/* ═══════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes staggerFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbPulse {
+  from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  to { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
+}
+
+/* Strength reveal animations */
+@keyframes rFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rExpand {
+  from { opacity: 0; width: 0; }
+  to { opacity: 1; width: 32px; }
+}
+
+/* Typing dots */
+@keyframes dotPulse {
+  0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+  30% { opacity: 1; transform: scale(1); }
+}
+
+.pl-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: dotPulse 1.4s infinite;
+}
+
+/* ═══════════════════════════════════════════
+   INTERACTION WIDGETS
+   Chat-mode (light background) styles
+   ═══════════════════════════════════════════ */
+
+/* Container for the full interaction block */
+.pl-interaction-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Question label above the interaction */
+.pl-interaction-q {
+  font-family: var(--font-body);
+  font-size: var(--text-body-base);
+  font-weight: 500;
+  color: var(--text-dark);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+/* Single/multi select option pill */
+.pl-choice {
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body-base);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  user-select: none;
+}
+
+.pl-choice:hover {
+  background: #F0EDE8;
+  border-color: #D0CEC9;
+}
+
+.pl-choice.selected {
+  background: var(--text-dark);
+  color: var(--bg-light);
+  border-color: var(--text-dark);
+}
+
+/* "None of these" custom option */
+.pl-choice.pl-choice-custom {
+  border-style: dashed;
+  color: var(--text-dark-body);
+  font-style: italic;
+}
+
+.pl-choice.pl-choice-custom:hover {
+  border-style: solid;
+  color: var(--text-dark);
+}
+
+/* Submit row */
+.pl-interaction-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* Dark submit button (chat mode) */
+.pl-btn-dark {
+  padding: 10px 24px;
+  background: var(--text-dark);
+  color: var(--bg-light);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity var(--duration-fast);
+}
+
+.pl-btn-dark:hover {
+  opacity: 0.85;
+}
+
+.pl-btn-dark:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* Escape hatch link ("Neither — let me explain") */
+.pl-escape {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--text-dark-body);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #D0CEC9;
+  transition: color var(--duration-fast);
+}
+
+.pl-escape:hover {
+  color: var(--text-dark);
+  text-decoration-color: var(--text-dark);
+}
+
+/* Free-text / custom input textarea */
+.pl-custom-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body-base);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--duration-fast);
+}
+
+.pl-custom-input:focus {
+  border-color: var(--accent-dim);
+}
+
+.pl-custom-input::placeholder {
+  color: #BFBDB8;
+}
+
+/* Mono small text (e.g. "A few sentences is perfect") */
+.pl-mono-sm {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--text-dark-body);
+  letter-spacing: 0.04em;
+}
+
+/* ── Slider ── */
+
+.pl-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-dark-body);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  gap: 24px;
+}
+
+.pl-slider-labels span {
+  flex: 1;
+}
+
+.pl-slider-labels span:last-child {
+  text-align: right;
+}
+
+.pl-slider-track {
+  position: relative;
+  height: 6px;
+  background: var(--border-light);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  touch-action: none;
+  margin-bottom: 8px;
+}
+
+.pl-slider-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--text-dark);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  transition: width 50ms;
+}
+
+.pl-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: var(--text-dark);
+  border: 3px solid var(--bg-light);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  transition: left 50ms;
+}
