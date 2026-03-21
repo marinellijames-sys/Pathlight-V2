@@ -108,12 +108,13 @@ export function LandingScreen({ onStart }) {
 }
 
 // ═══════════════════════════════════════════════
-// INTRO (2 pages)
+// INTRO (3 pages now — Empathy → How It Works → What You Get)
 // ═══════════════════════════════════════════════
 
 export function IntroScreen({ onComplete, onBack }) {
   const [page, setPage] = useState(0);
 
+  // ─── Page 0: Empathy ───
   if (page === 0) {
     return (
       <div
@@ -128,11 +129,12 @@ export function IntroScreen({ onComplete, onBack }) {
           overflow: 'hidden',
         }}
       >
+        <Orb size={500} opacity={0.1} />
         <GridBg opacity={0.015} />
 
         <div
           style={{
-            maxWidth: 560,
+            maxWidth: 520,
             width: '100%',
             position: 'relative',
             zIndex: 1,
@@ -144,14 +146,7 @@ export function IntroScreen({ onComplete, onBack }) {
             You're here because something isn't quite right.
           </DisplayHeading>
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 20,
-              marginTop: 32,
-            }}
-          >
+          <div style={{ marginTop: 40 }}>
             {[
               "Maybe you feel stuck in a role that doesn't fit anymore.",
               "Maybe you lack direction.",
@@ -161,12 +156,13 @@ export function IntroScreen({ onComplete, onBack }) {
                 key={i}
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: '1.0625rem',
+                  fontSize: '1.125rem',
                   fontWeight: 300,
-                  lineHeight: 1.7,
+                  lineHeight: 1.8,
                   color: '#A8A4A0',
+                  marginBottom: 24,
                   opacity: 0,
-                  animation: `staggerFadeUp 0.6s ease ${0.3 + i * 0.15}s forwards`,
+                  animation: `staggerFadeUp 0.6s ease ${0.3 + i * 0.2}s forwards`,
                 }}
               >
                 {text}
@@ -176,14 +172,14 @@ export function IntroScreen({ onComplete, onBack }) {
 
           <p
             style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: '1.0625rem',
-              fontWeight: 300,
-              lineHeight: 1.7,
+              fontFamily: "'Syne', sans-serif",
+              fontSize: '1.25rem',
+              fontWeight: 600,
+              lineHeight: 1.4,
               color: '#F0EDE8',
-              marginTop: 32,
+              marginTop: 16,
               opacity: 0,
-              animation: 'staggerFadeUp 0.6s ease 0.75s forwards',
+              animation: 'staggerFadeUp 0.6s ease 0.9s forwards',
             }}
           >
             That's okay. You're in the right place.
@@ -191,31 +187,28 @@ export function IntroScreen({ onComplete, onBack }) {
 
           <div
             style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: 12,
-              padding: 24,
-              marginTop: 32,
-              backdropFilter: 'blur(20px)',
-              opacity: 0,
-              animation: 'staggerFadeUp 0.6s ease 0.9s forwards',
-            }}
-          >
-            <BodyText>
-              This works like a conversation with a sharp friend who sees your
-              blind spots. The more honest and specific you are, the more useful
-              your report will be. Give yourself 20 minutes somewhere quiet.
-            </BodyText>
-          </div>
-
-          <div
-            style={{
-              marginTop: 48,
-              paddingTop: 32,
+              marginTop: 56,
               display: 'flex',
-              justifyContent: 'flex-end',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
+            <button
+              onClick={onBack}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                background: 'none',
+                border: 'none',
+                color: '#5C5955',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.8125rem',
+                cursor: 'pointer',
+              }}
+            >
+              <ArrowLeft size={14} /> Back
+            </button>
             <button
               onClick={() => setPage(1)}
               style={{
@@ -241,12 +234,143 @@ export function IntroScreen({ onComplete, onBack }) {
     );
   }
 
-  // Page 2
+  // ─── Page 1: How It Works (NEW — dedicated "sharp friend" screen) ───
+  if (page === 1) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          background: '#0A0A0B',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '48px 24px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <Orb size={450} opacity={0.08} />
+        <GridBg opacity={0.015} />
+
+        <div
+          style={{
+            maxWidth: 520,
+            width: '100%',
+            position: 'relative',
+            zIndex: 1,
+            animation: 'slideUp 0.7s ease forwards',
+          }}
+        >
+          <MonoLabel>how this works</MonoLabel>
+          <DisplayHeading>
+            A conversation, not a quiz.
+          </DisplayHeading>
+
+          <div style={{ marginTop: 32 }}>
+            <BodyLg style={{ color: '#F0EDE8', fontSize: '1.125rem', marginBottom: 24 }}>
+              Think of this as 20 minutes with a sharp friend who sees
+              your blind spots — someone who asks the questions you
+              haven't thought to ask yourself.
+            </BodyLg>
+
+            <BodyLg style={{ marginBottom: 24 }}>
+              There are no right answers. No personality categories.
+              No pre-built templates. Your report is generated entirely
+              from what you share — which means the more honest and
+              specific you are, the more useful it will be.
+            </BodyLg>
+
+            <BodyLg style={{ marginBottom: 24 }}>
+              We'll explore what energises you, what drains you, what
+              you're naturally great at, what you're proud of, and where
+              you want to go. From that, an AI synthesises patterns
+              you can't see from the inside.
+            </BodyLg>
+          </div>
+
+          <div
+            style={{
+              background: 'rgba(184,169,255,0.06)',
+              border: '1px solid rgba(184,169,255,0.2)',
+              borderRadius: 12,
+              padding: 24,
+              marginTop: 16,
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: '1rem',
+                fontWeight: 600,
+                color: '#B8A9FF',
+                marginBottom: 8,
+              }}
+            >
+              Give yourself space for this.
+            </p>
+            <BodyText style={{ color: '#A8A4A0' }}>
+              Find 20 quiet minutes. Put your phone on silent.
+              The quality of your report depends entirely on the
+              depth of your answers.
+            </BodyText>
+          </div>
+
+          <div
+            style={{
+              marginTop: 56,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <button
+              onClick={() => setPage(0)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                background: 'none',
+                border: 'none',
+                color: '#5C5955',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.8125rem',
+                cursor: 'pointer',
+              }}
+            >
+              <ArrowLeft size={14} /> Back
+            </button>
+            <button
+              onClick={() => setPage(2)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '12px 28px',
+                background: '#F0EDE8',
+                color: '#0A0A0B',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.8125rem',
+                fontWeight: 500,
+                border: 'none',
+                borderRadius: 4,
+                cursor: 'pointer',
+              }}
+            >
+              Continue <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Page 2: What You Get ───
   const items = [
     'Five signature strengths — uniquely named and actionable',
     'Deal-breakers you should never compromise on',
     'Role territories that fit how you actually work',
     'A career narrative ready for LinkedIn',
+    'Shareable strength cards for social media',
   ];
 
   return (
@@ -266,7 +390,7 @@ export function IntroScreen({ onComplete, onBack }) {
 
       <div
         style={{
-          maxWidth: 560,
+          maxWidth: 520,
           width: '100%',
           position: 'relative',
           zIndex: 1,
@@ -276,48 +400,59 @@ export function IntroScreen({ onComplete, onBack }) {
         <MonoLabel>after one conversation</MonoLabel>
         <DisplayHeading>What you'll walk away with</DisplayHeading>
 
-        {items.map((text, i) => (
-          <div
-            key={i}
-            style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: 16,
-              padding: '20px 0',
-              borderBottom:
-                i < items.length - 1
-                  ? '1px solid rgba(255,255,255,0.06)'
-                  : 'none',
-              opacity: 0,
-              animation: `staggerFadeUp 0.5s ease ${0.2 + i * 0.12}s forwards`,
-            }}
-          >
-            <span
+        <div style={{ marginTop: 16 }}>
+          {items.map((text, i) => (
+            <div
+              key={i}
               style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.6875rem',
-                color: '#B8A9FF',
-                minWidth: 24,
-                paddingTop: 4,
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 16,
+                padding: '18px 0',
+                borderBottom:
+                  i < items.length - 1
+                    ? '1px solid rgba(255,255,255,0.06)'
+                    : 'none',
+                opacity: 0,
+                animation: `staggerFadeUp 0.5s ease ${0.2 + i * 0.1}s forwards`,
               }}
             >
-              0{i + 1}
-            </span>
-            <BodyLg>{text}</BodyLg>
-          </div>
-        ))}
+              <span
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: '0.6875rem',
+                  color: '#B8A9FF',
+                  minWidth: 24,
+                  paddingTop: 5,
+                }}
+              >
+                0{i + 1}
+              </span>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '1rem',
+                  fontWeight: 300,
+                  lineHeight: 1.6,
+                  color: '#A8A4A0',
+                }}
+              >
+                {text}
+              </p>
+            </div>
+          ))}
+        </div>
 
         <div
           style={{
-            marginTop: 48,
-            paddingTop: 32,
+            marginTop: 56,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
           }}
         >
           <button
-            onClick={() => setPage(0)}
+            onClick={() => setPage(1)}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -349,7 +484,7 @@ export function IntroScreen({ onComplete, onBack }) {
               cursor: 'pointer',
             }}
           >
-            Let's start <ArrowRight size={16} />
+            {"Let's start"} <ArrowRight size={16} />
           </button>
         </div>
       </div>
@@ -362,18 +497,29 @@ export function IntroScreen({ onComplete, onBack }) {
 // ═══════════════════════════════════════════════
 
 export function ConsentScreen({ onConsent }) {
-  const [checks, setChecks] = useState({ terms: false, age: false, data: false });
+  const [checks, setChecks] = useState({
+    terms: false,
+    age: false,
+    data: false,
+  });
   const allChecked = checks.terms && checks.age && checks.data;
 
-  const toggle = (key) => setChecks((prev) => ({ ...prev, [key]: !prev[key] }));
+  const toggle = (key) =>
+    setChecks((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const items = [
     {
       key: 'terms',
       text: 'I agree to the Terms of Service and understand this is a self-reflection tool, not professional career advice',
     },
-    { key: 'age', text: 'I am 18 years of age or older' },
-    { key: 'data', text: 'I understand my responses will be processed by AI' },
+    {
+      key: 'age',
+      text: 'I am 18 years of age or older',
+    },
+    {
+      key: 'data',
+      text: 'I understand my responses will be processed by AI to generate my report',
+    },
   ];
 
   return (
@@ -444,8 +590,8 @@ export function ConsentScreen({ onConsent }) {
           }}
         >
           <BodyText>
-            Your data stays on your device. Responses are processed by AI to
-            generate insights. We don't store your information on our servers.
+            Your data stays on your device. Responses are processed by AI
+            to generate your report. Nothing is stored on our servers.
           </BodyText>
         </div>
 
@@ -480,7 +626,9 @@ export function ConsentScreen({ onConsent }) {
                 borderRadius: 4,
                 marginTop: 2,
                 border: `2px solid ${
-                  checks[item.key] ? '#B8A9FF' : 'rgba(255,255,255,0.1)'
+                  checks[item.key]
+                    ? '#B8A9FF'
+                    : 'rgba(255,255,255,0.1)'
                 }`,
                 background: checks[item.key] ? '#B8A9FF' : 'transparent',
                 display: 'flex',
@@ -527,7 +675,9 @@ export function ConsentScreen({ onConsent }) {
               transition: 'all 350ms',
             }}
           >
-            {allChecked ? 'Start the conversation' : 'Please agree to all items'}
+            {allChecked
+              ? 'Start the conversation'
+              : 'Please agree to all items'}
           </button>
 
           <div style={{ textAlign: 'center', marginTop: 16 }}>
