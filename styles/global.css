@@ -79,7 +79,11 @@
   --duration-normal: 350ms;
   --duration-slow:   700ms;
 }
-
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0A0A0B;
+}
 /* ═══════════════════════════════════════════
    KEYFRAMES
    ═══════════════════════════════════════════ */
