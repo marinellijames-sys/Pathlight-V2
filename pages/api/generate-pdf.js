@@ -31,7 +31,7 @@ Font.register({
     },
     {
       src: 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI2fAZ9hiA.woff2',
-      fontWeight: 500,
+      fontWeight: 700,
     },
     {
       src: 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYAZ9hiA.woff2',
@@ -216,7 +216,7 @@ const s = StyleSheet.create({
   },
   // Inline bold
   bold: {
-    fontWeight: 500,
+    fontWeight: 700,
     color: C.textPrimary,
   },
   // Combo title
@@ -247,7 +247,7 @@ const s = StyleSheet.create({
   // Value prop
   valueProp: {
     fontSize: 12,
-    fontWeight: 500,
+    fontWeight: 700,
     color: C.textPrimary,
     fontStyle: 'italic',
     textAlign: 'center',
@@ -286,7 +286,7 @@ const s = StyleSheet.create({
   },
   narrativeLabel: {
     fontSize: 9,
-    fontWeight: 500,
+    fontWeight: 700,
     color: C.textPrimary,
     marginBottom: 8,
   },
@@ -568,7 +568,7 @@ function ReportDocument({ data }) {
         ].map(([label, items]) =>
           items.length > 0 ? (
             <View key={label} style={s.card} wrap={false}>
-              <Text style={{ ...s.body, color: C.textPrimary, fontWeight: 500, marginBottom: 8 }}>
+              <Text style={{ ...s.body, color: C.textPrimary, fontWeight: 700, marginBottom: 8 }}>
                 {label}
               </Text>
               {items.map((item, i) => (
