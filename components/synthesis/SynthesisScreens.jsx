@@ -4,6 +4,7 @@ import {
   Lock,
   FileText,
   Download,
+  Image,
   ChevronRight,
 } from 'lucide-react';
 import {
@@ -93,7 +94,8 @@ export function StrengthRevealScreen({ strength, index, total, onContinue }) {
           animation: 'rFade 0.6s ease 0.2s forwards',
         }}
       >
-        strength_{String(index + 1).padStart(2, '0')} of {String(total).padStart(2, '0')}
+        strength_{String(index + 1).padStart(2, '0')} of{' '}
+        {String(total).padStart(2, '0')}
       </div>
 
       <div
@@ -216,7 +218,7 @@ export function ProfileScreen({ profile, onNext }) {
       </div>
 
       <MonoLabel>your profile</MonoLabel>
-      <DisplayHeading>Here's what we see in you</DisplayHeading>
+      <DisplayHeading>{"Here's what we see in you"}</DisplayHeading>
 
       <div style={{ marginTop: 8 }}>
         {profile
@@ -235,319 +237,188 @@ export function ProfileScreen({ profile, onNext }) {
 }
 
 // ═══════════════════════════════════════════════
-// STRENGTH CARD (full — used post-payment + first 2 free)
+// STRENGTH DETAIL SCREEN (full card with formatting)
+// Used for the 2 free strengths shown before paywall
 // ═══════════════════════════════════════════════
 
-function StrengthCard({ pw, num, showDetails }) {
-  return (
-    <div
-      style={{
-        background: '#111113',
-        border: '1px solid rgba(255,255,255,0.06)',
-        borderRadius: 12,
-        overflow: 'hidden',
-        marginBottom: 16,
-      }}
-    >
-      <div
-        style={{
-          padding: 24,
-          borderBottom: showDetails ? '1px solid rgba(255,255,255,0.06)' : 'none',
-          display: 'flex',
-          gap: 20,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '0.6875rem',
-            color: '#B8A9FF',
-            paddingTop: 4,
-          }}
-        >
-          {String(num).padStart(2, '0')}
-        </span>
-        <div>
-          <div
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: 'clamp(1.375rem, 3vw, 1.75rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              color: '#F0EDE8',
-              marginBottom: 4,
-            }}
-          >
-            {pw.name}
-          </div>
-          <BodyText>{pw.description}</BodyText>
-        </div>
-      </div>
-
-      {showDetails && (
-        <div style={{ padding: 24, display: 'grid', gap: 20 }}>
-          {pw.valuable && (
-            <div>
-              <div
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6875rem',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#FFB88C',
-                  marginBottom: 4,
-                }}
-              >
-                What makes this valuable
-              </div>
-              <BodyText>{pw.valuable}</BodyText>
-            </div>
-          )}
-
-          <div>
-            <div
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.6875rem',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: '#B8A9FF',
-                marginBottom: 8,
-              }}
-            >
-              How to deploy this
-            </div>
-            {pw.thisWeek && (
-              <BodyText style={{ marginBottom: 8 }}>
-                <strong style={{ color: '#F0EDE8', fontWeight: 500 }}>
-                  This week:
-                </strong>{' '}
-                {pw.thisWeek}
-              </BodyText>
-            )}
-            {pw.inInterviews && (
-              <BodyText style={{ marginBottom: 8 }}>
-                <strong style={{ color: '#F0EDE8', fontWeight: 500 }}>
-                  In interviews:
-                </strong>{' '}
-                {pw.inInterviews}
-              </BodyText>
-            )}
-            {pw.bestRoles && (
-              <BodyText>
-                <strong style={{ color: '#F0EDE8', fontWeight: 500 }}>
-                  Best roles:
-                </strong>{' '}
-                {pw.bestRoles}
-              </BodyText>
-            )}
-          </div>
-
-          {pw.watchOut && (
-            <div>
-              <div
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6875rem',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#FF8F8F',
-                  marginBottom: 4,
-                }}
-              >
-                Watch out
-              </div>
-              <BodyText>{pw.watchOut}</BodyText>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════
-// LOCKED CARD (blurred teaser)
-// ═══════════════════════════════════════════════
-
-function LockedCard({ pw, num }) {
-  return (
-    <div
-      style={{
-        background: '#111113',
-        border: '1px solid rgba(255,255,255,0.06)',
-        borderRadius: 12,
-        padding: 24,
-        position: 'relative',
-        overflow: 'hidden',
-        marginBottom: 16,
-      }}
-    >
-      <div
-        style={{
-          filter: 'blur(6px)',
-          opacity: 0.25,
-          userSelect: 'none',
-          display: 'flex',
-          gap: 20,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '0.6875rem',
-            color: '#B8A9FF',
-          }}
-        >
-          {String(num).padStart(2, '0')}
-        </span>
-        <div>
-          <div
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: '1.5rem',
-              fontWeight: 700,
-              color: '#F0EDE8',
-              marginBottom: 4,
-            }}
-          >
-            {pw.name}
-          </div>
-          <BodyText>{pw.description?.substring(0, 60)}...</BodyText>
-        </div>
-      </div>
-
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '8px 20px',
-            background: '#1A1A1D',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: 4,
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '0.6875rem',
-            color: '#5C5955',
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
-          }}
-        >
-          <Lock size={12} /> unlock full report
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════
-// STRENGTHS SCREEN (free + paid views)
-// ═══════════════════════════════════════════════
-
-export function StrengthsScreen({
-  superpowers,
-  superpowersSummary,
-  paymentCompleted,
-  onBack,
-  onNext,
-  onPayment,
-}) {
+export function StrengthDetailScreen({ strength, num, onBack, onNext, nextLabel }) {
   return (
     <ReportWrap>
-      <MonoLabel>signature strengths</MonoLabel>
-      <DisplayHeading>What you've been bringing to the table</DisplayHeading>
-      <BodyText style={{ marginBottom: 32 }}>
-        Strengths you undervalue because they come naturally.
-      </BodyText>
+      <MonoLabel>
+        strength {String(num).padStart(2, '0')} of 05
+      </MonoLabel>
 
-      {paymentCompleted ? (
-        <>
-          {superpowers.slice(0, 5).map((pw, i) => (
-            <StrengthCard key={i} pw={pw} num={i + 1} showDetails />
-          ))}
+      <h2
+        style={{
+          fontFamily: "'Syne', sans-serif",
+          fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+          fontWeight: 700,
+          letterSpacing: '-0.03em',
+          color: '#F0EDE8',
+          marginBottom: 16,
+          lineHeight: 1.1,
+        }}
+      >
+        {strength.name}
+      </h2>
 
-          {superpowersSummary.whyTogether && (
-            <div style={{ marginTop: 32 }}>
-              <MonoLabel>why these matter together</MonoLabel>
-              <BodyLg style={{ marginTop: 8 }}>
-                {superpowersSummary.whyTogether}
-              </BodyLg>
-            </div>
-          )}
+      <BodyLg style={{ marginBottom: 32 }}>
+        {strength.description}
+      </BodyLg>
 
-          {superpowersSummary.valueProp && (
-            <div
-              style={{
-                background: '#111113',
-                border: '1px solid rgba(184,169,255,0.3)',
-                borderRadius: 12,
-                padding: 24,
-                textAlign: 'center',
-                marginTop: 24,
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: 1,
-                  background:
-                    'linear-gradient(90deg, transparent, #B8A9FF, transparent)',
-                }}
-              />
-              <p
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: '1.125rem',
-                  fontWeight: 500,
-                  color: '#F0EDE8',
-                  fontStyle: 'italic',
-                }}
-              >
-                "{superpowersSummary.valueProp}"
-              </p>
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          {superpowers.slice(0, 2).map((pw, i) => (
-            <StrengthCard key={i} pw={pw} num={i + 1} showDetails />
-          ))}
-          {superpowers.slice(2, 5).map((pw, i) => (
-            <LockedCard key={i} pw={pw} num={i + 3} />
-          ))}
-          <PaywallCard onPayment={onPayment} />
-        </>
+      {/* What makes this valuable */}
+      {strength.valuable && (
+        <div style={{ marginBottom: 24 }}>
+          <div
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '0.6875rem',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#FFB88C',
+              marginBottom: 8,
+            }}
+          >
+            What makes this valuable
+          </div>
+          <BodyText>{strength.valuable}</BodyText>
+        </div>
       )}
 
-      <NavRow
-        onBack={onBack}
-        onNext={paymentCompleted ? onNext : null}
-        nextLabel="Strength Combinations"
-      />
+      {/* How to deploy this */}
+      <div style={{ marginBottom: 24 }}>
+        <div
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: '0.6875rem',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            color: '#B8A9FF',
+            marginBottom: 12,
+          }}
+        >
+          How to deploy this
+        </div>
+
+        {strength.thisWeek && (
+          <div
+            style={{
+              background: '#111113',
+              border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: 8,
+              padding: '14px 18px',
+              marginBottom: 8,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: '0.625rem',
+                color: '#B8A9FF',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              This week
+            </span>
+            <BodyText style={{ marginTop: 4 }}>
+              {strength.thisWeek}
+            </BodyText>
+          </div>
+        )}
+
+        {strength.inInterviews && (
+          <div
+            style={{
+              background: '#111113',
+              border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: 8,
+              padding: '14px 18px',
+              marginBottom: 8,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: '0.625rem',
+                color: '#B8A9FF',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              In interviews
+            </span>
+            <BodyText style={{ marginTop: 4, fontStyle: 'italic' }}>
+              {strength.inInterviews}
+            </BodyText>
+          </div>
+        )}
+
+        {strength.bestRoles && (
+          <div
+            style={{
+              background: '#111113',
+              border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: 8,
+              padding: '14px 18px',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: '0.625rem',
+                color: '#B8A9FF',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              Best roles for this
+            </span>
+            <BodyText style={{ marginTop: 4 }}>
+              {strength.bestRoles}
+            </BodyText>
+          </div>
+        )}
+      </div>
+
+      {/* Watch out */}
+      {strength.watchOut && (
+        <div style={{ marginBottom: 24 }}>
+          <div
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '0.6875rem',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#FF8F8F',
+              marginBottom: 8,
+            }}
+          >
+            Watch out
+          </div>
+          <div
+            style={{
+              background: 'rgba(255,143,143,0.06)',
+              border: '1px solid rgba(255,143,143,0.15)',
+              borderRadius: 8,
+              padding: '14px 18px',
+            }}
+          >
+            <BodyText>{strength.watchOut}</BodyText>
+          </div>
+        </div>
+      )}
+
+      <NavRow onBack={onBack} onNext={onNext} nextLabel={nextLabel} />
     </ReportWrap>
   );
 }
 
 // ═══════════════════════════════════════════════
-// PAYWALL CARD (inline within strengths screen)
+// PAYWALL SCREEN (standalone)
 // ═══════════════════════════════════════════════
 
-function PaywallCard({ onPayment }) {
+export function PaywallScreen({ onPayment, onBack }) {
   const features = [
     'All 5 bespoke strengths with deployment guides',
     'Rare strength combinations',
@@ -561,36 +432,45 @@ function PaywallCard({ onPayment }) {
   return (
     <div
       style={{
+        minHeight: '100vh',
         background: '#0A0A0B',
-        border: '1px solid rgba(255,255,255,0.06)',
-        borderRadius: 16,
-        padding: '64px 24px',
-        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '48px 24px',
         position: 'relative',
         overflow: 'hidden',
-        marginTop: 32,
       }}
     >
       <div
         style={{
           position: 'absolute',
-          top: '-10%',
+          top: '10%',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: 500,
-          height: 300,
+          width: 600,
+          height: 400,
           background:
-            'radial-gradient(ellipse, rgba(184,169,255,0.1) 0%, transparent 70%)',
-          filter: 'blur(60px)',
+            'radial-gradient(ellipse, rgba(184,169,255,0.12) 0%, transparent 70%)',
+          filter: 'blur(80px)',
           pointerEvents: 'none',
         }}
       />
       <GridBg opacity={0.02} />
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div
+        style={{
+          maxWidth: 480,
+          width: '100%',
+          position: 'relative',
+          zIndex: 1,
+          textAlign: 'center',
+          animation: 'slideUp 0.7s ease forwards',
+        }}
+      >
         <MonoLabel>2 of 5 strengths revealed</MonoLabel>
 
-        <h3
+        <h2
           style={{
             fontFamily: "'Syne', sans-serif",
             fontSize: 'clamp(2rem, 5vw, 3rem)',
@@ -601,23 +481,24 @@ function PaywallCard({ onPayment }) {
             marginBottom: 16,
           }}
         >
-          There's more to
+          {"There's more to"}
           <br />
           your story
-        </h3>
+        </h2>
 
-        <BodyText style={{ maxWidth: 380, margin: '0 auto 32px' }}>
-          Your full report reveals the complete picture — the patterns, the rare
-          combinations, and where to take them next.
+        <BodyText style={{ maxWidth: 380, margin: '0 auto 40px' }}>
+          Your full report reveals the complete picture — the patterns,
+          the rare combinations, and where to take them next.
         </BodyText>
 
+        {/* Feature list */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: 6,
-            maxWidth: 300,
-            margin: '0 auto 32px',
+            gap: 8,
+            maxWidth: 340,
+            margin: '0 auto 40px',
             textAlign: 'left',
           }}
         >
@@ -627,17 +508,17 @@ function PaywallCard({ onPayment }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
+                gap: 10,
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.8125rem',
+                fontSize: '0.875rem',
                 color: '#A8A4A0',
                 fontWeight: 300,
               }}
             >
               <span
                 style={{
-                  width: 3,
-                  height: 3,
+                  width: 4,
+                  height: 4,
                   borderRadius: '50%',
                   background: '#B8A9FF',
                   flexShrink: 0,
@@ -648,7 +529,8 @@ function PaywallCard({ onPayment }) {
           ))}
         </div>
 
-        <div style={{ marginBottom: 24 }}>
+        {/* Price */}
+        <div style={{ marginBottom: 28 }}>
           <span
             style={{
               fontFamily: "'Syne', sans-serif",
@@ -673,21 +555,23 @@ function PaywallCard({ onPayment }) {
           </span>
         </div>
 
+        {/* CTA */}
         <button
           onClick={onPayment}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            padding: '14px 36px',
+            padding: '16px 40px',
             background: '#B8A9FF',
             color: '#0A0A0B',
             fontFamily: "'Inter', sans-serif",
-            fontSize: '0.9375rem',
+            fontSize: '1rem',
             fontWeight: 500,
             border: 'none',
             borderRadius: 4,
             cursor: 'pointer',
+            transition: 'all 350ms',
           }}
         >
           Unlock Full Report <ArrowRight size={16} />
@@ -703,336 +587,46 @@ function PaywallCard({ onPayment }) {
         >
           encrypted payment via stripe · data stays on your device
         </p>
-      </div>
-    </div>
-  );
-}
 
-// ═══════════════════════════════════════════════
-// COMBINATIONS SCREEN
-// ═══════════════════════════════════════════════
-
-export function CombinationsScreen({ combos, rarestCombo, onBack, onNext }) {
-  return (
-    <ReportWrap>
-      <MonoLabel>strength combinations</MonoLabel>
-      <DisplayHeading>Where your strengths multiply</DisplayHeading>
-      <BodyText style={{ marginBottom: 32 }}>
-        Individual strengths are useful. Combinations make you irreplaceable.
-      </BodyText>
-
-      {combos.map((c, i) => (
-        <div
-          key={i}
-          style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
-            padding: 24,
-            marginBottom: 12,
-            backdropFilter: 'blur(20px)',
-          }}
-        >
-          <div
+        {/* Back */}
+        <div style={{ marginTop: 40 }}>
+          <button
+            onClick={onBack}
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: '1.25rem',
-              fontWeight: 600,
-              color: '#F0EDE8',
-              marginBottom: 8,
-            }}
-          >
-            {c.title}
-          </div>
-          <BodyText style={{ whiteSpace: 'pre-wrap' }}>{c.body}</BodyText>
-        </div>
-      ))}
-
-      {rarestCombo && (
-        <div
-          style={{
-            background: '#111113',
-            border: '1px solid rgba(184,169,255,0.3)',
-            borderRadius: 12,
-            padding: 24,
-            position: 'relative',
-            overflow: 'hidden',
-            marginTop: 8,
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 1,
-              background:
-                'linear-gradient(90deg, transparent, #B8A9FF, transparent)',
-            }}
-          />
-          <MonoLabel>your rarest combination</MonoLabel>
-          <BodyText>{rarestCombo}</BodyText>
-        </div>
-      )}
-
-      <NavRow onBack={onBack} onNext={onNext} nextLabel="Deal-Breakers" />
-    </ReportWrap>
-  );
-}
-
-// ═══════════════════════════════════════════════
-// DEAL-BREAKERS SCREEN
-// ═══════════════════════════════════════════════
-
-export function DealBreakersScreen({ dealbreakers, onBack, onNext }) {
-  const cats = [
-    ['About the work', dealbreakers.work],
-    ['What comes with the job', dealbreakers.job],
-    ['About leadership', dealbreakers.leadership],
-    ['About the environment', dealbreakers.environment],
-  ];
-
-  return (
-    <ReportWrap>
-      <MonoLabel>deal-breakers</MonoLabel>
-      <DisplayHeading>What doesn't work for you</DisplayHeading>
-      <BodyText style={{ marginBottom: 32 }}>
-        Use this when evaluating opportunities.
-      </BodyText>
-
-      {cats.map(
-        ([label, items]) =>
-          items.length > 0 && (
-            <div
-              key={label}
-              style={{
-                background: '#111113',
-                border: '1px solid rgba(255,255,255,0.06)',
-                borderRadius: 12,
-                padding: 24,
-                marginBottom: 12,
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: '1.125rem',
-                  fontWeight: 600,
-                  color: '#F0EDE8',
-                  marginBottom: 16,
-                }}
-              >
-                {label}
-              </div>
-              {items.map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 10,
-                    marginBottom: 8,
-                  }}
-                >
-                  <span
-                    style={{
-                      color: '#FF8F8F',
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '0.8125rem',
-                    }}
-                  >
-                    —
-                  </span>
-                  <BodyText>{item}</BodyText>
-                </div>
-              ))}
-            </div>
-          )
-      )}
-
-      <NavRow onBack={onBack} onNext={onNext} nextLabel="Role Territories" />
-    </ReportWrap>
-  );
-}
-
-// ═══════════════════════════════════════════════
-// TERRITORIES SCREEN
-// ═══════════════════════════════════════════════
-
-export function TerritoriesScreen({ territories, onBack, onNext }) {
-  const [expanded, setExpanded] = useState({});
-
-  return (
-    <ReportWrap>
-      <MonoLabel>role territories</MonoLabel>
-      <DisplayHeading>Paths to explore</DisplayHeading>
-      <BodyText style={{ marginBottom: 32 }}>
-        Directions, not prescriptions. Tap to expand.
-      </BodyText>
-
-      {territories.map((t, i) => (
-        <div
-          key={i}
-          style={{
-            background: '#111113',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
-            overflow: 'hidden',
-            marginBottom: 12,
-          }}
-        >
-          <div
-            onClick={() =>
-              setExpanded((prev) => ({ ...prev, [i]: !prev[i] }))
-            }
-            style={{
-              padding: '20px 24px',
-              cursor: 'pointer',
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: 6,
+              background: 'none',
+              border: 'none',
+              color: '#5C5955',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.8125rem',
+              cursor: 'pointer',
             }}
           >
-            <span
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: '1.125rem',
-                fontWeight: 600,
-                color: '#F0EDE8',
-              }}
-            >
-              {t.name}
-            </span>
-            <ChevronRight
-              size={18}
-              style={{
-                color: '#5C5955',
-                transform: expanded[i] ? 'rotate(90deg)' : 'none',
-                transition: 'transform 200ms',
-              }}
-            />
-          </div>
-
-          {expanded[i] && (
-            <div
-              style={{
-                padding: '0 24px 24px',
-                borderTop: '1px solid rgba(255,255,255,0.06)',
-                paddingTop: 20,
-              }}
-            >
-              {[
-                ['Why this fits', t.whyFits, '#B8A9FF'],
-                ['What transfers', t.transfers, '#FFB88C'],
-                ['Possible gaps', t.gaps, '#FF8F8F'],
-                ['Salary range', t.salary, '#5C5955'],
-                ['Search terms', t.searchTerms, '#5C5955'],
-                ['Respects your deal-breakers', t.dealbreakers, '#8CCFB8'],
-              ].map(
-                ([label, val, color]) =>
-                  val && (
-                    <div key={label} style={{ marginBottom: 16 }}>
-                      <div
-                        style={{
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: '0.6875rem',
-                          letterSpacing: '0.08em',
-                          textTransform: 'uppercase',
-                          color,
-                          marginBottom: 4,
-                        }}
-                      >
-                        {label}
-                      </div>
-                      <BodyText>{val}</BodyText>
-                    </div>
-                  )
-              )}
-            </div>
-          )}
+            ← Back to strengths
+          </button>
         </div>
-      ))}
-
-      <NavRow onBack={onBack} onNext={onNext} nextLabel="Career Narrative" />
-    </ReportWrap>
+      </div>
+    </div>
   );
 }
 
 // ═══════════════════════════════════════════════
-// CAREER NARRATIVE SCREEN
+// DOWNLOADS PAGE (post-payment)
 // ═══════════════════════════════════════════════
 
-export function CareerNarrativeScreen({
-  careerNarrative,
-  shortIntro,
-  onBack,
-  onDownloadPDF,
-  pdfDownloading,
-}) {
-  const CopyBlock = ({ title, text }) => (
-    <div
-      style={{
-        background: '#111113',
-        border: '1px solid rgba(255,255,255,0.06)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 16,
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: 16,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Syne', sans-serif",
-            fontSize: '1.125rem',
-            fontWeight: 600,
-            color: '#F0EDE8',
-          }}
-        >
-          {title}
-        </span>
-        <button
-          onClick={() => navigator.clipboard?.writeText(text)}
-          style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '0.6875rem',
-            color: '#5C5955',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            textTransform: 'uppercase',
-            letterSpacing: '0.06em',
-          }}
-        >
-          copy
-        </button>
-      </div>
-      <BodyLg style={{ whiteSpace: 'pre-wrap' }}>{text}</BodyLg>
-    </div>
-  );
-
+export function DownloadsScreen({ onDownloadPDF, pdfDownloading }) {
   return (
     <ReportWrap>
-      <MonoLabel>career narrative</MonoLabel>
-      <DisplayHeading>Your story, ready to use</DisplayHeading>
-      <BodyText style={{ marginBottom: 32 }}>
-        Copy, paste, make it yours.
+      <MonoLabel>your full report</MonoLabel>
+      <DisplayHeading>Everything you need</DisplayHeading>
+      <BodyText style={{ marginBottom: 40 }}>
+        Download your assets below. Bookmark this page — you can come back
+        anytime.
       </BodyText>
 
-      {careerNarrative && (
-        <CopyBlock title="LinkedIn / About" text={careerNarrative} />
-      )}
-      {shortIntro && (
-        <CopyBlock title="30-Second Introduction" text={shortIntro} />
-      )}
-
-      {/* PDF Download */}
+      {/* PDF Report */}
       <div
         style={{
           background: '#111113',
@@ -1040,9 +634,9 @@ export function CareerNarrativeScreen({
           borderRadius: 12,
           padding: 32,
           textAlign: 'center',
-          marginTop: 32,
           position: 'relative',
           overflow: 'hidden',
+          marginBottom: 16,
         }}
       >
         <div
@@ -1056,18 +650,25 @@ export function CareerNarrativeScreen({
               'linear-gradient(90deg, transparent, #B8A9FF, transparent)',
           }}
         />
-        <FileText size={32} style={{ color: '#B8A9FF', marginBottom: 16 }} />
+        <FileText
+          size={28}
+          style={{ color: '#B8A9FF', marginBottom: 12 }}
+        />
         <div
           style={{
             fontFamily: "'Syne', sans-serif",
-            fontSize: '1.25rem',
+            fontSize: '1.125rem',
             fontWeight: 600,
             color: '#F0EDE8',
-            marginBottom: 8,
+            marginBottom: 4,
           }}
         >
-          Download Your Report
+          Career Clarity Report
         </div>
+        <BodyText style={{ marginBottom: 16 }}>
+          Your complete report — strengths, combinations, deal-breakers,
+          role territories, and career narrative.
+        </BodyText>
         <button
           onClick={onDownloadPDF}
           disabled={pdfDownloading}
@@ -1075,16 +676,15 @@ export function CareerNarrativeScreen({
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            padding: '14px 36px',
+            padding: '12px 28px',
             background: '#B8A9FF',
             color: '#0A0A0B',
             fontFamily: "'Inter', sans-serif",
-            fontSize: '0.9375rem',
+            fontSize: '0.875rem',
             fontWeight: 500,
             border: 'none',
             borderRadius: 4,
             cursor: 'pointer',
-            marginTop: 12,
             opacity: pdfDownloading ? 0.5 : 1,
           }}
         >
@@ -1098,6 +698,104 @@ export function CareerNarrativeScreen({
         </button>
       </div>
 
+      {/* Strength Cards */}
+      <div
+        style={{
+          background: '#111113',
+          border: '1px solid rgba(255,255,255,0.06)',
+          borderRadius: 12,
+          padding: 24,
+          marginBottom: 16,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+          <Image size={22} style={{ color: '#FFB88C' }} />
+          <div>
+            <div
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: '1.0625rem',
+                fontWeight: 600,
+                color: '#F0EDE8',
+              }}
+            >
+              Strength Cards
+            </div>
+            <BodyText>
+              5 shareable cards for LinkedIn and Instagram
+            </BodyText>
+          </div>
+        </div>
+        <button
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '10px 20px',
+            background: 'transparent',
+            color: '#F0EDE8',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '0.8125rem',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 4,
+            cursor: 'pointer',
+            opacity: 0.4,
+          }}
+          disabled
+        >
+          Coming soon
+        </button>
+      </div>
+
+      {/* Combination Cards */}
+      <div
+        style={{
+          background: '#111113',
+          border: '1px solid rgba(255,255,255,0.06)',
+          borderRadius: 12,
+          padding: 24,
+          marginBottom: 16,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+          <Image size={22} style={{ color: '#8CCFB8' }} />
+          <div>
+            <div
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: '1.0625rem',
+                fontWeight: 600,
+                color: '#F0EDE8',
+              }}
+            >
+              Combination Cards
+            </div>
+            <BodyText>
+              3 combo cards + your rarest combination
+            </BodyText>
+          </div>
+        </div>
+        <button
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '10px 20px',
+            background: 'transparent',
+            color: '#F0EDE8',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '0.8125rem',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 4,
+            cursor: 'pointer',
+            opacity: 0.4,
+          }}
+          disabled
+        >
+          Coming soon
+        </button>
+      </div>
+
       {/* Feedback */}
       <div
         style={{
@@ -1106,7 +804,7 @@ export function CareerNarrativeScreen({
           borderRadius: 12,
           padding: 24,
           textAlign: 'center',
-          marginTop: 16,
+          marginTop: 32,
         }}
       >
         <div
@@ -1142,8 +840,6 @@ export function CareerNarrativeScreen({
           Take 2-Min Survey
         </a>
       </div>
-
-      <NavRow onBack={onBack} />
     </ReportWrap>
   );
 }
