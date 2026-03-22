@@ -17,25 +17,6 @@ import {
 // Returns: application/pdf blob
 // ═══════════════════════════════════════════════
 
-// ── Register fonts ──
-Font.register({
-  family: 'Inter',
-  fonts: [
-    {
-      src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-300-normal.woff2',
-      fontWeight: 300,
-    },
-    {
-      src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.woff2',
-      fontWeight: 400,
-    },
-    {
-      src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.woff2',
-      fontWeight: 700,
-    },
-  ],
-});
-
 // ── Colours ──
 const C = {
   void: '#0A0A0B',
@@ -61,7 +42,7 @@ const s = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 50,
     paddingHorizontal: 50,
-    fontFamily: 'Inter',
+    fontFamily: 'Helvetica',
     color: C.textBody,
   },
   // Cover
@@ -76,14 +57,14 @@ const s = StyleSheet.create({
   },
   coverTitle: {
     fontSize: 42,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     letterSpacing: -1.5,
     marginBottom: 12,
   },
   coverSubtitle: {
     fontSize: 12,
-    fontWeight: 300,
+    fontweight: 'normal',
     color: C.textMuted,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -104,7 +85,7 @@ const s = StyleSheet.create({
   // Section headers
   sectionLabel: {
     fontSize: 8,
-    fontWeight: 400,
+    fontweight: 'normal',
     color: C.accent,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -112,7 +93,7 @@ const s = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 22,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     letterSpacing: -0.5,
     marginBottom: 16,
@@ -121,14 +102,14 @@ const s = StyleSheet.create({
   // Body text
   bodyLg: {
     fontSize: 11,
-    fontWeight: 300,
+    fontweight: 'normal',
     color: C.textBody,
     lineHeight: 1.7,
     marginBottom: 10,
   },
   body: {
     fontSize: 10,
-    fontWeight: 300,
+    fontweight: 'normal',
     color: C.textBody,
     lineHeight: 1.65,
     marginBottom: 6,
@@ -159,7 +140,7 @@ const s = StyleSheet.create({
   },
   strengthName: {
     fontSize: 16,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     letterSpacing: -0.3,
     marginBottom: 8,
@@ -167,7 +148,7 @@ const s = StyleSheet.create({
   // Sub-section labels
   labelWarm: {
     fontSize: 7,
-    fontWeight: 400,
+    fontweight: 'normal',
     color: C.warm,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -176,7 +157,7 @@ const s = StyleSheet.create({
   },
   labelAccent: {
     fontSize: 7,
-    fontWeight: 400,
+    fontweight: 'normal',
     color: C.accent,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -185,7 +166,7 @@ const s = StyleSheet.create({
   },
   labelSharp: {
     fontSize: 7,
-    fontWeight: 400,
+    fontweight: 'normal',
     color: C.sharp,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -194,7 +175,7 @@ const s = StyleSheet.create({
   },
   labelCool: {
     fontSize: 7,
-    fontWeight: 400,
+    fontweight: 'normal',
     color: C.cool,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -203,7 +184,7 @@ const s = StyleSheet.create({
   },
   labelMuted: {
     fontSize: 7,
-    fontWeight: 400,
+    fontweight: 'normal',
     color: C.textMuted,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -212,13 +193,13 @@ const s = StyleSheet.create({
   },
   // Inline bold
   bold: {
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
   },
   // Combo title
   comboTitle: {
     fontSize: 13,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     marginBottom: 6,
   },
@@ -236,14 +217,14 @@ const s = StyleSheet.create({
   // Territory
   territoryName: {
     fontSize: 14,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     marginBottom: 8,
   },
   // Value prop
   valueProp: {
     fontSize: 12,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     fontStyle: 'italic',
     textAlign: 'center',
@@ -282,7 +263,7 @@ const s = StyleSheet.create({
   },
   narrativeLabel: {
     fontSize: 9,
-    fontWeight: 700,
+    fontweight: 'bold',
     color: C.textPrimary,
     marginBottom: 8,
   },
@@ -564,7 +545,7 @@ function ReportDocument({ data }) {
         ].map(([label, items]) =>
           items.length > 0 ? (
             <View key={label} style={s.card} wrap={false}>
-              <Text style={{ ...s.body, color: C.textPrimary, fontWeight: 700, marginBottom: 8 }}>
+              <Text style={{ ...s.body, color: C.textPrimary, fontweight: 'bold', marginBottom: 8 }}>
                 {label}
               </Text>
               {items.map((item, i) => (
