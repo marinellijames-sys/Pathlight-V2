@@ -6,18 +6,13 @@ import {
   View,
   StyleSheet,
   renderToBuffer,
-  Font,
 } from '@react-pdf/renderer';
 
 // ═══════════════════════════════════════════════
 // PATHLIGHT — PDF Report Generator
-//
-// POST /api/generate-pdf
-// Body: { synthesisContent: string }
-// Returns: application/pdf blob
+// Helvetica (built-in, no font registration)
 // ═══════════════════════════════════════════════
 
-// ── Colours ──
 const C = {
   void: '#0A0A0B',
   surface: '#111113',
@@ -27,7 +22,6 @@ const C = {
   textMuted: '#5C5955',
   textGhost: '#3A3835',
   accent: '#B8A9FF',
-  accentDim: '#7B6FBF',
   warm: '#FFB88C',
   cool: '#8CCFB8',
   sharp: '#FF8F8F',
@@ -35,17 +29,15 @@ const C = {
   borderAccent: '#3D3566',
 };
 
-// ── Styles ──
 const s = StyleSheet.create({
   page: {
     backgroundColor: C.void,
     paddingTop: 50,
-    paddingBottom: 50,
+    paddingBottom: 60,
     paddingHorizontal: 50,
     fontFamily: 'Helvetica',
     color: C.textBody,
   },
-  // Cover
   coverPage: {
     backgroundColor: C.void,
     paddingHorizontal: 50,
@@ -56,15 +48,14 @@ const s = StyleSheet.create({
     height: '100%',
   },
   coverTitle: {
-    fontSize: 42,
-    fontweight: 'bold',
+    fontSize: 44,
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
     letterSpacing: -1.5,
     marginBottom: 12,
   },
   coverSubtitle: {
-    fontSize: 12,
-    fontweight: 'normal',
+    fontSize: 13,
     color: C.textMuted,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -82,162 +73,167 @@ const s = StyleSheet.create({
     textTransform: 'uppercase',
     marginTop: 40,
   },
-  // Section headers
   sectionLabel: {
-    fontSize: 8,
-    fontweight: 'normal',
+    fontSize: 9,
     color: C.accent,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   sectionTitle: {
-    fontSize: 22,
-    fontweight: 'bold',
+    fontSize: 24,
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
     letterSpacing: -0.5,
-    marginBottom: 16,
+    marginBottom: 18,
     lineHeight: 1.2,
   },
-  // Body text
   bodyLg: {
-    fontSize: 11,
-    fontweight: 'normal',
+    fontSize: 12.5,
     color: C.textBody,
     lineHeight: 1.7,
     marginBottom: 10,
   },
   body: {
-    fontSize: 10,
-    fontweight: 'normal',
+    fontSize: 11.5,
     color: C.textBody,
     lineHeight: 1.65,
     marginBottom: 6,
   },
-  // Cards
   card: {
     backgroundColor: C.surface,
     borderRadius: 8,
-    padding: 20,
-    marginBottom: 12,
+    padding: 22,
+    marginBottom: 14,
     borderWidth: 1,
     borderColor: C.borderSubtle,
   },
   cardAccent: {
     backgroundColor: C.surface,
     borderRadius: 8,
-    padding: 20,
-    marginBottom: 12,
+    padding: 22,
+    marginBottom: 14,
     borderWidth: 1,
     borderColor: C.borderAccent,
   },
-  // Strength
   strengthNum: {
-    fontSize: 8,
+    fontSize: 9,
     color: C.accent,
     letterSpacing: 1,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   strengthName: {
-    fontSize: 16,
-    fontweight: 'bold',
+    fontSize: 20,
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
     letterSpacing: -0.3,
-    marginBottom: 8,
+    marginBottom: 10,
   },
-  // Sub-section labels
   labelWarm: {
-    fontSize: 7,
-    fontweight: 'normal',
+    fontSize: 8,
     color: C.warm,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    marginBottom: 4,
-    marginTop: 12,
+    marginBottom: 6,
+    marginTop: 14,
   },
   labelAccent: {
-    fontSize: 7,
-    fontweight: 'normal',
+    fontSize: 8,
     color: C.accent,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    marginBottom: 4,
-    marginTop: 12,
+    marginBottom: 6,
+    marginTop: 14,
   },
   labelSharp: {
-    fontSize: 7,
-    fontweight: 'normal',
+    fontSize: 8,
     color: C.sharp,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    marginBottom: 4,
-    marginTop: 12,
-  },
-  labelCool: {
-    fontSize: 7,
-    fontweight: 'normal',
-    color: C.cool,
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-    marginBottom: 4,
-    marginTop: 12,
+    marginBottom: 6,
+    marginTop: 14,
   },
   labelMuted: {
-    fontSize: 7,
-    fontweight: 'normal',
+    fontSize: 8,
     color: C.textMuted,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    marginBottom: 4,
-    marginTop: 12,
+    marginBottom: 6,
+    marginTop: 14,
   },
-  // Inline bold
   bold: {
-    fontweight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
   },
-  // Combo title
-  comboTitle: {
-    fontSize: 13,
-    fontweight: 'bold',
-    color: C.textPrimary,
+  pitchBox: {
+    backgroundColor: C.elevated,
+    borderRadius: 6,
+    padding: 16,
+    marginTop: 14,
+    marginBottom: 8,
+    borderLeftWidth: 3,
+    borderLeftColor: C.accent,
+  },
+  pitchLabel: {
+    fontSize: 8,
+    color: C.accent,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
     marginBottom: 6,
   },
-  // Dealbreaker dash
-  dbRow: {
+  pitchText: {
+    fontSize: 12,
+    color: C.textPrimary,
+    fontFamily: 'Helvetica-Oblique',
+    lineHeight: 1.6,
+  },
+  valueItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 4,
-    gap: 6,
+    marginBottom: 6,
+    gap: 8,
   },
-  dbDash: {
-    fontSize: 10,
-    color: C.sharp,
+  valueBullet: {
+    fontSize: 8,
+    color: C.warm,
+    marginTop: 3,
   },
-  // Territory
-  territoryName: {
-    fontSize: 14,
-    fontweight: 'bold',
+  comboTitle: {
+    fontSize: 15,
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
     marginBottom: 8,
   },
-  // Value prop
-  valueProp: {
-    fontSize: 12,
-    fontweight: 'bold',
+  dbRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 5,
+    gap: 8,
+  },
+  dbDash: {
+    fontSize: 11,
+    color: C.sharp,
+  },
+  territoryName: {
+    fontSize: 16,
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
-    fontStyle: 'italic',
+    marginBottom: 10,
+  },
+  valueProp: {
+    fontSize: 13,
+    fontFamily: 'Helvetica-Oblique',
+    color: C.textPrimary,
     textAlign: 'center',
     marginVertical: 16,
     paddingHorizontal: 20,
+    lineHeight: 1.6,
   },
-  // Divider
   divider: {
     height: 1,
     backgroundColor: C.borderSubtle,
-    marginVertical: 20,
+    marginVertical: 22,
   },
-  // Footer
   footer: {
     position: 'absolute',
     bottom: 30,
@@ -252,31 +248,26 @@ const s = StyleSheet.create({
     color: C.textGhost,
     letterSpacing: 1,
   },
-  // Narrative box
   narrativeBox: {
     backgroundColor: C.surface,
     borderRadius: 8,
-    padding: 20,
-    marginBottom: 12,
+    padding: 22,
+    marginBottom: 14,
     borderWidth: 1,
     borderColor: C.borderSubtle,
   },
   narrativeLabel: {
-    fontSize: 9,
-    fontweight: 'bold',
+    fontSize: 10,
+    fontFamily: 'Helvetica-Bold',
     color: C.textPrimary,
-    marginBottom: 8,
+    marginBottom: 10,
   },
 });
 
-// ── Parser (lightweight, inline) ──
+// ── Parser ──
 function cleanText(text) {
   if (!text) return '';
-  return text
-    .replace(/\*\*/g, '')
-    .replace(/\*/g, '')
-    .replace(/^#+\s*/gm, '')
-    .trim();
+  return text.replace(/\*\*/g, '').replace(/\*/g, '').replace(/^#+\s*/gm, '').trim();
 }
 
 function parseForPDF(content) {
@@ -299,7 +290,8 @@ function parseForPDF(content) {
 
     const ss = content.match(/## Your Signature Strengths\n\n([\s\S]*?)(?=\n## Your Strength Combinations)/);
     if (ss) {
-      const labels = ['WHAT MAKES THIS VALUABLE:', 'HOW TO DEPLOY THIS:', 'WATCH OUT:', '---'];
+      const labels = ['WHAT MAKES THIS VALUABLE:', 'YOUR ELEVATOR PITCH:', 'HOW TO DEPLOY THIS:', 'WATCH OUT:', '---'];
+
       ss[1].split(/\n### /).filter(b => b.trim()).forEach(block => {
         const lines = block.split('\n');
         const name = cleanText(lines[0]);
@@ -325,11 +317,21 @@ function parseForPDF(content) {
           return m ? cleanText(m[1]) : '';
         };
 
+        const valuableRaw = getSection('WHAT MAKES THIS VALUABLE:');
+        const valueItems = valuableRaw
+          .split(/\n(?=\d\.)/)
+          .map(v => cleanText(v.replace(/^\d\.\s*/, '')))
+          .filter(v => v.length > 0);
+
+        let elevatorPitch = getSection('YOUR ELEVATOR PITCH:');
+        elevatorPitch = elevatorPitch.replace(/^["']|["']$/g, '').trim();
+
         if (name) {
           r.strengths.push({
             name,
             description: cleanText(descLines.join(' ')),
-            valuable: getSection('WHAT MAKES THIS VALUABLE:'),
+            valueItems: valueItems.length > 0 ? valueItems : (valuableRaw ? [valuableRaw] : []),
+            elevatorPitch,
             thisWeek: gdf('This week'),
             inInterviews: gdf('In interviews'),
             bestRoles: gdf('Best roles for this'),
@@ -403,7 +405,6 @@ function parseForPDF(content) {
   return r;
 }
 
-// ── Footer component ──
 function Footer({ pageLabel }) {
   return (
     <View style={s.footer} fixed>
@@ -413,20 +414,79 @@ function Footer({ pageLabel }) {
   );
 }
 
-// ── PDF Document ──
+function StrengthPage({ pw, num }) {
+  return (
+    <Page size="A4" style={s.page} wrap>
+      <Text style={s.strengthNum}>
+        STRENGTH {String(num).padStart(2, '0')}
+      </Text>
+      <Text style={s.strengthName}>{pw.name}</Text>
+      <Text style={s.bodyLg}>{pw.description}</Text>
+
+      {pw.elevatorPitch ? (
+        <View style={s.pitchBox}>
+          <Text style={s.pitchLabel}>Your strength in your own words</Text>
+          <Text style={s.pitchText}>"{pw.elevatorPitch}"</Text>
+        </View>
+      ) : null}
+
+      <Text style={s.labelWarm}>What makes this valuable</Text>
+      {pw.valueItems.map((item, i) => (
+        <View key={i} style={s.valueItem}>
+          <Text style={s.valueBullet}>●</Text>
+          <Text style={s.body}>{item}</Text>
+        </View>
+      ))}
+
+      <Text style={s.labelAccent}>How to deploy this</Text>
+      {pw.thisWeek ? (
+        <Text style={s.body}>
+          <Text style={s.bold}>This week: </Text>
+          {pw.thisWeek}
+        </Text>
+      ) : null}
+      {pw.inInterviews ? (
+        <Text style={s.body}>
+          <Text style={s.bold}>In interviews: </Text>
+          {pw.inInterviews}
+        </Text>
+      ) : null}
+      {pw.bestRoles ? (
+        <Text style={s.body}>
+          <Text style={s.bold}>Best roles: </Text>
+          {pw.bestRoles}
+        </Text>
+      ) : null}
+
+      {pw.watchOut ? (
+        <>
+          <Text style={s.labelSharp}>Watch out</Text>
+          <Text style={s.body}>{pw.watchOut}</Text>
+        </>
+      ) : null}
+
+      <Footer pageLabel="STRENGTHS" />
+    </Page>
+  );
+}
+
 function ReportDocument({ data }) {
   const d = data;
 
   return (
     <Document>
-      {/* Cover Page */}
       <Page size="A4" style={{ backgroundColor: C.void }}>
         <View style={s.coverPage}>
           <Text style={s.coverTitle}>Pathlight</Text>
           <View style={s.coverLine} />
           <Text style={s.coverSubtitle}>Career Clarity Report</Text>
           <Text style={s.coverMeta}>
-            Generated {new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}
+            Generated{' '}
+            {new Date().toLocaleDateString('en-AU', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
           </Text>
           <Text style={{ ...s.coverMeta, marginTop: 8 }}>
             Private · AI-Generated · For personal use only
@@ -434,7 +494,6 @@ function ReportDocument({ data }) {
         </View>
       </Page>
 
-      {/* Profile */}
       <Page size="A4" style={s.page}>
         <Text style={s.sectionLabel}>Your Profile</Text>
         <Text style={s.sectionTitle}>{"Here's what we see in you"}</Text>
@@ -444,99 +503,40 @@ function ReportDocument({ data }) {
         <Footer pageLabel="PROFILE" />
       </Page>
 
-      {/* Strengths */}
+      {d.strengths.map((pw, i) => (
+        <StrengthPage key={i} pw={pw} num={i + 1} />
+      ))}
+
       <Page size="A4" style={s.page}>
-        <Text style={s.sectionLabel}>Signature Strengths</Text>
-        <Text style={s.sectionTitle}>What you bring to the table</Text>
-
-        {d.strengths.map((pw, i) => (
-          <View key={i} style={s.card} wrap={false}>
-            <Text style={s.strengthNum}>
-              STRENGTH {String(i + 1).padStart(2, '0')}
-            </Text>
-            <Text style={s.strengthName}>{pw.name}</Text>
-            <Text style={s.body}>{pw.description}</Text>
-
-            {pw.valuable ? (
-              <>
-                <Text style={s.labelWarm}>What makes this valuable</Text>
-                <Text style={s.body}>{pw.valuable}</Text>
-              </>
-            ) : null}
-
-            <Text style={s.labelAccent}>How to deploy this</Text>
-            {pw.thisWeek ? (
-              <Text style={s.body}>
-                <Text style={s.bold}>This week: </Text>
-                {pw.thisWeek}
-              </Text>
-            ) : null}
-            {pw.inInterviews ? (
-              <Text style={s.body}>
-                <Text style={s.bold}>In interviews: </Text>
-                {pw.inInterviews}
-              </Text>
-            ) : null}
-            {pw.bestRoles ? (
-              <Text style={s.body}>
-                <Text style={s.bold}>Best roles: </Text>
-                {pw.bestRoles}
-              </Text>
-            ) : null}
-
-            {pw.watchOut ? (
-              <>
-                <Text style={s.labelSharp}>Watch out</Text>
-                <Text style={s.body}>{pw.watchOut}</Text>
-              </>
-            ) : null}
-          </View>
-        ))}
-
-        {d.whyTogether ? (
-          <>
-            <View style={s.divider} />
-            <Text style={s.labelAccent}>Why these matter together</Text>
-            <Text style={s.bodyLg}>{d.whyTogether}</Text>
-          </>
-        ) : null}
-
+        <Text style={s.sectionLabel}>The Bigger Picture</Text>
+        <Text style={s.sectionTitle}>Why these strengths matter together</Text>
+        {d.whyTogether ? <Text style={s.bodyLg}>{d.whyTogether}</Text> : null}
         {d.valueProp ? (
           <View style={s.cardAccent}>
             <Text style={s.valueProp}>"{d.valueProp}"</Text>
           </View>
         ) : null}
-
-        <Footer pageLabel="STRENGTHS" />
-      </Page>
-
-      {/* Combinations */}
-      <Page size="A4" style={s.page}>
+        <View style={s.divider} />
         <Text style={s.sectionLabel}>Strength Combinations</Text>
         <Text style={s.sectionTitle}>Where your strengths multiply</Text>
-
         {d.combos.map((c, i) => (
           <View key={i} style={s.card} wrap={false}>
             <Text style={s.comboTitle}>{c.title}</Text>
             <Text style={s.body}>{c.body}</Text>
           </View>
         ))}
-
         {d.rarestCombo ? (
           <View style={s.cardAccent}>
             <Text style={s.labelAccent}>Your rarest combination</Text>
             <Text style={s.body}>{d.rarestCombo}</Text>
           </View>
         ) : null}
-
         <Footer pageLabel="COMBINATIONS" />
       </Page>
 
-      {/* Deal-Breakers */}
       <Page size="A4" style={s.page}>
         <Text style={s.sectionLabel}>Deal-Breakers</Text>
         <Text style={s.sectionTitle}>{"What doesn't work for you"}</Text>
-
         {[
           ['About the work', d.dealbreakers.work],
           ['What comes with the job', d.dealbreakers.job],
@@ -545,9 +545,7 @@ function ReportDocument({ data }) {
         ].map(([label, items]) =>
           items.length > 0 ? (
             <View key={label} style={s.card} wrap={false}>
-              <Text style={{ ...s.body, color: C.textPrimary, fontweight: 'bold', marginBottom: 8 }}>
-                {label}
-              </Text>
+              <Text style={{ ...s.body, color: C.textPrimary, fontFamily: 'Helvetica-Bold', marginBottom: 10 }}>{label}</Text>
               {items.map((item, i) => (
                 <View key={i} style={s.dbRow}>
                   <Text style={s.dbDash}>—</Text>
@@ -557,74 +555,40 @@ function ReportDocument({ data }) {
             </View>
           ) : null
         )}
-
         <Footer pageLabel="DEAL-BREAKERS" />
       </Page>
 
-      {/* Role Territories */}
       <Page size="A4" style={s.page}>
         <Text style={s.sectionLabel}>Role Territories</Text>
         <Text style={s.sectionTitle}>Paths to explore</Text>
-
         {d.territories.map((t, i) => (
           <View key={i} style={s.card} wrap={false}>
             <Text style={s.territoryName}>{t.name}</Text>
-
-            {t.whyFits ? (
-              <>
-                <Text style={s.labelAccent}>Why this fits</Text>
-                <Text style={s.body}>{t.whyFits}</Text>
-              </>
-            ) : null}
-            {t.transfers ? (
-              <>
-                <Text style={s.labelWarm}>What transfers</Text>
-                <Text style={s.body}>{t.transfers}</Text>
-              </>
-            ) : null}
-            {t.gaps ? (
-              <>
-                <Text style={s.labelSharp}>Possible gaps</Text>
-                <Text style={s.body}>{t.gaps}</Text>
-              </>
-            ) : null}
-            {t.salary ? (
-              <>
-                <Text style={s.labelMuted}>Salary range</Text>
-                <Text style={s.body}>{t.salary}</Text>
-              </>
-            ) : null}
-            {t.searchTerms ? (
-              <>
-                <Text style={s.labelMuted}>Search terms</Text>
-                <Text style={s.body}>{t.searchTerms}</Text>
-              </>
-            ) : null}
+            {t.whyFits ? (<><Text style={s.labelAccent}>Why this fits</Text><Text style={s.body}>{t.whyFits}</Text></>) : null}
+            {t.transfers ? (<><Text style={s.labelWarm}>What transfers</Text><Text style={s.body}>{t.transfers}</Text></>) : null}
+            {t.gaps ? (<><Text style={s.labelSharp}>Possible gaps</Text><Text style={s.body}>{t.gaps}</Text></>) : null}
+            {t.salary ? (<><Text style={s.labelMuted}>Salary range</Text><Text style={s.body}>{t.salary}</Text></>) : null}
+            {t.searchTerms ? (<><Text style={s.labelMuted}>Search terms</Text><Text style={s.body}>{t.searchTerms}</Text></>) : null}
           </View>
         ))}
-
         <Footer pageLabel="TERRITORIES" />
       </Page>
 
-      {/* Career Narrative */}
       <Page size="A4" style={s.page}>
         <Text style={s.sectionLabel}>Career Narrative</Text>
         <Text style={s.sectionTitle}>Your story, ready to use</Text>
-
         {d.careerNarrative ? (
           <View style={s.narrativeBox}>
             <Text style={s.narrativeLabel}>LinkedIn / About</Text>
             <Text style={s.bodyLg}>{d.careerNarrative}</Text>
           </View>
         ) : null}
-
         {d.shortIntro ? (
           <View style={s.narrativeBox}>
             <Text style={s.narrativeLabel}>30-Second Introduction</Text>
             <Text style={s.bodyLg}>{d.shortIntro}</Text>
           </View>
         ) : null}
-
         <View style={{ marginTop: 40, alignItems: 'center' }}>
           <View style={s.coverLine} />
           <Text style={{ ...s.coverMeta, textAlign: 'center', marginTop: 16 }}>
@@ -634,14 +598,12 @@ function ReportDocument({ data }) {
             This report is for personal reflection only
           </Text>
         </View>
-
         <Footer pageLabel="NARRATIVE" />
       </Page>
     </Document>
   );
 }
 
-// ── API Handler ──
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -654,15 +616,10 @@ export default async function handler(req, res) {
     }
 
     const data = parseForPDF(synthesisContent);
-    const buffer = await renderToBuffer(
-      <ReportDocument data={data} />
-    );
+    const buffer = await renderToBuffer(<ReportDocument data={data} />);
 
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader(
-      'Content-Disposition',
-      'attachment; filename=pathlight-career-report.pdf'
-    );
+    res.setHeader('Content-Disposition', 'attachment; filename=pathlight-career-report.pdf');
     res.send(Buffer.from(buffer));
   } catch (error) {
     console.error('PDF generation error:', error);
@@ -670,7 +627,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Increase serverless function timeout for PDF generation
 export const config = {
   maxDuration: 30,
 };
