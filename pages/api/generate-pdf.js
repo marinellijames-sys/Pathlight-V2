@@ -22,19 +22,15 @@ Font.register({
   family: 'Inter',
   fonts: [
     {
-      src: 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiA.woff2',
+      src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-300-normal.woff2',
       fontWeight: 300,
     },
     {
-      src: 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiA.woff2',
+      src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.woff2',
       fontWeight: 400,
     },
     {
-      src: 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI2fAZ9hiA.woff2',
-      fontWeight: 700,
-    },
-    {
-      src: 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYAZ9hiA.woff2',
+      src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.woff2',
       fontWeight: 700,
     },
   ],
