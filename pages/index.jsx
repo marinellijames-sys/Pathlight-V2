@@ -22,7 +22,7 @@ import {
 } from '../lib/prompts';
 
 // ═══════════════════════════════════════════════
-// PATHLIGHT v5 — ROOT ORCHESTRATOR
+// Candoor v5 — ROOT ORCHESTRATOR
 //
 // Screen flow:
 //   landing → intro → consent → chat
@@ -31,7 +31,7 @@ import {
 //   → (payment) → downloads
 // ═══════════════════════════════════════════════
 
-export default function Pathlight() {
+export default function Candoor() {
   // ── Screen routing ──
   const [screen, setScreen] = useState('loading');
 
@@ -163,7 +163,7 @@ export default function Pathlight() {
       const transcript = messages
         .map(
           (m) =>
-            `${m.role === 'user' ? 'THEM' : 'PATHLIGHT'}: ${m.content}`
+            `${m.role === 'user' ? 'THEM' : 'Candoor'}: ${m.content}`
         )
         .join('\n\n');
 
@@ -235,7 +235,7 @@ export default function Pathlight() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'pathlight-career-report.pdf';
+      a.download = 'Candoor-career-report.pdf';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
