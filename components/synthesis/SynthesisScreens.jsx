@@ -816,7 +816,7 @@ export function DownloadsScreen({ onDownloadPDF, pdfDownloading }) {
             marginBottom: 8,
           }}
         >
-          Help improve Pathlight
+          Help improve Candoor
         </div>
         <a
           href="https://forms.gle/fUaxKWAMbQZdbXNk7"
