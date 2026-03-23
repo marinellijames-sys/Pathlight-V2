@@ -24,10 +24,10 @@ export default function Terms() {
           <div className="bg-blue-50 border-l-2 border-blue-200 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-medium text-gray-900 mb-3">Plain English Summary</h2>
             <div className="space-y-2 text-sm text-gray-700">
-              <p><strong>What this document is:</strong> These are the rules for using Pathlight. By using the service, you agree to these terms.</p>
+              <p><strong>What this document is:</strong> These are the rules for using Candoor. By using the service, you agree to these terms.</p>
               <p className="mt-3"><strong>Key points:</strong></p>
               <ul className="list-disc ml-6 space-y-1">
-                <li>You must be 18+ to use Pathlight</li>
+                <li>You must be 18+ to use Candoor</li>
                 <li>This is a self-reflection tool, not professional career advice</li>
                 <li>We're not liable if you make career decisions based on AI insights</li>
                 <li>Your data stays on your device (localStorage)</li>
@@ -35,7 +35,7 @@ export default function Terms() {
                 <li>We can change or shut down the service anytime</li>
                 <li>Australian law applies</li>
               </ul>
-              <p className="mt-3 text-xs text-gray-600"><strong>Not a lawyer?</strong> This is a legally binding contract. Read it carefully. If you don't agree, don't use Pathlight.</p>
+              <p className="mt-3 text-xs text-gray-600"><strong>Not a lawyer?</strong> This is a legally binding contract. Read it carefully. If you don't agree, don't use Candoor.</p>
             </div>
           </div>
 
@@ -46,12 +46,12 @@ export default function Terms() {
               <h2 className="text-2xl font-medium text-gray-900 mb-4">1. Acceptance of Terms</h2>
               
               <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.1 Agreement to Terms</h3>
-              <p>By accessing or using Pathlight ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Service.</p>
+              <p>By accessing or using Candoor ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Service.</p>
               
               <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.2 Changes to Terms</h3>
               <p>We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to the Service. Your continued use of the Service after changes are posted constitutes acceptance of the modified Terms.</p>
               
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.3 Who Can Use Pathlight</h3>
+              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.3 Who Can Use Candoor</h3>
               <p>You must be at least 18 years of age to use the Service. By using the Service, you represent and warrant that you are at least 18 years old.</p>
             </section>
 
@@ -59,11 +59,11 @@ export default function Terms() {
             <section>
               <h2 className="text-2xl font-medium text-gray-900 mb-4">2. Description of Service</h2>
               
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.1 What Pathlight Is</h3>
-              <p>Pathlight is a self-reflection tool that uses artificial intelligence to help users identify their strengths, skills, and potential career directions through guided reflection and AI-powered analysis.</p>
+              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.1 What Candoor Is</h3>
+              <p>Candoor is a self-reflection tool that uses artificial intelligence to help users identify their strengths, skills, and potential career directions through guided reflection and AI-powered analysis.</p>
               
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.2 What Pathlight Is NOT</h3>
-              <p>Pathlight is NOT:</p>
+              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.2 What Candoor Is NOT</h3>
+              <p>Candoor is NOT:</p>
               <ul className="list-disc ml-6 space-y-1 mt-2">
                 <li>Professional career counseling or vocational guidance</li>
                 <li>A substitute for licensed career advisors or counselors</li>
@@ -80,7 +80,7 @@ export default function Terms() {
               </ul>
               
               <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.4 Beta Testing Disclaimer</h3>
-              <p>Pathlight is currently in beta testing. The Service may contain bugs, errors, or inaccuracies. Features may change or be discontinued without notice. Use during beta testing is at your own risk.</p>
+              <p>Candoor is currently in beta testing. The Service may contain bugs, errors, or inaccuracies. Features may change or be discontinued without notice. Use during beta testing is at your own risk.</p>
             </section>
 
             {/* Section 3 */}
@@ -102,7 +102,7 @@ export default function Terms() {
               </ul>
               
               <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">3.3 Professional Advice</h3>
-              <p>You acknowledge that Pathlight does not provide professional career advice. You agree not to make significant career, educational, or life decisions based solely on AI-generated insights. You are encouraged to consult qualified career counselors, advisors, or other professionals before making important decisions.</p>
+              <p>You acknowledge that Candoor does not provide professional career advice. You agree not to make significant career, educational, or life decisions based solely on AI-generated insights. You are encouraged to consult qualified career counselors, advisors, or other professionals before making important decisions.</p>
             </section>
 
             {/* Section 4 */}
@@ -187,7 +187,7 @@ export default function Terms() {
             {/* Acknowledgment */}
             <section className="bg-gray-50 rounded-lg p-6 mt-8">
               <h2 className="text-xl font-medium text-gray-900 mb-3">Acknowledgment</h2>
-              <p className="text-sm">BY USING PATHLIGHT, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.</p>
+              <p className="text-sm">BY USING Candoor, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.</p>
             </section>
 
           </div>
