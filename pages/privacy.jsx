@@ -24,14 +24,14 @@ export default function Privacy() {
             <section>
               <h2 className="text-2xl text-ink mb-4 font-serif">Overview</h2>
               <p>
-                Pathlight is a career clarity tool that helps you discover your strengths and identify potential career paths. 
+                Candoor is a career clarity tool that helps you discover your strengths and identify potential career paths. 
                 We take your privacy seriously and are committed to protecting your personal information.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl text-ink mb-4 font-serif">Information We Collect</h2>
-              <p>When you use Pathlight, we collect:</p>
+              <p>When you use Candoor, we collect:</p>
               <ul className="mt-4 space-y-2">
                 <li>Your responses to career reflection questions</li>
                 <li>Information about your career history, strengths, and goals that you provide</li>
@@ -66,7 +66,7 @@ export default function Privacy() {
               <ul className="mt-4 space-y-2">
                 <li>Your data stays on your device</li>
                 <li>We cannot access your responses or synthesis</li>
-                <li>Clearing your browser data will delete all your Pathlight information</li>
+                <li>Clearing your browser data will delete all your Candoor information</li>
                 <li>Your data will not sync across devices</li>
               </ul>
             </section>
@@ -74,7 +74,7 @@ export default function Privacy() {
             <section>
               <h2 className="text-2xl text-ink mb-4 font-serif">Third-Party Processing</h2>
               <p>
-                We use <strong>Anthropic's Claude API</strong> to process your responses and generate insights. When you use Pathlight:
+                We use <strong>Anthropic's Claude API</strong> to process your responses and generate insights. When you use Candoor:
               </p>
               <ul className="mt-4 space-y-2">
                 <li>Your responses are sent to Anthropic's servers for AI processing</li>
@@ -96,7 +96,7 @@ export default function Privacy() {
               <ul className="mt-4 space-y-2">
                 <li><strong>Access your data:</strong> All your data is stored locally in your browser and visible to you at all times</li>
                 <li><strong>Delete your data:</strong> Click "Clear My Data" at any time to permanently delete all your information</li>
-                <li><strong>Withdraw consent:</strong> Stop using Pathlight at any time</li>
+                <li><strong>Withdraw consent:</strong> Stop using Candoor at any time</li>
               </ul>
             </section>
 
@@ -146,7 +146,7 @@ export default function Privacy() {
 
             <section className="mt-12 pt-8 border-t border-sand">
               <p className="text-sm text-driftwood">
-                <strong className="text-charcoal">Your Privacy Matters:</strong> We built Pathlight to help you understand your strengths, not to collect your data. 
+                <strong className="text-charcoal">Your Privacy Matters:</strong> We built Candoor to help you understand your strengths, not to collect your data. 
                 By keeping your information on your device and using it only for AI processing, we minimize data collection 
                 and maximize your privacy.
               </p>
