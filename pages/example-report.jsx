@@ -14,7 +14,7 @@ export default function ExampleReport() {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-ash hover:text-ink transition-colors">
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm font-light">Back to Pathlight</span>
+            <span className="text-sm font-light">Back to Candoor</span>
           </Link>
           <span className="font-serif text-lg text-ink">Example Report</span>
         </div>
@@ -56,7 +56,7 @@ export default function ExampleReport() {
             {/* Page 1 - Cover */}
             <div className="bg-paper border border-silver rounded-lg shadow-lg overflow-hidden">
               <div className="p-8 text-center border-b border-silver">
-                <h2 className="font-serif text-4xl text-ink mb-2">Pathlight</h2>
+                <h2 className="font-serif text-4xl text-ink mb-2">Candoor</h2>
                 <p className="text-ash font-light">Career Clarity Report</p>
                 <div className="mt-8 pt-8 border-t border-silver">
                   <p className="text-stone text-sm">Prepared for</p>
