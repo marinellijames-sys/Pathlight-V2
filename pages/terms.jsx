@@ -5,192 +5,179 @@ import { useRouter } from 'next/router';
 export default function Terms() {
   const router = useRouter();
 
+  const h2 = {
+    fontFamily: "'Syne', sans-serif",
+    fontSize: '1.5rem',
+    fontWeight: 600,
+    color: '#F0EDE8',
+    marginTop: 40,
+    marginBottom: 16,
+  };
+
+  const h3 = {
+    fontFamily: "'Syne', sans-serif",
+    fontSize: '1.125rem',
+    fontWeight: 500,
+    color: '#F0EDE8',
+    marginTop: 24,
+    marginBottom: 8,
+  };
+
+  const p = {
+    fontFamily: "'Inter', sans-serif",
+    fontSize: '0.9375rem',
+    fontWeight: 300,
+    lineHeight: 1.7,
+    color: '#A8A4A0',
+    marginBottom: 12,
+  };
+
+  const b = { color: '#F0EDE8', fontWeight: 500 };
+
+  const li = {
+    ...p,
+    paddingLeft: 20,
+    marginBottom: 8,
+  };
+
+  const dash = {
+    color: '#5C5955',
+    marginRight: 8,
+  };
+
+  const a = {
+    color: '#B8A9FF',
+    textDecoration: 'underline',
+    textUnderlineOffset: '3px',
+  };
+
+  const callout = {
+    background: 'rgba(184,169,255,0.06)',
+    border: '1px solid rgba(184,169,255,0.2)',
+    borderRadius: 8,
+    padding: 20,
+    marginBottom: 16,
+    marginTop: 16,
+  };
+
+  const warning = {
+    background: 'rgba(255,143,143,0.06)',
+    border: '1px solid rgba(255,143,143,0.15)',
+    borderRadius: 8,
+    padding: 20,
+    marginBottom: 16,
+    marginTop: 16,
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-amber-50">
-      <div className="max-w-4xl mx-auto px-6 py-16">
-        <button
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back
+    <div style={{ minHeight: '100vh', background: '#0A0A0B', fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '48px 24px' }}>
+        <button onClick={() => router.back()} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', color: '#5C5955', fontSize: '0.875rem', cursor: 'pointer', marginBottom: 40, fontFamily: "'Inter', sans-serif" }}>
+          <ArrowLeft size={16} /> Back
         </button>
 
-        <div className="bg-white rounded-3xl p-10 shadow-xl">
-          <h1 className="text-4xl font-medium text-gray-900 mb-2">Terms of Service</h1>
-          <p className="text-sm text-gray-500 mb-8">Last updated: February 2026</p>
+        <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 700, color: '#F0EDE8', letterSpacing: '-0.03em', marginBottom: 8 }}>Terms of Service</h1>
+        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.6875rem', color: '#5C5955', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 24 }}>Last updated: March 2026</div>
 
-          {/* Plain English Summary */}
-          <div className="bg-blue-50 border-l-2 border-blue-200 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-medium text-gray-900 mb-3">Plain English Summary</h2>
-            <div className="space-y-2 text-sm text-gray-700">
-              <p><strong>What this document is:</strong> These are the rules for using Candoor. By using the service, you agree to these terms.</p>
-              <p className="mt-3"><strong>Key points:</strong></p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>You must be 18+ to use Candoor</li>
-                <li>This is a self-reflection tool, not professional career advice</li>
-                <li>We're not liable if you make career decisions based on AI insights</li>
-                <li>Your data stays on your device (localStorage)</li>
-                <li>Free version is free; resume optimizer costs $20</li>
-                <li>We can change or shut down the service anytime</li>
-                <li>Australian law applies</li>
-              </ul>
-              <p className="mt-3 text-xs text-gray-600"><strong>Not a lawyer?</strong> This is a legally binding contract. Read it carefully. If you don't agree, don't use Candoor.</p>
-            </div>
-          </div>
+        {/* Plain English Summary */}
+        <div style={callout}>
+          <div style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.125rem', fontWeight: 600, color: '#F0EDE8', marginBottom: 12 }}>Plain English Summary</div>
+          <div style={{ ...p, fontSize: '0.875rem' }}><span style={b}>What this is:</span> These are the rules for using Candoor. By using the service, you agree to these terms.</div>
+          <div style={{ ...p, fontSize: '0.875rem', marginBottom: 4 }}><span style={b}>Key points:</span></div>
+          <div style={{ ...li, fontSize: '0.875rem' }}><span style={dash}>—</span>You must be 18+ to use Candoor</div>
+          <div style={{ ...li, fontSize: '0.875rem' }}><span style={dash}>—</span>This is a self-reflection tool, not professional career advice</div>
+          <div style={{ ...li, fontSize: '0.875rem' }}><span style={dash}>—</span>{"We're not liable if you make career decisions based on AI insights"}</div>
+          <div style={{ ...li, fontSize: '0.875rem' }}><span style={dash}>—</span>Your data stays on your device (localStorage)</div>
+          <div style={{ ...li, fontSize: '0.875rem' }}><span style={dash}>—</span>The career clarity report costs $39 AUD</div>
+          <div style={{ ...li, fontSize: '0.875rem' }}><span style={dash}>—</span>Australian law applies</div>
+        </div>
 
-          <div className="prose prose-lg max-w-none space-y-8 text-gray-700">
-            
-            {/* Section 1 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">1. Acceptance of Terms</h2>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.1 Agreement to Terms</h3>
-              <p>By accessing or using Candoor ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Service.</p>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.2 Changes to Terms</h3>
-              <p>We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to the Service. Your continued use of the Service after changes are posted constitutes acceptance of the modified Terms.</p>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">1.3 Who Can Use Candoor</h3>
-              <p>You must be at least 18 years of age to use the Service. By using the Service, you represent and warrant that you are at least 18 years old.</p>
-            </section>
+        {/* 1 */}
+        <h2 style={h2}>1. Acceptance of Terms</h2>
+        <h3 style={h3}>1.1 Agreement to Terms</h3>
+        <div style={p}>{"By accessing or using Candoor (\"the Service\"), you agree to be bound by these Terms of Service (\"Terms\"). If you do not agree to these Terms, you may not access or use the Service."}</div>
+        <h3 style={h3}>1.2 Changes to Terms</h3>
+        <div style={p}>We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to the Service. Your continued use of the Service after changes are posted constitutes acceptance of the modified Terms.</div>
+        <h3 style={h3}>1.3 Who Can Use Candoor</h3>
+        <div style={p}>You must be at least 18 years of age to use the Service. By using the Service, you represent and warrant that you are at least 18 years old.</div>
 
-            {/* Section 2 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">2. Description of Service</h2>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.1 What Candoor Is</h3>
-              <p>Candoor is a self-reflection tool that uses artificial intelligence to help users identify their strengths, skills, and potential career directions through guided reflection and AI-powered analysis.</p>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.2 What Candoor Is NOT</h3>
-              <p>Candoor is NOT:</p>
-              <ul className="list-disc ml-6 space-y-1 mt-2">
-                <li>Professional career counseling or vocational guidance</li>
-                <li>A substitute for licensed career advisors or counselors</li>
-                <li>A guarantee of career success or job placement</li>
-                <li>Psychological assessment or mental health counseling</li>
-                <li>Financial, legal, or medical advice</li>
-              </ul>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.3 Service Components</h3>
-              <p>The Service includes:</p>
-              <ul className="list-disc ml-6 space-y-1 mt-2">
-                <li><strong>Free Version:</strong> Guided reflection questions and AI-generated synthesis identifying strengths and potential role territories</li>
-                <li><strong>Paid Version:</strong> Resume optimization service based on identified strengths ($20 per resume)</li>
-              </ul>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">2.4 Beta Testing Disclaimer</h3>
-              <p>Candoor is currently in beta testing. The Service may contain bugs, errors, or inaccuracies. Features may change or be discontinued without notice. Use during beta testing is at your own risk.</p>
-            </section>
+        {/* 2 */}
+        <h2 style={h2}>2. Description of Service</h2>
+        <h3 style={h3}>2.1 What Candoor Is</h3>
+        <div style={p}>Candoor is a self-reflection tool that uses artificial intelligence to help users identify their strengths, deal-breakers, and potential career directions through guided conversation and AI-powered analysis.</div>
+        <h3 style={h3}>2.2 What Candoor Is NOT</h3>
+        <div style={p}>Candoor is NOT:</div>
+        <div style={li}><span style={dash}>—</span>Professional career counselling or vocational guidance</div>
+        <div style={li}><span style={dash}>—</span>A substitute for licensed career advisors or counsellors</div>
+        <div style={li}><span style={dash}>—</span>A guarantee of career success or job placement</div>
+        <div style={li}><span style={dash}>—</span>Psychological assessment or mental health counselling</div>
+        <div style={li}><span style={dash}>—</span>Financial, legal, or medical advice</div>
+        <h3 style={h3}>2.3 Service Components</h3>
+        <div style={p}>The Service includes:</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>Free:</span> AI-guided career conversation, profile overview, and 2 signature strengths</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>Paid ($39 AUD):</span> Full career clarity report including all 5 signature strengths, strength combinations, deal-breakers, role territories, career narrative, downloadable PDF, and shareable strength cards</div>
 
-            {/* Section 3 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">3. User Responsibilities</h2>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">3.1 Accurate Information</h3>
-              <p>You agree to provide accurate and honest responses during your reflection journey. The quality of insights generated depends on the quality of information you provide.</p>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">3.2 Appropriate Use</h3>
-              <p>You agree NOT to:</p>
-              <ul className="list-disc ml-6 space-y-1 mt-2">
-                <li>Use the Service for any illegal purpose</li>
-                <li>Enter false, misleading, or fraudulent information</li>
-                <li>Attempt to reverse-engineer, hack, or compromise the Service</li>
-                <li>Use automated tools (bots, scrapers) to access the Service</li>
-                <li>Share your responses or synthesis in ways that misrepresent the Service</li>
-                <li>Enter highly sensitive personal information (financial data, health records, government IDs, passwords, etc.)</li>
-              </ul>
-              
-              <h3 className="text-lg font-medium text-gray-900 mt-4 mb-2">3.3 Professional Advice</h3>
-              <p>You acknowledge that Candoor does not provide professional career advice. You agree not to make significant career, educational, or life decisions based solely on AI-generated insights. You are encouraged to consult qualified career counselors, advisors, or other professionals before making important decisions.</p>
-            </section>
+        {/* 3 */}
+        <h2 style={h2}>3. User Responsibilities</h2>
+        <h3 style={h3}>3.1 Accurate Information</h3>
+        <div style={p}>You agree to provide accurate and honest responses during your conversation. The quality of insights generated depends on the quality of information you provide.</div>
+        <h3 style={h3}>3.2 Appropriate Use</h3>
+        <div style={p}>You agree NOT to:</div>
+        <div style={li}><span style={dash}>—</span>Use the Service for any illegal purpose</div>
+        <div style={li}><span style={dash}>—</span>Enter false, misleading, or fraudulent information</div>
+        <div style={li}><span style={dash}>—</span>Attempt to reverse-engineer, hack, or compromise the Service</div>
+        <div style={li}><span style={dash}>—</span>Use automated tools to access the Service</div>
+        <div style={li}><span style={dash}>—</span>Enter highly sensitive personal information (financial data, health records, government IDs, passwords)</div>
+        <h3 style={h3}>3.3 Professional Advice</h3>
+        <div style={p}>You acknowledge that Candoor does not provide professional career advice. You agree not to make significant career, educational, or life decisions based solely on AI-generated insights. You are encouraged to consult qualified professionals before making important decisions.</div>
 
-            {/* Section 4 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">4. Data and Privacy</h2>
-              
-              <p>Your use of the Service is also governed by our <a href="/privacy" className="text-orange-600 hover:text-orange-700 underline">Privacy Policy</a>. Key points:</p>
-              
-              <ul className="list-disc ml-6 space-y-2 mt-3">
-                <li><strong>Local Storage:</strong> Your responses are stored locally in your browser using localStorage. We do not store your responses on our servers.</li>
-                <li><strong>Third-Party Processing:</strong> Your responses are sent to Anthropic's Claude API for AI processing. Anthropic may retain logs for up to 30 days.</li>
-                <li><strong>No Guarantee of Data Persistence:</strong> Browser updates or device changes may result in data loss. We are not liable for data loss.</li>
-                <li><strong>Bookmark to Save:</strong> You must bookmark the page to preserve your progress.</li>
-              </ul>
-            </section>
+        {/* 4 */}
+        <h2 style={h2}>4. Data and Privacy</h2>
+        <div style={p}>Your use of the Service is also governed by our <a href="/privacy" style={a}>Privacy Policy</a>. Key points:</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>Local Storage:</span> Your responses are stored locally in your browser. We do not store your responses on our servers.</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>Third-Party Processing:</span> {"Your responses are sent to Anthropic's Claude API for AI processing. Anthropic may retain logs for up to 30 days."}</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>No Guarantee of Data Persistence:</span> Browser updates or device changes may result in data loss. We are not liable for data loss.</div>
 
-            {/* Section 5 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">5. Limitation of Liability</h2>
-              
-              <div className="bg-yellow-50 border-l-2 border-yellow-300 rounded-lg p-4 my-4">
-                <p className="font-medium text-gray-900 mb-2">⚠️ Important Disclaimer</p>
-                <p className="text-sm">AI-GENERATED INSIGHTS ARE PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ACCURACY, COMPLETENESS, OR SUITABILITY FOR ANY PARTICULAR PURPOSE.</p>
-              </div>
-              
-              <p><strong>YOU ACKNOWLEDGE THAT YOU ARE SOLELY RESPONSIBLE FOR ANY DECISIONS YOU MAKE BASED ON INSIGHTS GENERATED BY THE SERVICE.</strong> We are not liable for consequences resulting from career decisions, job changes, or other actions taken based on Service use.</p>
-              
-              <p className="mt-4">We are not liable for:</p>
-              <ul className="list-disc ml-6 space-y-1 mt-2">
-                <li>Service interruptions, downtime, or unavailability</li>
-                <li>Data loss due to browser storage limitations</li>
-                <li>Bugs, errors, or inaccuracies in the Service</li>
-                <li>Third-party service failures (including Anthropic API)</li>
-              </ul>
-              
-              <p className="mt-4">To the maximum extent permitted by law, our total liability shall not exceed the amount you paid us in the preceding 12 months, or AUD $100, whichever is less.</p>
-            </section>
+        {/* 5 */}
+        <h2 style={h2}>5. Limitation of Liability</h2>
+        <div style={warning}>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.6875rem', color: '#FF8F8F', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Important Disclaimer</div>
+          <div style={{ ...p, fontSize: '0.875rem' }}>AI-GENERATED INSIGHTS ARE PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ACCURACY, COMPLETENESS, OR SUITABILITY FOR ANY PARTICULAR PURPOSE.</div>
+        </div>
+        <div style={{ ...p, color: '#F0EDE8' }}>YOU ACKNOWLEDGE THAT YOU ARE SOLELY RESPONSIBLE FOR ANY DECISIONS YOU MAKE BASED ON INSIGHTS GENERATED BY THE SERVICE.</div>
+        <div style={p}>We are not liable for:</div>
+        <div style={li}><span style={dash}>—</span>Service interruptions, downtime, or unavailability</div>
+        <div style={li}><span style={dash}>—</span>Data loss due to browser storage limitations</div>
+        <div style={li}><span style={dash}>—</span>Bugs, errors, or inaccuracies in the Service</div>
+        <div style={li}><span style={dash}>—</span>Third-party service failures (including Anthropic API)</div>
+        <div style={{ ...p, marginTop: 16 }}>To the maximum extent permitted by law, our total liability shall not exceed the amount you paid us in the preceding 12 months, or AUD $100, whichever is less.</div>
 
-            {/* Section 6 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">6. Payment Terms (Paid Features)</h2>
-              
-              <ul className="space-y-3">
-                <li><strong>Pricing:</strong> Resume optimization costs AUD $20 per resume</li>
-                <li><strong>No Refunds:</strong> All sales are final once the optimized resume is generated and delivered</li>
-                <li><strong>Refund Exception:</strong> If we fail to generate your resume due to technical error, we will retry at no cost or provide a full refund</li>
-                <li><strong>Payment Processing:</strong> Payments processed through third-party processors (e.g., Stripe)</li>
-              </ul>
-            </section>
+        {/* 6 */}
+        <h2 style={h2}>6. Payment Terms</h2>
+        <div style={li}><span style={dash}>—</span><span style={b}>Pricing:</span> The full career clarity report costs AUD $39</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>No Refunds:</span> All sales are final once the report is generated and delivered</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>Refund Exception:</span> If we fail to generate your report due to technical error, we will retry at no cost or provide a full refund</div>
+        <div style={li}><span style={dash}>—</span><span style={b}>Payment Processing:</span> Payments processed through Stripe. We do not store your payment details.</div>
 
-            {/* Section 7 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">7. Termination</h2>
-              
-              <p>You may stop using the Service at any time by clearing your browser data or using the "Clear My Data" button.</p>
-              
-              <p className="mt-3">We reserve the right to suspend or terminate your access at any time, or to modify or discontinue the Service without notice.</p>
-            </section>
+        {/* 7 */}
+        <h2 style={h2}>7. Termination</h2>
+        <div style={p}>{"You may stop using the Service at any time by clearing your browser data or using the \"clear data\" option."}</div>
+        <div style={p}>We reserve the right to suspend or terminate your access at any time, or to modify or discontinue the Service without notice.</div>
 
-            {/* Section 8 */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">8. Governing Law</h2>
-              
-              <p>These Terms are governed by the laws of the State of Victoria, Australia. Any disputes shall be subject to the exclusive jurisdiction of Victorian courts.</p>
-              
-              <p className="mt-3">Before filing legal action, you agree to contact us at <a href="mailto:marinellijames@gmail.com" className="text-orange-600 hover:text-orange-700 underline">marinellijames@gmail.com</a> to attempt informal resolution.</p>
-              
-              <p className="mt-3">Any claim must be filed within one (1) year after it arose, or be forever barred.</p>
-            </section>
+        {/* 8 */}
+        <h2 style={h2}>8. Governing Law</h2>
+        <div style={p}>These Terms are governed by the laws of the State of Victoria, Australia. Any disputes shall be subject to the exclusive jurisdiction of Victorian courts.</div>
+        <div style={p}>Before filing legal action, you agree to contact us at <a href="mailto:hello@candoor.com" style={a}>hello@candoor.com</a> to attempt informal resolution.</div>
+        <div style={p}>Any claim must be filed within one (1) year after it arose, or be forever barred.</div>
 
-            {/* Contact */}
-            <section>
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">Contact Us</h2>
-              <p>
-                Questions about these Terms? Contact us at:{' '}
-                <a href="mailto:marinellijames@gmail.com" className="text-orange-600 hover:text-orange-700 underline">
-                  marinellijames@gmail.com
-                </a>
-              </p>
-            </section>
+        {/* Contact */}
+        <h2 style={h2}>Contact Us</h2>
+        <div style={p}>Questions about these Terms? Contact us at: <a href="mailto:hello@candoor.com" style={a}>hello@candoor.com</a></div>
 
-            {/* Acknowledgment */}
-            <section className="bg-gray-50 rounded-lg p-6 mt-8">
-              <h2 className="text-xl font-medium text-gray-900 mb-3">Acknowledgment</h2>
-              <p className="text-sm">BY USING Candoor, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.</p>
-            </section>
-
-          </div>
+        {/* Acknowledgment */}
+        <div style={{ ...callout, marginTop: 40 }}>
+          <div style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.125rem', fontWeight: 600, color: '#F0EDE8', marginBottom: 8 }}>Acknowledgment</div>
+          <div style={{ ...p, fontSize: '0.875rem' }}>BY USING CANDOOR, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.</div>
         </div>
       </div>
     </div>
