@@ -42,7 +42,7 @@ export function LandingScreen({ onStart }) {
             animation: 'fadeIn 1s ease forwards',
           }}
         >
-          Pathlight
+          Candoor
         </h1>
 
         <p
