@@ -197,6 +197,8 @@ export default function Pathlight() {
       setScreen('profile');
     } catch (e) {
       console.error('Synthesis error:', e);
+      alert('Something went wrong generating your report. Please try again — if it keeps happening, try refreshing the page first.');
+      setScreen('chat');
     } finally {
       setSynthesisGenerating(false);
     }
