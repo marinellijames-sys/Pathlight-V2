@@ -6,6 +6,7 @@
 //   2. Per-IP token budget (150k tokens per hour)
 //   3. Max tokens guard per request (hard ceiling of 4500)
 //   4. Request payload size limit
+//   5. 55-second timeout on Anthropic API calls
 //
 // Note: Uses in-memory storage. Vercel serverless instances
 // don't share memory, so limits apply per-instance. For stricter
@@ -101,6 +102,10 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 55-second timeout — stays under Vercel's 60s maxDuration
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 55000);
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -109,7 +114,10 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify(req.body),
+      signal: controller.signal,
     });
+
+    clearTimeout(timeout);
 
     const data = await response.json();
 
@@ -121,6 +129,12 @@ export default async function handler(req, res) {
 
     return res.status(200).json(data);
   } catch (error) {
+    if (error.name === 'AbortError') {
+      console.error('Anthropic API timed out after 55s');
+      return res.status(504).json({
+        error: 'AI response took too long. Please try again.',
+      });
+    }
     console.error('Claude API error:', error);
     return res.status(500).json({ error: 'Failed to call Claude API' });
   }
