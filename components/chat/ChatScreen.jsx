@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Send, Lock, ArrowRight } from 'lucide-react';
-import { parseAIResponse } from '../../lib/parsers';
+import InteractionWidget from './InteractionWidgets';
+import { parseAIResponse, formatInteractionResponse } from '../../lib/parsers';
 import { buildSystemPrompt, callAPI } from '../../lib/prompts';
 
 // ═══════════════════════════════════════════════
-// CHAT SCREEN — Pure text conversation
-// No interaction widgets for launch
+// CHAT SCREEN
+//
+// Bug fixes applied:
+//   #1 — buildSystemPrompt receives actual count, not stale state
+//   #2 — lastMessageHadInteraction boolean replaces index math
+//   #3 — hard cap lowered to 16, closing instruction strengthened in prompts.js
+//   #4 — "no two questions" rule added to system prompt in prompts.js
 // ═══════════════════════════════════════════════
 
 export default function ChatScreen({
@@ -18,8 +24,16 @@ export default function ChatScreen({
   onGenerateReport,
   resetProgress,
 }) {
+  const [activeInteraction, setActiveInteraction] = useState(null);
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Bug 2 fix: simple boolean instead of index tracking
+  const lastMessageHadInteraction = useRef(false);
+
+  // Prevent auto-start from firing multiple times (React Strict Mode,
+  // remounts, or any re-render before setMessages resolves)
+  const startedRef = useRef(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -35,27 +49,71 @@ export default function ChatScreen({
   }, [parsedMessages, isLoading]);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !activeInteraction) {
       inputRef.current?.focus();
     }
-  }, [isLoading]);
+  }, [isLoading, activeInteraction]);
 
-  // ─── START CHAT ───
+  // ─── GUARDRAILS ───
+  // Bug 2 fix: uses boolean flag, not index math
+  const applyGuardrails = (parsed, msgIndex) => {
+    // No interaction on first AI message
+    if (msgIndex === 0 && parsed.interaction) {
+      return { ...parsed, interaction: null };
+    }
+
+    // No consecutive interactions
+    if (parsed.interaction && lastMessageHadInteraction.current) {
+      return { ...parsed, interaction: null };
+    }
+
+    // Bug 4 code-level guardrail: if the AI served an interaction AND
+    // also asked a text question, strip the question sentences from the
+    // text and keep the interaction (the interaction IS the question).
+    if (parsed.interaction && parsed.conversationText.includes('?')) {
+      const sentences = parsed.conversationText
+        .split(/(?<=[.!?])\s+/)
+        .filter((s) => !s.includes('?'));
+      const cleanedText = sentences.join(' ').trim();
+      // If stripping questions leaves nothing, use a minimal acknowledgment
+      return {
+        ...parsed,
+        conversationText: cleanedText || "That's a really useful answer.",
+      };
+    }
+
+    return parsed;
+  };
+
+  // ─── START CHAT (opening message) ───
   const startChat = useCallback(async () => {
     setIsLoading(true);
 
     try {
+      // Bug 1 fix: pass 0 explicitly for the opening message
       const text = await callAPI(
         [{ role: 'user', content: '[Begin]' }],
         buildSystemPrompt(0),
         150
       );
       const parsed = parseAIResponse(text);
+      const guarded = applyGuardrails(parsed, 0);
 
       setMessages([{ role: 'assistant', content: text }]);
       setParsedMessages([
-        { role: 'assistant', text: parsed.conversationText },
+        {
+          role: 'assistant',
+          text: guarded.conversationText,
+          interaction: guarded.interaction,
+        },
       ]);
+
+      if (guarded.interaction) {
+        setActiveInteraction(guarded.interaction);
+        lastMessageHadInteraction.current = true;
+      } else {
+        lastMessageHadInteraction.current = false;
+      }
     } catch (e) {
       console.error('Start error:', e);
     } finally {
@@ -63,9 +121,10 @@ export default function ChatScreen({
     }
   }, [setMessages, setParsedMessages]);
 
-  // Auto-start if no messages
+  // Auto-start if no messages — guarded against re-fires
   useEffect(() => {
-    if (messages.length === 0) {
+    if (messages.length === 0 && !startedRef.current) {
+      startedRef.current = true;
       startChat();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -80,18 +139,17 @@ export default function ChatScreen({
     setMessages(newMsgs);
     setParsedMessages((prev) => [...prev, { role: 'user', text: userMsg }]);
     setUserInput('');
+    setActiveInteraction(null);
     setIsLoading(true);
 
+    // Bug 1 fix: calculate actual count from the new array
     const currentUserCount = newMsgs.filter((m) => m.role === 'user').length;
 
     try {
-      let text = await callAPI(
-        newMsgs,
-        buildSystemPrompt(currentUserCount),
-        600
-      );
+      // Bug 1 fix: pass correct count to buildSystemPrompt
+      let text = await callAPI(newMsgs, buildSystemPrompt(currentUserCount), 600);
 
-      // Hard cap at 16 user messages
+      // Bug 3 fix: hard cap lowered from 18 to 16
       if (currentUserCount >= 16 && !text.includes('[CONVERSATION_COMPLETE]')) {
         text += '\n\n[CONVERSATION_COMPLETE]';
       }
@@ -99,12 +157,25 @@ export default function ChatScreen({
       const complete = text.includes('[CONVERSATION_COMPLETE]');
       const cleanedText = text.replace('[CONVERSATION_COMPLETE]', '').trim();
       const parsed = parseAIResponse(cleanedText);
+      const aiMsgIdx = parsedMessages.length + 1;
+      const guarded = applyGuardrails(parsed, aiMsgIdx);
 
       setMessages([...newMsgs, { role: 'assistant', content: cleanedText }]);
       setParsedMessages((prev) => [
         ...prev,
-        { role: 'assistant', text: parsed.conversationText },
+        {
+          role: 'assistant',
+          text: guarded.conversationText,
+          interaction: guarded.interaction,
+        },
       ]);
+
+      // Bug 2 fix: set the boolean flag
+      lastMessageHadInteraction.current = !!guarded.interaction;
+
+      if (guarded.interaction) {
+        setActiveInteraction(guarded.interaction);
+      }
 
       if (complete) setChatComplete(true);
     } catch (e) {
@@ -112,6 +183,10 @@ export default function ChatScreen({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleInteractionSubmit = (result) => {
+    sendMessage(formatInteractionResponse(activeInteraction, result));
   };
 
   const handleTextSubmit = () => {
@@ -171,7 +246,7 @@ export default function ChatScreen({
             color: '#111113',
           }}
         >
-          Candoor
+          Pathlight
         </span>
         <span
           style={{
@@ -252,8 +327,7 @@ export default function ChatScreen({
                   msg.role === 'user'
                     ? '#111113'
                     : 'rgba(255, 255, 255, 0.75)',
-                backdropFilter:
-                  msg.role === 'user' ? 'none' : 'blur(12px)',
+                backdropFilter: msg.role === 'user' ? 'none' : 'blur(12px)',
                 WebkitBackdropFilter:
                   msg.role === 'user' ? 'none' : 'blur(12px)',
                 color: msg.role === 'user' ? '#F5F5F3' : '#111113',
@@ -342,6 +416,11 @@ export default function ChatScreen({
                 takes about 45 seconds
               </p>
             </div>
+          ) : activeInteraction ? (
+            <InteractionWidget
+              interaction={activeInteraction}
+              onSubmit={handleInteractionSubmit}
+            />
           ) : (
             <div style={{ display: 'flex', gap: 12 }}>
               <input
