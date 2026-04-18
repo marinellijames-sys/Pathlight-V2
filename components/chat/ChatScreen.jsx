@@ -171,7 +171,7 @@ export default function ChatScreen({
             color: '#111113',
           }}
         >
-          Pathlight
+          Candoor
         </span>
         <span
           style={{
