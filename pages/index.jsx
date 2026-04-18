@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Spinner } from '../components/shared/DesignSystem';
 import {
   LandingScreen,
@@ -10,11 +10,9 @@ import {
   SynthesisLoadingScreen,
   StrengthRevealScreen,
   ProfileScreen,
-  StrengthsScreen,
-  CombinationsScreen,
-  DealBreakersScreen,
-  TerritoriesScreen,
-  CareerNarrativeScreen,
+  StrengthDetailScreen,
+  PaywallScreen,
+  DownloadsScreen,
 } from '../components/synthesis/SynthesisScreens';
 import { parseSynthesis } from '../lib/parsers';
 import {
@@ -26,16 +24,18 @@ import {
 // ═══════════════════════════════════════════════
 // PATHLIGHT v5 — ROOT ORCHESTRATOR
 //
-// Owns: screen routing, core state, localStorage,
-//       synthesis generation, payment, PDF download
-// Delegates: all UI to child components
+// Screen flow:
+//   landing → intro → consent → chat
+//   → synthesis_loading → profile → reveal1 → strength1
+//   → reveal2 → strength2 → paywall
+//   → (payment) → downloads
 // ═══════════════════════════════════════════════
 
 export default function Pathlight() {
   // ── Screen routing ──
   const [screen, setScreen] = useState('loading');
 
-  // ── Chat state (lifted — shared with ChatScreen) ──
+  // ── Chat state ──
   const [messages, setMessages] = useState([]);
   const [parsedMessages, setParsedMessages] = useState([]);
   const [chatComplete, setChatComplete] = useState(false);
@@ -43,29 +43,22 @@ export default function Pathlight() {
   // ── Synthesis state ──
   const [synthesisContent, setSynthesisContent] = useState(null);
   const [parsedData, setParsedData] = useState(null);
-  const [synthesisScreen, setSynthesisScreen] = useState(0);
   const [synthesisGenerating, setSynthesisGenerating] = useState(false);
 
-  // ── Strength reveal ──
+  // ── Reveal tracking ──
   const [revealStrength, setRevealStrength] = useState(null);
   const [revealIndex, setRevealIndex] = useState(0);
+  const [revealNextScreen, setRevealNextScreen] = useState(null);
 
   // ── Payment / PDF ──
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [pdfDownloading, setPdfDownloading] = useState(false);
 
-  // ── Refs ──
-  // Prevent synthesis from being generated twice (double-click,
-  // accidental refresh during the 45s wait, re-mount, etc.)
-  // Each full synthesis run costs ~15k tokens, so this matters.
-  const synthesisLockRef = useRef(false);
-
   // ═══════════════════════════════════════════════
-  // INITIALIZATION — localStorage restore + payment check
+  // INITIALIZATION
   // ═══════════════════════════════════════════════
 
   useEffect(() => {
-    // Check for payment return
     const params = new URLSearchParams(window.location.search);
     if (
       params.get('payment') === 'success' ||
@@ -78,7 +71,6 @@ export default function Pathlight() {
       window.history.replaceState({}, '', window.location.pathname);
     }
 
-    // Restore from localStorage
     try {
       const saved = localStorage.getItem('pl_state');
       if (saved) {
@@ -91,7 +83,13 @@ export default function Pathlight() {
 
           if (state.synthesisContent) {
             setParsedData(parseSynthesis(state.synthesisContent));
-            setScreen('synthesis');
+            // If paid, go to downloads. Otherwise go to profile.
+            if (localStorage.getItem('pl_payment') === 'true') {
+              setPaymentCompleted(true);
+              setScreen('downloads');
+            } else {
+              setScreen('profile');
+            }
           } else {
             setScreen('chat');
           }
@@ -110,7 +108,7 @@ export default function Pathlight() {
     }
   }, []);
 
-  // ── Persist state to localStorage ──
+  // ── Persist ──
   useEffect(() => {
     if (screen === 'loading') return;
     try {
@@ -138,9 +136,7 @@ export default function Pathlight() {
       setSynthesisContent(null);
       setParsedData(null);
       setPaymentCompleted(false);
-      setSynthesisScreen(0);
       setRevealStrength(null);
-      synthesisLockRef.current = false;
       setScreen('landing');
       try {
         localStorage.removeItem('pl_state');
@@ -156,16 +152,12 @@ export default function Pathlight() {
   const generateSynthesis = useCallback(async () => {
     if (synthesisContent) {
       setParsedData(parseSynthesis(synthesisContent));
+      setScreen('profile');
       return;
     }
 
-    // Hard lock — prevents double-firing under any circumstance
-    // (double-click, remount, concurrent calls, etc.)
-    if (synthesisLockRef.current) return;
-    synthesisLockRef.current = true;
-
     setSynthesisGenerating(true);
-    setScreen('synthesis');
+    setScreen('synthesis_loading');
 
     try {
       const transcript = messages
@@ -175,7 +167,6 @@ export default function Pathlight() {
         )
         .join('\n\n');
 
-      // Part 1: Profile + Strengths + Combinations
       const part1 = await callAPI(
         [
           {
@@ -188,7 +179,6 @@ export default function Pathlight() {
         4000
       );
 
-      // Part 2: Deal-breakers + Territories + Narrative
       const part2 = await callAPI(
         [
           {
@@ -204,10 +194,9 @@ export default function Pathlight() {
       const full = part1 + '\n\n' + part2;
       setSynthesisContent(full);
       setParsedData(parseSynthesis(full));
+      setScreen('profile');
     } catch (e) {
       console.error('Synthesis error:', e);
-      // Release lock on failure so the user can retry
-      synthesisLockRef.current = false;
     } finally {
       setSynthesisGenerating(false);
     }
@@ -259,10 +248,20 @@ export default function Pathlight() {
   };
 
   // ═══════════════════════════════════════════════
+  // REVEAL HELPER — triggers animation then navigates
+  // ═══════════════════════════════════════════════
+
+  const triggerReveal = (strength, index, nextScreen) => {
+    setRevealStrength(strength);
+    setRevealIndex(index);
+    setRevealNextScreen(nextScreen);
+    setScreen('reveal');
+  };
+
+  // ═══════════════════════════════════════════════
   // SCREEN ROUTING
   // ═══════════════════════════════════════════════
 
-  // ─── Loading ───
   if (screen === 'loading') {
     return (
       <div
@@ -279,16 +278,10 @@ export default function Pathlight() {
     );
   }
 
-  // ─── Landing ───
   if (screen === 'landing') {
-    return (
-      <LandingScreen
-        onStart={() => setScreen('intro')}
-      />
-    );
+    return <LandingScreen onStart={() => setScreen('intro')} />;
   }
 
-  // ─── Intro ───
   if (screen === 'intro') {
     return (
       <IntroScreen
@@ -298,16 +291,10 @@ export default function Pathlight() {
     );
   }
 
-  // ─── Consent ───
   if (screen === 'consent') {
-    return (
-      <ConsentScreen
-        onConsent={() => setScreen('chat')}
-      />
-    );
+    return <ConsentScreen onConsent={() => setScreen('chat')} />;
   }
 
-  // ─── Chat ───
   if (screen === 'chat') {
     return (
       <ChatScreen
@@ -323,7 +310,12 @@ export default function Pathlight() {
     );
   }
 
-  // ─── Strength Reveal ───
+  // Synthesis loading
+  if (screen === 'synthesis_loading') {
+    return <SynthesisLoadingScreen />;
+  }
+
+  // Strength reveal animation
   if (screen === 'reveal' && revealStrength) {
     return (
       <StrengthRevealScreen
@@ -332,109 +324,81 @@ export default function Pathlight() {
         total={5}
         onContinue={() => {
           setRevealStrength(null);
-          setSynthesisScreen(1);
-          setScreen('synthesis');
+          setScreen(revealNextScreen);
         }}
       />
     );
   }
 
-  // ─── Synthesis ───
-  if (screen === 'synthesis') {
-    // Loading
-    if (synthesisGenerating || (!parsedData && !synthesisContent)) {
-      return <SynthesisLoadingScreen />;
-    }
-
-    // Parse if needed
-    if (synthesisContent && !parsedData) {
-      setParsedData(parseSynthesis(synthesisContent));
-      return null;
-    }
-
-    if (!parsedData) return null;
-
-    // Screen 0: Profile
-    if (synthesisScreen === 0) {
-      return (
-        <ProfileScreen
-          profile={parsedData.profile}
-          onNext={() => {
-            if (parsedData.superpowers[0]) {
-              setRevealStrength(parsedData.superpowers[0]);
-              setRevealIndex(0);
-              setScreen('reveal');
-            } else {
-              setSynthesisScreen(1);
-            }
-          }}
-        />
-      );
-    }
-
-    // Screen 1: Strengths
-    if (synthesisScreen === 1) {
-      return (
-        <StrengthsScreen
-          superpowers={parsedData.superpowers}
-          superpowersSummary={parsedData.superpowersSummary}
-          paymentCompleted={paymentCompleted}
-          onBack={() => setSynthesisScreen(0)}
-          onNext={() => setSynthesisScreen(2)}
-          onPayment={handlePayment}
-        />
-      );
-    }
-
-    // Screen 2: Combinations (paid only)
-    if (synthesisScreen === 2 && paymentCompleted) {
-      return (
-        <CombinationsScreen
-          combos={parsedData.strengthCombos}
-          rarestCombo={parsedData.rarestCombo}
-          onBack={() => setSynthesisScreen(1)}
-          onNext={() => setSynthesisScreen(3)}
-        />
-      );
-    }
-
-    // Screen 3: Deal-breakers (paid only)
-    if (synthesisScreen === 3 && paymentCompleted) {
-      return (
-        <DealBreakersScreen
-          dealbreakers={parsedData.dealbreakers}
-          onBack={() => setSynthesisScreen(2)}
-          onNext={() => setSynthesisScreen(4)}
-        />
-      );
-    }
-
-    // Screen 4: Territories (paid only)
-    if (synthesisScreen === 4 && paymentCompleted) {
-      return (
-        <TerritoriesScreen
-          territories={parsedData.territories}
-          onBack={() => setSynthesisScreen(3)}
-          onNext={() => setSynthesisScreen(5)}
-        />
-      );
-    }
-
-    // Screen 5: Career Narrative + PDF (paid only)
-    if (synthesisScreen === 5 && paymentCompleted) {
-      return (
-        <CareerNarrativeScreen
-          careerNarrative={parsedData.careerNarrative}
-          shortIntro={parsedData.shortIntro}
-          onBack={() => setSynthesisScreen(4)}
-          onDownloadPDF={downloadPDF}
-          pdfDownloading={pdfDownloading}
-        />
-      );
-    }
+  // Profile (always free)
+  if (screen === 'profile' && parsedData) {
+    return (
+      <ProfileScreen
+        profile={parsedData.profile}
+        onNext={() => {
+          if (parsedData.superpowers[0]) {
+            triggerReveal(parsedData.superpowers[0], 0, 'strength1');
+          } else {
+            setScreen('paywall');
+          }
+        }}
+      />
+    );
   }
 
-  // ─── Fallback ───
+  // Strength #1 detail (free)
+  if (screen === 'strength1' && parsedData?.superpowers[0]) {
+    return (
+      <StrengthDetailScreen
+        strength={parsedData.superpowers[0]}
+        num={1}
+        onBack={() => setScreen('profile')}
+        onNext={() => {
+          if (parsedData.superpowers[1]) {
+            triggerReveal(parsedData.superpowers[1], 1, 'strength2');
+          } else {
+            setScreen('paywall');
+          }
+        }}
+        nextLabel="Next Strength"
+      />
+    );
+  }
+
+  // Strength #2 detail (free)
+  if (screen === 'strength2' && parsedData?.superpowers[1]) {
+    return (
+      <StrengthDetailScreen
+        strength={parsedData.superpowers[1]}
+        num={2}
+        onBack={() => setScreen('strength1')}
+        onNext={() => setScreen('paywall')}
+        nextLabel="See Full Report"
+      />
+    );
+  }
+
+  // Paywall
+  if (screen === 'paywall') {
+    return (
+      <PaywallScreen
+        onPayment={handlePayment}
+        onBack={() => setScreen('strength2')}
+      />
+    );
+  }
+
+  // Downloads (post-payment)
+  if (screen === 'downloads' && paymentCompleted) {
+    return (
+      <DownloadsScreen
+        onDownloadPDF={downloadPDF}
+        pdfDownloading={pdfDownloading}
+      />
+    );
+  }
+
+  // Fallback
   return (
     <div
       style={{
